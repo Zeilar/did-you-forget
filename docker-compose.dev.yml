@@ -10,6 +10,11 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - ${DB_PORT}:${DB_PORT}
+  adminer:
+    image: adminer:latest
+    container_name: dyf_adminer
+    ports:
+      - 8080:8080
 
 volumes:
   postgres_data:
