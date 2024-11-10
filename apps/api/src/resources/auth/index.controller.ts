@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { AuthService } from "./index.service";
-import type { SignInDto, SignInReturnDto } from "./dto";
+import type { RefreshAccessTokenDto, SignInDto, SignInReturnDto } from "./dto";
 import { JwtRefreshTokenGuard } from "./guards/jwt/refresh-token.guard";
 
 @Controller("/auth")
@@ -24,10 +24,11 @@ export class AuthController {
 
   @UseGuards(JwtRefreshTokenGuard)
   @Post("/refresh-access-token")
-  refreshAccessToken(@Req() req: Express.Request) {
+  public async refreshAccessToken(@Req() req: Express.Request): Promise<RefreshAccessTokenDto> {
     if (!req.user) {
       throw new UnauthorizedException("req.user not found.");
     }
-    return this.authService.generateAccessToken(req.user);
+    const accessToken = await this.authService.generateAccessToken(req.user);
+    return { accessToken };
   }
 }
