@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { AuthService } from "./index.service";
-import type { RefreshAccessTokenDto, SignInDto, SignInReturnDto } from "./dto";
+import type { RefreshAccessTokenDto, SignInDto, SignInResultDto } from "./dto";
 import { JwtRefreshTokenGuard } from "./guards/jwt/refresh-token.guard";
 
 @Controller("/auth")
@@ -18,11 +18,12 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post("/sign-in")
-  public signIn(@Body() signInDto: SignInDto): Promise<SignInReturnDto> {
+  public signIn(@Body() signInDto: SignInDto): Promise<SignInResultDto> {
     return this.authService.signIn(signInDto);
   }
 
   @UseGuards(JwtRefreshTokenGuard)
+  @HttpCode(HttpStatus.CREATED)
   @Post("/refresh-access-token")
   public async refreshAccessToken(@Req() req: Express.Request): Promise<RefreshAccessTokenDto> {
     if (!req.user) {

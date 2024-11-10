@@ -1,8 +1,14 @@
-import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { compare } from "bcrypt";
 import { PrismaService } from "../db/prisma/index.service";
-import type { JwtAccessTokenDto, SignInDto, SignInReturnDto } from "./dto";
+import type { JwtAccessTokenDto, SignInDto, SignInResultDto } from "./dto";
+import { ExtractJwt } from "passport-jwt";
 
 @Injectable()
 export class AuthService {
@@ -11,7 +17,7 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  public async signIn({ email, password }: SignInDto): Promise<SignInReturnDto> {
+  public async signIn({ email, password }: SignInDto): Promise<SignInResultDto> {
     const { id } = await this.validateUser({ email, password });
     const accessToken = await this.generateAccessToken({ email, id } satisfies JwtAccessTokenDto);
     const refreshToken = await this.generateRefreshToken({ email, id } satisfies JwtAccessTokenDto);
@@ -45,5 +51,13 @@ export class AuthService {
       secret: process.env.JWT_ACCESS_TOKEN_SECRET,
       expiresIn: "15m",
     });
+  }
+
+  public extractAccessToken(req: Express.Request): JwtAccessTokenDto {
+    const accessToken = ExtractJwt.fromAuthHeaderAsBearerToken()(req);
+    if (!accessToken) {
+      throw new BadRequestException("Missing accessToken.");
+    }
+    return this.jwtService.decode(accessToken);
   }
 }

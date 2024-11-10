@@ -1,26 +1,14 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Post,
-  Req,
-  UseGuards,
-} from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, UseGuards } from "@nestjs/common";
 import { UserService } from "./index.service";
 import type { RegisterUserDto } from "./dto";
 import { JwtAccessTokenGuard } from "../auth/guards/jwt/access-token.guard";
-import { ExtractJwt } from "passport-jwt";
-import { JwtService } from "@nestjs/jwt";
-import type { JwtAccessTokenDto } from "../auth/dto";
+import { AuthService } from "../auth/index.service";
 
 @Controller("/user")
 export class UserController {
   public constructor(
     private readonly userService: UserService,
-    private readonly jwtService: JwtService
+    private readonly authService: AuthService
   ) {}
 
   @Post("/register")
@@ -33,11 +21,6 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAccessTokenGuard)
   public async profile(@Req() req: Express.Request) {
-    const accessToken = ExtractJwt.fromAuthHeaderAsBearerToken()(req);
-    if (!accessToken) {
-      throw new BadRequestException("Missing accessToken.");
-    }
-    const { id }: JwtAccessTokenDto = await this.jwtService.decode(accessToken);
-    return this.userService.profile(id);
+    return this.userService.profile(this.authService.extractAccessToken(req).id);
   }
 }

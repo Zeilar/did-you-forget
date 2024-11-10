@@ -1,8 +1,8 @@
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
-import { Request } from "express";
+import type { Request } from "express";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { JwtAccessTokenDto } from "../../dto";
+import type { JwtAccessTokenDto } from "../../dto";
 
 @Injectable()
 export class JwtRefreshTokenStrategy extends PassportStrategy(Strategy, "jwt-refresh") {
@@ -14,10 +14,7 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(Strategy, "jwt-ref
     });
   }
 
-  public validate(
-    req: Request,
-    payload: JwtAccessTokenDto
-  ): { refreshToken: string } & JwtAccessTokenDto {
+  public validate(req: Request, payload: JwtAccessTokenDto): JwtAccessTokenDto {
     const refreshToken = req.get("Authorization")?.replace("Bearer", "").trim();
     if (!refreshToken) {
       throw new UnauthorizedException("refreshToken not found in Authorization header.");
