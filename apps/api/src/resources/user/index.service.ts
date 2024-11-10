@@ -1,6 +1,6 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../db/prisma/index.service";
-import type { CreatedUserDto, RegisterUserDto } from "./dto";
+import type { CreatedUserDto, RegisterUserDto, UserWithoutPasswordDto } from "./dto";
 import { hash } from "bcrypt";
 
 @Injectable()
@@ -24,5 +24,14 @@ export class UserService {
   private async isEmailTaken(email: string): Promise<boolean> {
     const count = await this.prismaService.user.count({ where: { email } });
     return count > 0;
+  }
+
+  public async profile(id: string): Promise<UserWithoutPasswordDto> {
+    const user = await this.prismaService.user.findFirst({ where: { id } });
+    if (!user) {
+      throw new NotFoundException(`User with id ${JSON.stringify(id)} not found.`);
+    }
+    const { password, ...rest } = user;
+    return rest;
   }
 }

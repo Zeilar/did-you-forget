@@ -1,4 +1,5 @@
-import { Prisma } from "@prisma/client";
+import type { User } from "@prisma/client";
 
-export type CreatedUserDto = Omit<Prisma.UserCreateInput, "password" | "notifications">;
-export type RegisterUserDto = Pick<Prisma.UserCreateInput, "email" | "password">;
+export type UserWithoutPasswordDto = Omit<User, "password">;
+export type CreatedUserDto = Omit<UserWithoutPasswordDto, "notifications">;
+export type RegisterUserDto = Pick<User, "email" | "password">;
