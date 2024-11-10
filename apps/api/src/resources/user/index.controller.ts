@@ -1,26 +1,23 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from "@nestjs/common";
 import { UserService } from "./index.service";
-import type { RegisterUserDto } from "./dto";
-import { JwtAccessTokenGuard } from "../auth/guards/jwt/access-token.guard";
-import { AuthService } from "../auth/index.service";
+import type { CreatedUserDto, RegisterUserDto, UserWithoutPasswordDto } from "./dto";
+import { AuthGuard } from "../auth/guards/auth.guard";
+import { SessionId } from "../auth/decorators/session-id.decorator";
 
 @Controller("/user")
 export class UserController {
-  public constructor(
-    private readonly userService: UserService,
-    private readonly authService: AuthService
-  ) {}
+  public constructor(private readonly userService: UserService) {}
 
-  @Post("/register")
   @HttpCode(HttpStatus.CREATED)
-  public async register(@Body() registerUserDto: RegisterUserDto) {
+  @Post("/register")
+  public register(@Body() registerUserDto: RegisterUserDto): Promise<CreatedUserDto> {
     return this.userService.createUser(registerUserDto);
   }
 
-  @Get("/profile")
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAccessTokenGuard)
-  public async profile(@Req() req: Express.Request) {
-    return this.userService.profile(this.authService.extractAccessToken(req).id);
+  @Get("/profile")
+  public profile(@SessionId() sessionId: string): Promise<UserWithoutPasswordDto> {
+    return this.userService.getUserBySessionId(sessionId);
   }
 }

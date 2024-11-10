@@ -1,12 +1,8 @@
-import { Prisma, User } from "@prisma/client";
-
-export type SignInDto = Pick<Prisma.UserCreateInput, "email" | "password">;
-export type SignInResultDto = { accessToken: string; refreshToken: string };
-export type RefreshAccessTokenDto = { accessToken: string };
-export interface JwtAccessTokenDto extends Pick<User, "id" | "email"> {
-  iat?: number;
-  exp?: number;
-  refreshToken?: string;
+export interface SignInDto {
+  email: string;
+  password: string;
+  rememberMe?: boolean;
 }
-export type JwtRefreshTokenDto = Omit<JwtAccessTokenDto, "refreshToken">;
-export type VerifyTokenDto = { accessToken: string };
+export interface SignInResultDto {
+  sessionId: string;
+}

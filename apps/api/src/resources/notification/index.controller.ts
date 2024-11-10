@@ -1,14 +1,14 @@
 import { Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from "@nestjs/common";
 import { NotificationService } from "./index.service";
-import { JwtAccessTokenGuard } from "../auth/guards/jwt/access-token.guard";
 import { UserId } from "../user/decorators/user-id.decorator";
 import type { CreateNotificationResultDto, NotificationsForUserDto } from "./dto";
+import { AuthGuard } from "../auth/guards/auth.guard";
 
 @Controller("/notification")
 export class NotificationController {
   public constructor(private readonly notificationService: NotificationService) {}
 
-  @UseGuards(JwtAccessTokenGuard)
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   @Get("/")
   public async getNotificationsForUser(@UserId() userId: string): Promise<NotificationsForUserDto> {
@@ -17,7 +17,7 @@ export class NotificationController {
     };
   }
 
-  @UseGuards(JwtAccessTokenGuard)
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.CREATED)
   @Post("/create")
   public async createNotification(@UserId() userId: string): Promise<CreateNotificationResultDto> {

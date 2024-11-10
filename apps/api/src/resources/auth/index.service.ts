@@ -1,34 +1,35 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
+import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { compare } from "bcrypt";
 import { PrismaService } from "../db/prisma/index.service";
-import type { JwtAccessTokenDto, SignInDto, SignInResultDto } from "./dto";
-import { ExtractJwt } from "passport-jwt";
+import type { SignInDto, SignInResultDto } from "./dto";
+import type { Session } from "@prisma/client";
 
 @Injectable()
 export class AuthService {
-  public constructor(
-    private readonly prismaService: PrismaService,
-    private readonly jwtService: JwtService
-  ) {}
+  public constructor(private readonly prismaService: PrismaService) {}
 
-  public async signIn({ email, password }: SignInDto): Promise<SignInResultDto> {
+  private getCookieExpiresDate(): Date {
+    return new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
+  }
+
+  public async signIn({
+    email,
+    password,
+    rememberMe,
+  }: SignInDto): Promise<SignInResultDto & { expires: Session["expires"] }> {
     const { id } = await this.validateUser({ email, password });
-    const accessToken = await this.generateAccessToken({ email, id } satisfies JwtAccessTokenDto);
-    const refreshToken = await this.generateRefreshToken({ email, id } satisfies JwtAccessTokenDto);
-    return { accessToken, refreshToken };
+    const expires = !rememberMe ? this.getCookieExpiresDate() : null;
+    const session = await this.prismaService.session.create({
+      data: { user: { connect: { id } }, expires },
+    });
+    return { expires, sessionId: session.id };
   }
 
   private comparePassword(password: string, hashed: string): Promise<boolean> {
     return compare(password, hashed);
   }
 
-  public async validateUser({ email, password }: SignInDto) {
+  private async validateUser({ email, password }: SignInDto) {
     const user = await this.prismaService.user.findFirst({ where: { email } });
     if (!user) {
       throw new NotFoundException(`User with email ${JSON.stringify(email)} not found.`);
@@ -37,27 +38,5 @@ export class AuthService {
       throw new UnauthorizedException("Password does not match.");
     }
     return user;
-  }
-
-  public generateRefreshToken({ iat, exp, ...payload }: JwtAccessTokenDto): Promise<string> {
-    return this.jwtService.signAsync(payload, {
-      secret: process.env.JWT_REFRESH_TOKEN_SECRET,
-      expiresIn: "7d",
-    });
-  }
-
-  public generateAccessToken({ iat, exp, ...payload }: JwtAccessTokenDto): Promise<string> {
-    return this.jwtService.signAsync(payload, {
-      secret: process.env.JWT_ACCESS_TOKEN_SECRET,
-      expiresIn: "15m",
-    });
-  }
-
-  public extractAccessToken(req: Express.Request): JwtAccessTokenDto {
-    const accessToken = ExtractJwt.fromAuthHeaderAsBearerToken()(req);
-    if (!accessToken) {
-      throw new BadRequestException("Missing accessToken.");
-    }
-    return this.jwtService.decode(accessToken);
   }
 }

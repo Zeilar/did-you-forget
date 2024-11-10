@@ -34,4 +34,17 @@ export class UserService {
     const { password, ...rest } = user;
     return rest;
   }
+
+  public async getUserBySessionId(id: string): Promise<UserWithoutPasswordDto> {
+    const session = await this.prismaService.session.findFirst({ where: { id } });
+    if (!session) {
+      throw new NotFoundException(`Session with id ${JSON.stringify(id)} not found.`);
+    }
+    const user = await this.prismaService.user.findFirst({ where: { id: session.userId } });
+    if (!user) {
+      throw new NotFoundException(`User with id ${JSON.stringify(session.userId)} not found.`);
+    }
+    const { password, ...rest } = user;
+    return rest;
+  }
 }
