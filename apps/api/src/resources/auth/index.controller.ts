@@ -18,7 +18,7 @@ export class AuthController {
       sameSite: true,
       httpOnly: true,
       secure: process.env.SECURE === "true",
-      expires: expires ?? new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 10),
+      expires: expires ?? new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 10), // Remember me equals 10 years.
     });
     return { sessionId };
   }
