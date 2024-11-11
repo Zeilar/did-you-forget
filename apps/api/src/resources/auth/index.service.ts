@@ -16,13 +16,23 @@ export class AuthService {
     email,
     password,
     rememberMe,
-  }: SignInDto): Promise<SignInResultDto & { expires: Session["expires"] }> {
+    ipAddress,
+  }: SignInDto & Pick<Session, "ipAddress">): Promise<
+    SignInResultDto & { expires: Session["expires"] }
+  > {
     const { id } = await this.validateUser({ email, password });
+    if (ipAddress) {
+      await this.prismaService.session.deleteMany({ where: { ipAddress } });
+    }
     const expires = !rememberMe ? this.getCookieExpiresDate() : null;
     const session = await this.prismaService.session.create({
-      data: { user: { connect: { id } }, expires },
+      data: { user: { connect: { id } }, expires, ipAddress },
     });
     return { expires, sessionId: session.id };
+  }
+
+  public async logout(sessionId: string): Promise<Pick<Session, "id">> {
+    return this.prismaService.session.delete({ where: { id: sessionId }, select: { id: true } });
   }
 
   private comparePassword(password: string, hashed: string): Promise<boolean> {
