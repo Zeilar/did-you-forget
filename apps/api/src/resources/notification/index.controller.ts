@@ -24,7 +24,7 @@ export class NotificationController {
   ): Promise<NotificationsForUserDto> {
     const { id } = await this.userService.getUserBySessionId(sessionId);
     return {
-      notifications: await this.notificationService.getNotificationByUserId(id),
+      notifications: await this.notificationService.getNotificationsByUserId(id),
     };
   }
 

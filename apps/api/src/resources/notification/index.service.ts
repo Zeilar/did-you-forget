@@ -7,7 +7,7 @@ import { CreateNotificationDto } from "./dto";
 export class NotificationService {
   public constructor(private readonly prismaService: PrismaService) {}
 
-  public getNotificationByUserId(userId: string): Promise<Notification[]> {
+  public getNotificationsByUserId(userId: string): Promise<Notification[]> {
     return this.prismaService.notification.findMany({ where: { userId } });
   }
 
