@@ -31,7 +31,7 @@ export class AuthService {
     return { expires, sessionId: session.id };
   }
 
-  public async logout(sessionId: string): Promise<Pick<Session, "id">> {
+  public logout(sessionId: string): Promise<Pick<Session, "id">> {
     return this.prismaService.session.delete({ where: { id: sessionId }, select: { id: true } });
   }
 
