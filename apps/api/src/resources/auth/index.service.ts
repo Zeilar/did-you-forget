@@ -9,7 +9,7 @@ export class AuthService {
   public constructor(private readonly prismaService: PrismaService) {}
 
   private getCookieExpiresDate(): Date {
-    return new Date(Date.now() + 1000 * 60 * 60 * 24 * 7); // 7 days.
+    return new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 4); // 28 days (4 weeks).
   }
 
   public async signIn({
