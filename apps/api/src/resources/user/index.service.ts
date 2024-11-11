@@ -1,6 +1,11 @@
-import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { PrismaService } from "../db/prisma/index.service";
-import type { CreatedUserDto, RegisterUserDto, UserWithoutPasswordDto } from "./dto";
+import type { CreatedUserDto, EditUserDto, RegisterUserDto, UserWithoutPasswordDto } from "./dto";
 import { hash } from "bcrypt";
 
 @Injectable()
@@ -9,7 +14,7 @@ export class UserService {
 
   public async createUser({ email, password }: RegisterUserDto): Promise<CreatedUserDto> {
     if (await this.isEmailTaken(email)) {
-      throw new ConflictException("That email is taken.");
+      throw new ConflictException(`The email ${JSON.stringify(email)} is taken.`);
     }
     const { password: hashedPassword, ...user } = await this.prismaService.user.create({
       data: { email, password: await this.hashPassword(password) },
@@ -46,5 +51,18 @@ export class UserService {
     }
     const { password, ...rest } = user;
     return rest;
+  }
+
+  public async editUser(id: string, { email, password }: EditUserDto) {
+    if (!email && !password) {
+      throw new BadRequestException("No fields were filled.");
+    }
+    return this.prismaService.user.update({
+      data: {
+        email,
+        password: password ? await this.hashPassword(password) : undefined,
+      },
+      where: { id },
+    });
   }
 }

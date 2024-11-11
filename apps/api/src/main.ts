@@ -7,7 +7,10 @@ import { ConfigService } from "@nestjs/config";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = "api";
-  app.setGlobalPrefix(globalPrefix).useGlobalPipes(new ValidationPipe()).use(cookieParser());
+  app
+    .setGlobalPrefix(globalPrefix)
+    .useGlobalPipes(new ValidationPipe({ transform: true }))
+    .use(cookieParser());
   const configService = app.get(ConfigService);
   const port = configService.getOrThrow("port");
   await app.listen(port);
