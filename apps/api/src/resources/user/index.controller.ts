@@ -21,10 +21,11 @@ export class UserController {
   @Post("/register")
   public async register(
     @Body() registerUserDto: RegisterUserDto,
-    @IpAddress() ipAddress: string
+    @IpAddress() ipAddress: string,
+    @Res({ passthrough: true }) res: Response
   ): Promise<CreatedUserDto> {
     const user = await this.userService.createUser(registerUserDto);
-    await this.authService.signIn({ ipAddress, ...registerUserDto });
+    await this.authService.signIn({ ipAddress, ...registerUserDto }, res);
     return user;
   }
 

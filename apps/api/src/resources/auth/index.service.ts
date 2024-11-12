@@ -3,32 +3,39 @@ import { compare } from "bcrypt";
 import { PrismaService } from "../db/prisma/index.service";
 import type { SignInDto, SignInResultDto } from "./dto";
 import type { Session } from "@prisma/client";
+import type { Response } from "express";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class AuthService {
-  public constructor(private readonly prismaService: PrismaService) {}
+  public constructor(
+    private readonly prismaService: PrismaService,
+    private readonly configService: ConfigService
+  ) {}
 
   private getCookieExpiresDate(): Date {
     return new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 4); // 28 days (4 weeks).
   }
 
-  public async signIn({
-    email,
-    password,
-    rememberMe,
-    ipAddress,
-  }: SignInDto & Pick<Session, "ipAddress">): Promise<
-    SignInResultDto & { expires: Session["expires"] }
-  > {
+  public async signIn(
+    { email, password, rememberMe, ipAddress }: SignInDto & Pick<Session, "ipAddress">,
+    res: Response
+  ): Promise<SignInResultDto & { expires: Session["expires"] }> {
     const { id } = await this.validateUser({ email, password });
     if (ipAddress) {
       await this.prismaService.session.deleteMany({ where: { ipAddress } });
     }
     const expires = !rememberMe ? this.getCookieExpiresDate() : null;
-    const session = await this.prismaService.session.create({
+    const { id: sessionId } = await this.prismaService.session.create({
       data: { user: { connect: { id } }, expires, ipAddress },
     });
-    return { expires, sessionId: session.id };
+    res.cookie(this.configService.getOrThrow<string>("sessionCookieName"), sessionId, {
+      sameSite: true,
+      httpOnly: true,
+      secure: process.env.SECURE === "true",
+      expires: expires ?? new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 10), // Remember me equals 10 years.
+    });
+    return { expires, sessionId };
   }
 
   public logout(sessionId: string): Promise<Pick<Session, "id">> {
