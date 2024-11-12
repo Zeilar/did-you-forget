@@ -2,23 +2,30 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Post, Res, UseGuards } fro
 import { UserService } from "./index.service";
 import type { CreatedUserDto, EditUserDto, RegisterUserDto, UserWithoutPasswordDto } from "./dto";
 import { AuthGuard } from "../auth/guards";
-import { SessionId } from "../decorators";
+import { IpAddress, SessionId } from "../decorators";
 import { PrismaService } from "../db/prisma/index.service";
 import type { Response } from "express";
 import { ConfigService } from "@nestjs/config";
+import { AuthService } from "../auth/index.service";
 
 @Controller("/user")
 export class UserController {
   public constructor(
     private readonly userService: UserService,
     private readonly prismaService: PrismaService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+    private readonly authService: AuthService
   ) {}
 
   @HttpCode(HttpStatus.CREATED)
   @Post("/register")
-  public register(@Body() registerUserDto: RegisterUserDto): Promise<CreatedUserDto> {
-    return this.userService.createUser(registerUserDto);
+  public async register(
+    @Body() registerUserDto: RegisterUserDto,
+    @IpAddress() ipAddress: string
+  ): Promise<CreatedUserDto> {
+    const user = await this.userService.createUser(registerUserDto);
+    await this.authService.signIn({ ipAddress, ...registerUserDto });
+    return user;
   }
 
   @UseGuards(AuthGuard)
