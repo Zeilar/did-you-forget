@@ -14,7 +14,7 @@ export class UserService {
 
   public async createUser({ email, password }: RegisterUserDto): Promise<CreatedUserDto> {
     if (await this.isEmailTaken(email)) {
-      throw new ConflictException(`The email ${JSON.stringify(email)} is taken.`);
+      throw new ConflictException(`The email ${email} is taken.`);
     }
     const { password: hashedPassword, ...user } = await this.prismaService.user.create({
       data: { email, password: await this.hashPassword(password) },
@@ -34,7 +34,7 @@ export class UserService {
   public async profile(id: string): Promise<UserWithoutPasswordDto> {
     const user = await this.prismaService.user.findFirst({ where: { id } });
     if (!user) {
-      throw new NotFoundException(`User with id ${JSON.stringify(id)} not found.`);
+      throw new NotFoundException(`User with id ${id} not found.`);
     }
     const { password, ...rest } = user;
     return rest;
@@ -43,11 +43,11 @@ export class UserService {
   public async getUserBySessionId(id: string): Promise<UserWithoutPasswordDto> {
     const session = await this.prismaService.session.findFirst({ where: { id } });
     if (!session) {
-      throw new NotFoundException(`Session with id ${JSON.stringify(id)} not found.`);
+      throw new NotFoundException(`Session with id ${id} not found.`);
     }
     const user = await this.prismaService.user.findFirst({ where: { id: session.userId } });
     if (!user) {
-      throw new NotFoundException(`User with id ${JSON.stringify(session.userId)} not found.`);
+      throw new NotFoundException(`User with id ${session.userId} not found.`);
     }
     const { password, ...rest } = user;
     return rest;

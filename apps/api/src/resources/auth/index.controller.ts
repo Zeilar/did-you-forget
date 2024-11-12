@@ -49,7 +49,7 @@ export class AuthController {
   ): Promise<void> {
     const { id } = await this.authService.logout(sessionId);
     if (!id) {
-      throw new BadRequestException(`Failed to delete session with id ${JSON.stringify(id)}.`);
+      throw new BadRequestException(`Failed to delete session with id ${(id)}.`);
     }
     res.clearCookie(this.configService.getOrThrow<string>("sessionCookieName"));
   }

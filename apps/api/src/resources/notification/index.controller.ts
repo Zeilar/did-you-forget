@@ -1,4 +1,14 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from "@nestjs/common";
 import { NotificationService } from "./index.service";
 import type { CreateNotificationDto, NotificationDto, NotificationsForUserDto } from "./dto";
 import { AuthGuard } from "../auth/guards/auth.guard";
@@ -32,10 +42,18 @@ export class NotificationController {
     @Body() createNotificationDto: CreateNotificationDto
   ): Promise<NotificationDto> {
     const { id } = await this.userService.getUserBySessionId(sessionId);
-    const notification = await this.notificationService.createNotification(
-      id,
-      createNotificationDto
-    );
-    return notification;
+    return this.notificationService.createNotification(id, createNotificationDto);
+  }
+
+  @UseGuards(AuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Patch("/edit/:id")
+  public async editNotification(
+    @SessionId() sessionId: string,
+    @Body() createNotificationDto: CreateNotificationDto,
+    @Param("id") id: string
+  ): Promise<NotificationDto> {
+    const { id: userId } = await this.userService.getUserBySessionId(sessionId);
+    return this.notificationService.editNotification(id, userId, createNotificationDto);
   }
 }

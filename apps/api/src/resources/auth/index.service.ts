@@ -42,7 +42,7 @@ export class AuthService {
   private async validateUser({ email, password }: SignInDto) {
     const user = await this.prismaService.user.findFirst({ where: { email } });
     if (!user) {
-      throw new NotFoundException(`User with email ${JSON.stringify(email)} not found.`);
+      throw new NotFoundException(`User with email ${email} not found.`);
     }
     if (!(await this.comparePassword(password, user.password))) {
       throw new UnauthorizedException("Password does not match.");
