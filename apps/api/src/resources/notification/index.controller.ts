@@ -19,7 +19,7 @@ import type {
   NotificationDto,
   NotificationsForUserDto,
 } from "./dto";
-import { AuthGuard } from "../auth/guards/auth.guard";
+import { AuthGuard } from "../guards/auth.guard";
 import { SessionId } from "../decorators/session-id.decorator";
 import { UserService } from "../user/index.service";
 import { isArray } from "class-validator";

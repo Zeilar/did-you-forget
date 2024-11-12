@@ -5,7 +5,7 @@ import {
   type ExecutionContext,
 } from "@nestjs/common";
 import type { Request } from "express";
-import { PrismaService } from "../../db/prisma/index.service";
+import { PrismaService } from "../db/prisma/index.service";
 import { ConfigService } from "@nestjs/config";
 
 @Injectable()
