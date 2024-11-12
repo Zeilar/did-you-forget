@@ -13,6 +13,6 @@
     "src/**/*.ts",
     "types",
     "src/resources/notification/dto/validation/repeat.validation.ts",
-    "src/resources/decorators/ip-address..decoratorts"
+    "src/common/decorators/ip-address..decoratorts"
   ]
 }

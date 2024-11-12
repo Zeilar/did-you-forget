@@ -10,8 +10,8 @@ import {
 import { AuthService } from "./index.service";
 import type { SignInDto } from "./dto";
 import type { Response } from "express";
-import { SessionId } from "../decorators/session-id.decorator";
-import { IpAddress } from "../decorators";
+import { SessionId } from "../../common/decorators/session-id.decorator";
+import { IpAddress } from "../../common/decorators";
 import { ConfigService } from "@nestjs/config";
 
 @Controller("/auth")
