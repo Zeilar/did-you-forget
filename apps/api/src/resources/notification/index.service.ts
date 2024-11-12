@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../db/prisma/index.service";
 import type { Notification } from "@prisma/client";
-import { CreateNotificationDto, EditNotificationDto } from "./dto";
+import { CreateNotificationDto, EditNotificationDto, NotificationDto } from "./dto";
 
 @Injectable()
 export class NotificationService {
@@ -36,5 +36,18 @@ export class NotificationService {
       where: { id, userId },
       data: editNotificationDto,
     });
+  }
+
+  public async deleteNotifications(
+    notificationIds: string[],
+    userId: string
+  ): Promise<NotificationDto[]> {
+    const deletedNotifications = await Promise.all(
+      notificationIds.map(async (id) => {
+        const count = await this.prismaService.notification.count({ where: { id, userId } });
+        return count ? this.prismaService.notification.delete({ where: { id, userId } }) : null;
+      })
+    );
+    return deletedNotifications.filter((deletedNotification) => deletedNotification !== null);
   }
 }
