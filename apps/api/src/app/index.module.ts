@@ -12,7 +12,7 @@ import { APP_INTERCEPTOR } from "@nestjs/core";
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
-    CacheModule.register({ isGlobal: true }),
+    CacheModule.register({ isGlobal: true, ttl: 60 }),
     UserModule,
     AuthModule,
     NotificationModule,

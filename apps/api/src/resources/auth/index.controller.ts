@@ -5,32 +5,34 @@ import {
   HttpCode,
   HttpStatus,
   Post,
-  Req,
   Res,
 } from "@nestjs/common";
 import { AuthService } from "./index.service";
 import type { SignInDto, SignInResultDto } from "./dto";
-import type { Request, Response } from "express";
-import { SessionId } from "./decorators/session-id.decorator";
+import type { Response } from "express";
+import { SessionId } from "../decorators/session-id.decorator";
+import { IpAddress } from "../decorators";
+import { ConfigService } from "@nestjs/config";
 
 @Controller("/auth")
 export class AuthController {
-  private readonly sessionCookieName = "dyf-session";
-
-  public constructor(private readonly authService: AuthService) {}
+  public constructor(
+    private readonly authService: AuthService,
+    private readonly configService: ConfigService
+  ) {}
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Post("/sign-in")
   public async signIn(
     @Body() signInDto: SignInDto,
-    @Req() req: Request,
+    @IpAddress() ipAddress: string | undefined,
     @Res({ passthrough: true }) res: Response
   ): Promise<SignInResultDto> {
     const { sessionId, expires } = await this.authService.signIn({
       ...signInDto,
-      ipAddress: req.ip || null,
+      ipAddress: ipAddress || null,
     });
-    res.cookie(this.sessionCookieName, sessionId, {
+    res.cookie(this.configService.getOrThrow<string>("sessionCookieName"), sessionId, {
       sameSite: true,
       httpOnly: true,
       secure: process.env.SECURE === "true",
@@ -49,6 +51,6 @@ export class AuthController {
     if (!id) {
       throw new BadRequestException(`Failed to delete session with id ${JSON.stringify(id)}.`);
     }
-    res.clearCookie(this.sessionCookieName);
+    res.clearCookie(this.configService.getOrThrow<string>("sessionCookieName"));
   }
 }

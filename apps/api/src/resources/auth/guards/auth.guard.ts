@@ -1,14 +1,27 @@
-import { Injectable, type CanActivate, type ExecutionContext } from "@nestjs/common";
+import {
+  Injectable,
+  UnauthorizedException,
+  type CanActivate,
+  type ExecutionContext,
+} from "@nestjs/common";
 import type { Request } from "express";
 import { PrismaService } from "../../db/prisma/index.service";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  public constructor(private readonly prismaService: PrismaService) {}
+  public constructor(
+    private readonly prismaService: PrismaService,
+    private readonly configService: ConfigService
+  ) {}
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
     const req: Request = context.switchToHttp().getRequest();
-    const sessionId = req.cookies["dyf-session"];
+    const sessionId = req.cookies[this.configService.getOrThrow<string>("sessionCookieName")];
+    console.log({ sessionId });
+    if (!sessionId) {
+      throw new UnauthorizedException();
+    }
     const sessionCount = await this.prismaService.session.count({
       where: { id: sessionId, expires: { gt: new Date() } },
     });

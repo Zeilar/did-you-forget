@@ -53,16 +53,20 @@ export class UserService {
     return rest;
   }
 
-  public async editUser(id: string, { email, password }: EditUserDto) {
+  public async editUser(
+    id: string,
+    { email, password }: EditUserDto
+  ): Promise<UserWithoutPasswordDto> {
     if (!email && !password) {
       throw new BadRequestException("No fields were filled.");
     }
-    return this.prismaService.user.update({
+    const { password: hashedPassword, ...user } = await this.prismaService.user.update({
       data: {
         email,
         password: password ? await this.hashPassword(password) : undefined,
       },
       where: { id },
     });
+    return user;
   }
 }

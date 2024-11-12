@@ -5,6 +5,7 @@ import {
   IsDate,
   IsInt,
   IsOptional,
+  IsPositive,
   IsString,
   MaxLength,
   MinLength,
@@ -21,6 +22,7 @@ export class CreateNotificationDto
 
   @IsOptional()
   @IsArray()
+  @IsPositive({ each: true })
   @IsInt({ each: true })
   reminders?: number[];
 

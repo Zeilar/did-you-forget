@@ -10,5 +10,6 @@ export default function config() {
       url: process.env.DB_URL,
       host: process.env.DB_HOST || "localhost",
     },
+    sessionCookieName: "dyf-session",
   };
 }

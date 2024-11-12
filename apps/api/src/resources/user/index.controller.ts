@@ -1,12 +1,19 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Res, UseGuards } from "@nestjs/common";
 import { UserService } from "./index.service";
-import type { CreatedUserDto, RegisterUserDto, UserWithoutPasswordDto } from "./dto";
-import { AuthGuard } from "../auth/guards/auth.guard";
-import { SessionId } from "../auth/decorators/session-id.decorator";
+import type { CreatedUserDto, EditUserDto, RegisterUserDto, UserWithoutPasswordDto } from "./dto";
+import { AuthGuard } from "../auth/guards";
+import { SessionId } from "../decorators";
+import { PrismaService } from "../db/prisma/index.service";
+import type { Response } from "express";
+import { ConfigService } from "@nestjs/config";
 
 @Controller("/user")
 export class UserController {
-  public constructor(private readonly userService: UserService) {}
+  public constructor(
+    private readonly userService: UserService,
+    private readonly prismaService: PrismaService,
+    private readonly configService: ConfigService
+  ) {}
 
   @HttpCode(HttpStatus.CREATED)
   @Post("/register")
@@ -19,5 +26,28 @@ export class UserController {
   @Get("/profile")
   public profile(@SessionId() sessionId: string): Promise<UserWithoutPasswordDto> {
     return this.userService.getUserBySessionId(sessionId);
+  }
+
+  @UseGuards(AuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Post("/edit")
+  public async edit(
+    @SessionId() sessionId: string,
+    @Body() editUserDto: EditUserDto
+  ): Promise<UserWithoutPasswordDto> {
+    const { id } = await this.userService.getUserBySessionId(sessionId);
+    return this.userService.editUser(id, editUserDto);
+  }
+
+  @UseGuards(AuthGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Post("/clear-sessions")
+  public async clearSessions(
+    @SessionId() sessionId: string,
+    @Res({ passthrough: true }) res: Response
+  ): Promise<void> {
+    const { id } = await this.userService.getUserBySessionId(sessionId);
+    await this.prismaService.session.deleteMany({ where: { userId: id } });
+    res.clearCookie(this.configService.getOrThrow<string>("sessionCookieName"));
   }
 }

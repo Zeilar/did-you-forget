@@ -11,7 +11,10 @@ export class NotificationService {
     return this.prismaService.notification.findMany({ where: { userId } });
   }
 
-  public createNotification(userId: string, createNotificationDto: CreateNotificationDto) {
+  public createNotification(
+    userId: string,
+    createNotificationDto: CreateNotificationDto
+  ): Promise<Notification> {
     return this.prismaService.notification.create({
       data: { user: { connect: { id: userId } }, ...createNotificationDto },
     });
