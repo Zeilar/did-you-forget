@@ -77,8 +77,10 @@ export class NotificationController {
     @Query("ids") ids: string
   ): Promise<DeletedNotificationsDto> {
     const parsedIds = ids.split(",");
-    if (!isArray(parsedIds)) {
-      throw new BadRequestException(`ids must be a comma separated string.`);
+    if (!isArray(parsedIds) || !parsedIds.every(Boolean)) {
+      throw new BadRequestException(
+        `ids must be a comma separated string that starts and ends with an id.`
+      );
     }
     const { id: userId } = await this.userService.getUserBySessionId(sessionId);
     const deletedNotifications = await this.notificationService.deleteNotifications(
