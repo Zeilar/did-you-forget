@@ -6,13 +6,13 @@ import { ConfigService } from "@nestjs/config";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const globalPrefix = "api";
+  const configService = app.get(ConfigService);
+  const port = configService.getOrThrow("port");
+  const globalPrefix = configService.getOrThrow("globalPrefix");
   app
     .setGlobalPrefix(globalPrefix)
     .useGlobalPipes(new ValidationPipe({ transform: true }))
     .use(cookieParser());
-  const configService = app.get(ConfigService);
-  const port = configService.getOrThrow("port");
   await app.listen(port);
   Logger.log(`🚀 Application is running on: ${await app.getUrl()}/${globalPrefix}`);
 }

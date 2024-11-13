@@ -11,5 +11,6 @@ export default function config() {
       host: process.env.DB_HOST || "localhost",
     },
     sessionCookieName: "dyf-session",
+    globalPrefix: "api",
   };
 }
