@@ -13,7 +13,7 @@ async function bootstrap() {
     .setGlobalPrefix(globalPrefix)
     .useGlobalPipes(new ValidationPipe({ transform: true }))
     .use(cookieParser())
-    .enableCors({ origin: configService.getOrThrow("cors") });
+    .enableCors({ origin: configService.getOrThrow("cors"), credentials: true });
   await app.listen(port);
   Logger.log(`🚀 Application is running on: ${await app.getUrl()}/${globalPrefix}`);
 }

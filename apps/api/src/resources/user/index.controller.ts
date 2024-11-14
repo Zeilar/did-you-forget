@@ -1,6 +1,11 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, Res, UseGuards } from "@nestjs/common";
 import { UserService } from "./index.service";
-import type { CreatedUserDto, EditUserDto, RegisterUserDto, UserWithoutPasswordDto } from "./dto";
+import type {
+  CreatedUserDto,
+  EditUserDto,
+  RegisterUserDto,
+  UserWithoutPasswordDto,
+} from "@did-you-forget/dto";
 import { AuthGuard } from "../../common/guards";
 import { IpAddress, SessionId } from "../../common/decorators";
 import { PrismaService } from "../db/prisma/index.service";

@@ -1,3 +1,9 @@
+import { Button, Input } from "@chakra-ui/react";
+import { UserWithoutPasswordDto } from "@did-you-forget/dto";
+import { cookies } from "next/headers";
+import { serverFetch } from "../../common/fetchers/server";
+import { redirect } from "next/navigation";
+
 // import { useState, useEffect } from "react";
 // import { subscribe, unsubscribe, notify } from "./actions";
 
@@ -76,7 +82,12 @@
 // }
 
 export default async function Page() {
-  const s = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile`);
+  const { data, status } = await serverFetch<UserWithoutPasswordDto>("/user/profile");
+  if (status === 401) {
+    redirect("/login");
+    return null;
+  }
+  console.log(data);
   return (
     <div>
       <h1>Hello</h1>

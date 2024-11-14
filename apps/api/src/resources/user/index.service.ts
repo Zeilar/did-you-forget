@@ -5,7 +5,12 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { PrismaService } from "../db/prisma/index.service";
-import type { CreatedUserDto, EditUserDto, RegisterUserDto, UserWithoutPasswordDto } from "./dto";
+import type {
+  CreatedUserDto,
+  EditUserDto,
+  RegisterUserDto,
+  UserWithoutPasswordDto,
+} from "@did-you-forget/dto";
 import { hash } from "bcrypt";
 
 @Injectable()

@@ -1,8 +1,11 @@
 const nx = require("@nx/eslint-plugin");
 
 module.exports = [
+  // @ts-expect-error type issue
   ...nx.configs["flat/base"],
+  // @ts-expect-error type issue
   ...nx.configs["flat/typescript"],
+  // @ts-expect-error type issue
   ...nx.configs["flat/javascript"],
   {
     ignores: ["**/dist"],

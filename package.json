@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "docker-dev": "docker compose -f docker-compose.dev.yml --env-file apps/api/.env up"
+    "docker-dev": "docker compose --env-file apps/api/.env up"
   },
   "private": true,
   "devDependencies": {
@@ -27,6 +27,7 @@
     "@testing-library/react": "15.0.6",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.7",
+    "@types/eslint__eslintrc": "^2.1.2",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.9.0",
     "@types/react": "18.3.1",
@@ -67,6 +68,8 @@
     "next-themes": "^0.4.3",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "react-hook-form": "^7.53.2",
+    "react-query": "^3.39.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "typescript-eslint": "^8.13.0",

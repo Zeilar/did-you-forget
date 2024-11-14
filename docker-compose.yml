@@ -10,6 +10,38 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - ${DB_PORT}:${DB_PORT}
+  adminer:
+    container_name: dyf_adminer
+    image: adminer:latest
+    ports:
+      - 8080:8080
+  # api:
+  #   container_name: dyf_api
+  #   build:
+  #     dockerfile: ./apps/api/Dockerfile
+  #     context: .
+  #   depends_on:
+  #     - db
+  #   expose:
+  #     - ${PORT}:${PORT}
+  # ui:
+  #   container_name: dyf_ui
+  #   build:
+  #     dockerfile: ./apps/ui/Dockerfile
+  #     context: .
+  #   expose:
+  #     - 3000:3000
+  # nginx:
+  #   container_name: dyf_nginx
+  #   image: nginx:latest
+  #   ports:
+  #     - 3000:3000
+  #     - ${PORT}:${PORT}
+  #   volumes:
+  #     - ./tools/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
+  #   depends_on:
+  #     - api
+  #     - ui
 
 volumes:
   postgres_data:

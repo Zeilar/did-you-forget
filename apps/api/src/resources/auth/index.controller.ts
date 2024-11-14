@@ -28,6 +28,7 @@ export class AuthController {
     @IpAddress() ipAddress: string | undefined,
     @Res({ passthrough: true }) res: Response
   ): Promise<void> {
+    console.log({ signInDto });
     await this.authService.signIn(
       {
         ...signInDto,
