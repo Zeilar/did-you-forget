@@ -30,6 +30,10 @@
     "strict": true,
     "target": "es2022",
     "verbatimModuleSyntax": false,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "baseUrl": ".",
+    "paths": {
+      "@did-you-forget/dto": ["packages/dto/src/index.ts"]
+    }
   }
 }

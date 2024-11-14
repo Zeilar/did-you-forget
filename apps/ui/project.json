@@ -6,6 +6,12 @@
   "tags": [],
   "// targets": "to see all targets run: nx show project ui --web",
   "targets": {
+    "theme-types": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx @chakra-ui/cli typegen apps/ui/src/theme/index.ts"
+      }
+    },
     "generate-vapid-keys": {
       "executor": "nx:run-commands",
       "options": {

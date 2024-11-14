@@ -2,5 +2,5 @@
   "extends": "./tsconfig.base.json",
   "compileOnSave": false,
   "files": [],
-  "references": []
+  "references": [{ "path": "./packages/dto" }, { "path": "./apps/api" }, { "path": "./apps/ui" }]
 }

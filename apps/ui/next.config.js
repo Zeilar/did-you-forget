@@ -6,8 +6,15 @@ const { composePlugins, withNx } = require("@nx/next");
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
-  nx: { svgr: true },
-  logging: { fetches: { fullUrl: true } },
+  experimental: {
+    optimizePackageImports: ["@chakra-ui/react"],
+  },
+  nx: {
+    svgr: true,
+  },
+  logging: {
+    fetches: { fullUrl: true },
+  },
   async headers() {
     return [
       {

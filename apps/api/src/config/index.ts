@@ -12,5 +12,6 @@ export default function config() {
     },
     sessionCookieName: "dyf-session",
     globalPrefix: "api",
+    cors: process.env.CORS,
   };
 }

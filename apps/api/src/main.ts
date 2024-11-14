@@ -12,7 +12,8 @@ async function bootstrap() {
   app
     .setGlobalPrefix(globalPrefix)
     .useGlobalPipes(new ValidationPipe({ transform: true }))
-    .use(cookieParser());
+    .use(cookieParser())
+    .enableCors({ origin: configService.getOrThrow("cors") });
   await app.listen(port);
   Logger.log(`🚀 Application is running on: ${await app.getUrl()}/${globalPrefix}`);
 }

@@ -9,5 +9,6 @@
     "target": "es2021"
   },
   "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
-  "include": ["src/**/*.ts", "types"]
+  "include": ["src/**/*.ts", "types"],
+  "references": [{ "path": "../../packages/dto/tsconfig.lib.json" }]
 }
