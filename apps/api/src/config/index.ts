@@ -10,7 +10,10 @@ export default function config() {
       url: process.env.DB_URL,
       host: process.env.DB_HOST || "localhost",
     },
-    sessionCookieName: "dyf-session",
+    sessionCookie: {
+      name: "dyf-session",
+      domain: process.env.SESSION_COOKIE_DOMAIN,
+    },
     globalPrefix: "api",
     cors: process.env.CORS,
   };

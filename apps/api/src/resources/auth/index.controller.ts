@@ -28,7 +28,6 @@ export class AuthController {
     @IpAddress() ipAddress: string | undefined,
     @Res({ passthrough: true }) res: Response
   ): Promise<void> {
-    console.log({ signInDto });
     await this.authService.signIn(
       {
         ...signInDto,
@@ -48,6 +47,6 @@ export class AuthController {
     if (!id) {
       throw new BadRequestException(`Failed to delete session with id ${id}.`);
     }
-    res.clearCookie(this.configService.getOrThrow<string>("sessionCookieName"));
+    res.clearCookie(this.configService.getOrThrow<string>("sessionCookie.name"));
   }
 }

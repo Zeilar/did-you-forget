@@ -29,7 +29,8 @@ export class AuthService {
     const { id: sessionId } = await this.prismaService.session.create({
       data: { user: { connect: { id } }, expires, ipAddress },
     });
-    res.cookie(this.configService.getOrThrow<string>("sessionCookieName"), sessionId, {
+    res.cookie(this.configService.getOrThrow<string>("sessionCookie.name"), sessionId, {
+      domain: this.configService.getOrThrow<string>("sessionCookie.domain"),
       sameSite: true,
       httpOnly: true,
       secure: process.env.SECURE === "true",

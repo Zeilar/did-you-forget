@@ -6,6 +6,7 @@ declare global {
       PORT: string;
       SECURE: string;
       CORS: string;
+      SESSION_COOKIE_DOMAIN: string;
       DB_USER: string;
       DB_PASSWORD: string;
       DB_NAME: string;

@@ -8,7 +8,7 @@ import config from "../../config";
 export const SessionId = createParamDecorator(
   (_data: unknown, ctx: ExecutionContext): ParameterDecorator => {
     const req: Request | undefined = ctx?.switchToHttp().getRequest();
-    const sessionId = req?.cookies[config().sessionCookieName];
+    const sessionId = req?.cookies[config().sessionCookie.name];
     if (!sessionId) {
       throw new UnauthorizedException("Session cookie not found.");
     }

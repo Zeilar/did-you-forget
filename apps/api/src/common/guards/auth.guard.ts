@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
     const req: Request = context.switchToHttp().getRequest();
-    const sessionId = req.cookies[this.configService.getOrThrow<string>("sessionCookieName")];
+    const sessionId = req.cookies[this.configService.getOrThrow<string>("sessionCookie.name")];
     if (!sessionId) {
       throw new UnauthorizedException();
     }

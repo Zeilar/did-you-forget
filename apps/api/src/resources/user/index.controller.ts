@@ -61,6 +61,6 @@ export class UserController {
   ): Promise<void> {
     const { id } = await this.userService.getUserBySessionId(sessionId);
     await this.prismaService.session.deleteMany({ where: { userId: id } });
-    res.clearCookie(this.configService.getOrThrow<string>("sessionCookieName"));
+    res.clearCookie(this.configService.getOrThrow<string>("sessionCookie.name"));
   }
 }
