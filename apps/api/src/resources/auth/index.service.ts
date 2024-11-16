@@ -22,9 +22,6 @@ export class AuthService {
     res: Response
   ): Promise<SignInResultDto & { expires: Session["expires"] }> {
     const { id } = await this.validateUser({ email, password });
-    if (ipAddress) {
-      await this.prismaService.session.deleteMany({ where: { ipAddress } });
-    }
     const expires = !rememberMe ? this.getCookieExpiresDate() : null;
     const { id: sessionId } = await this.prismaService.session.create({
       data: { user: { connect: { id } }, expires, ipAddress },
