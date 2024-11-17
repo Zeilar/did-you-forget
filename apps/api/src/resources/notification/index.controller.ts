@@ -16,6 +16,7 @@ import { NotificationService } from "./index.service";
 import type {
   CreateNotificationDto,
   DeletedNotificationsDto,
+  EditNotificationDto,
   NotificationDto,
   NotificationsForUserDto,
 } from "@did-you-forget/dto";
@@ -59,11 +60,12 @@ export class NotificationController {
   @Patch("/edit/:id")
   public async editNotification(
     @SessionId() sessionId: string,
-    @Body() createNotificationDto: CreateNotificationDto,
+    @Body() editNotificationDto: EditNotificationDto,
     @Param("id") id: string
   ): Promise<NotificationDto> {
+    console.log(editNotificationDto);
     const { id: userId } = await this.userService.getUserBySessionId(sessionId);
-    return this.notificationService.editNotification(id, userId, createNotificationDto);
+    return this.notificationService.editNotification(id, userId, editNotificationDto);
   }
 
   @UseGuards(AuthGuard)

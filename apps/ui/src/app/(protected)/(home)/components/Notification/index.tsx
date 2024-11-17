@@ -1,7 +1,11 @@
 "use client";
 
-import { Box } from "@chakra-ui/react";
-import type { DeletedNotificationsDto, NotificationDto } from "@did-you-forget/dto";
+import { Flex } from "@chakra-ui/react";
+import type {
+  DeletedNotificationsDto,
+  EditNotificationDto,
+  NotificationDto,
+} from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import {
   AccordionItem,
@@ -10,13 +14,17 @@ import {
   AccordionRoot,
   Button,
   Checkbox,
+  Input,
   toaster,
 } from "@ui/components";
+import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 
-export function Notification({ id, title }: NotificationDto) {
+export function Notification({ id, title, createdAt }: NotificationDto) {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [titleInput, setTitleInput] = useState<string>(title);
   const queryClient = useQueryClient();
-  const { isLoading, mutate } = useMutation<NotificationDto[]>(
+  const deleteNotification = useMutation<NotificationDto[]>(
     ["deleteNotification", id],
     async () => {
       const { data } = await clientFetch<DeletedNotificationsDto>(
@@ -52,6 +60,44 @@ export function Notification({ id, title }: NotificationDto) {
       },
     }
   );
+  const editNotification = useMutation<NotificationDto | null>(
+    ["editNotification", id],
+    async () => {
+      // Use react hook form and validate title etc
+      const { data } = await clientFetch<NotificationDto>(`/notification/edit/${id}`, "PATCH", {
+        title: titleInput,
+      } satisfies EditNotificationDto);
+      return data;
+    },
+    {
+      onSuccess: (data) => {
+        queryClient.setQueryData(
+          "notifications",
+          (oldData: NotificationDto[] | undefined): NotificationDto[] => {
+            return (
+              oldData?.map((notification) =>
+                notification.id === data?.id ? data : notification
+              ) ?? []
+            );
+          }
+        );
+        toaster.create({
+          title: "Saved",
+          description: "Successfully edited notification.",
+          type: "success",
+        });
+        setIsEditing(false);
+      },
+      onError: (error) => {
+        console.error(error);
+        toaster.create({
+          title: "Error",
+          description: "Failed to edit notification.",
+          type: "error",
+        });
+      },
+    }
+  );
 
   return (
     <AccordionRoot
@@ -61,19 +107,42 @@ export function Notification({ id, title }: NotificationDto) {
       rounded="lg"
       border="1px solid"
       borderColor="border"
+      bgColor="gray.900"
       px={3}
     >
       <AccordionItem value={id}>
         <AccordionItemTrigger>
-          {title}
+          {!isEditing ? (
+            title
+          ) : (
+            <Input value={titleInput} onChange={(e) => setTitleInput(e.target.value)} autoFocus />
+          )}
           <Checkbox ml="auto" />
         </AccordionItemTrigger>
         <AccordionItemContent pb={3}>
-          <Box padding="1px">
-            <Button bgColor="danger" onClick={() => mutate()} loading={isLoading}>
+          <Flex gap={2} justify="space-between">
+            {!isEditing ? (
+              <Button onClick={() => setIsEditing(true)}>Edit</Button>
+            ) : (
+              <Flex gap={2}>
+                <Button
+                  onClick={() => editNotification.mutate()}
+                  loading={editNotification.isLoading}
+                >
+                  Save
+                </Button>
+                <Button onClick={() => setIsEditing(false)}>Cancel</Button>
+              </Flex>
+            )}
+            <Button
+              bgColor="danger"
+              onClick={() => deleteNotification.mutate()}
+              loading={deleteNotification.isLoading}
+            >
               Delete
             </Button>
-          </Box>
+          </Flex>
+          <p>Created: {new Date(createdAt).toISOString()}</p>
         </AccordionItemContent>
       </AccordionItem>
     </AccordionRoot>

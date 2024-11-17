@@ -11,7 +11,9 @@ async function bootstrap() {
   const globalPrefix = configService.getOrThrow("globalPrefix");
   app
     .setGlobalPrefix(globalPrefix)
-    .useGlobalPipes(new ValidationPipe({ transform: true }))
+    .useGlobalPipes(
+      new ValidationPipe({ transform: true, whitelist: true, forbidNonWhitelisted: true })
+    )
     .use(cookieParser())
     .enableCors({ origin: configService.getOrThrow("cors"), credentials: true });
   await app.listen(port);

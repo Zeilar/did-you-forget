@@ -7,7 +7,7 @@ import type { NotificationDto, NotificationsForUserDto } from "@did-you-forget/d
 import { clientFetch } from "@ui/common/fetchers/client";
 import { AnimatePresence, motion } from "motion/react";
 import { InputWithAddon } from "@ui/components";
-import { LuSearch } from "react-icons/lu";
+import { LuSearch, LuX } from "react-icons/lu";
 import { useMemo, useState } from "react";
 
 interface NotificationsProps {
@@ -37,7 +37,9 @@ export function Notifications({ initialData }: NotificationsProps) {
       <InputWithAddon
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        addon={<LuSearch color="var(--chakra-colors-cyan-500)" />}
+        placeholder="Search"
+        start={<LuSearch />}
+        end={search && <LuX role="button" onClick={() => setSearch("")} cursor="pointer" />}
       />
       <Grid gridTemplateColumns={["repeat(1, 1fr)"]} gap={2} mt={2}>
         {!search ? (

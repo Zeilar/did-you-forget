@@ -8,7 +8,10 @@ export class NotificationService {
   public constructor(private readonly prismaService: PrismaService) {}
 
   public getNotificationsByUserId(userId: string): Promise<Notification[]> {
-    return this.prismaService.notification.findMany({ where: { userId } });
+    return this.prismaService.notification.findMany({
+      where: { userId },
+      orderBy: { createdAt: "desc" },
+    });
   }
 
   public createNotification(

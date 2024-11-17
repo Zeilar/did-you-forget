@@ -30,11 +30,13 @@ export class EditNotificationDto
   @Validate(RepeatValidator)
   repeat?: number[];
 
+  @IsOptional()
   @IsDate()
-  time: Date;
+  time?: Date;
 
+  @IsOptional()
   @MinLength(3)
   @MaxLength(30)
   @IsString()
-  title: string;
+  title?: string;
 }
