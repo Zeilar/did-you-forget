@@ -18,7 +18,7 @@ import type {
   DeletedNotificationsDto,
   NotificationDto,
   NotificationsForUserDto,
-} from "./dto";
+} from "@did-you-forget/dto";
 import { AuthGuard } from "../../common/guards/auth.guard";
 import { SessionId } from "../../common/decorators/session-id.decorator";
 import { UserService } from "../user/index.service";

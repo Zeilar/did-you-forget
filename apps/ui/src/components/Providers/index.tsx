@@ -1,14 +1,20 @@
 "use client";
 
 import type { PropsWithChildren } from "react";
-import { ChakraProvider } from "@chakra-ui/react";
-import { ThemeProvider } from "next-themes";
+import { ChakraProvider, Theme } from "@chakra-ui/react";
 import { system } from "../../theme";
+import { QueryClientProvider, QueryClient } from "react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { refetchOnWindowFocus: false } },
+});
 
 export function Providers({ children }: PropsWithChildren) {
   return (
-    <ThemeProvider forcedTheme="dark" enableSystem={false} defaultTheme="dark">
-      <ChakraProvider value={system}>{children}</ChakraProvider>
-    </ThemeProvider>
+    <ChakraProvider value={system}>
+      <Theme bgColor="body.bg" appearance="dark">
+        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      </Theme>
+    </ChakraProvider>
   );
 }

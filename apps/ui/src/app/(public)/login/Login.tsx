@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Button, Input } from "@chakra-ui/react";
-import { clientFetch } from "../../../common/fetchers/client";
+import { clientFetch } from "@ui/common/fetchers/client";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
@@ -16,7 +16,6 @@ export function Login() {
           console.log(fields);
           const { status } = await clientFetch("/auth/sign-in", "POST", fields);
           if (status === 204) {
-            console.log("logged in!");
             push("/");
           }
           return null;

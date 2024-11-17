@@ -43,7 +43,7 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
     @SessionId() sessionId: string
   ): Promise<void> {
-    const { id } = await this.authService.logout(sessionId);
+    const { id } = await this.authService.deleteSessionById(sessionId);
     if (!id) {
       throw new BadRequestException(`Failed to delete session with id ${id}.`);
     }

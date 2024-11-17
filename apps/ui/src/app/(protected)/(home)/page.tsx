@@ -1,8 +1,20 @@
-import { Button, Input } from "@chakra-ui/react";
-import { UserWithoutPasswordDto } from "@did-you-forget/dto";
-import { cookies } from "next/headers";
-import { serverFetch } from "../../common/fetchers/server";
+import { Box, Flex, Grid } from "@chakra-ui/react";
+import { NotificationsForUserDto, UserWithoutPasswordDto } from "@did-you-forget/dto";
+import { serverFetch } from "@ui/common/fetchers/server";
 import { redirect } from "next/navigation";
+import {
+  AccordionItem,
+  AccordionItemContent,
+  AccordionItemTrigger,
+  AccordionRoot,
+  Button,
+  Checkbox,
+  InputWithAddon,
+  Title,
+} from "@ui/components";
+import { LuSearch } from "react-icons/lu";
+import { deleteNotifications } from "./actions";
+import { Notification } from "./components";
 
 // import { useState, useEffect } from "react";
 // import { subscribe, unsubscribe, notify } from "./actions";
@@ -82,15 +94,24 @@ import { redirect } from "next/navigation";
 // }
 
 export default async function Page() {
-  const { data, status } = await serverFetch<UserWithoutPasswordDto>("/user/profile");
-  if (status === 401) {
+  const profileQuery = await serverFetch<UserWithoutPasswordDto>("/user/profile");
+  if (profileQuery.status >= 400) {
     redirect("/login");
     return null;
   }
-  console.log(data);
+  const notificationsQuery = await serverFetch<NotificationsForUserDto>("/notification");
+
   return (
     <div>
-      <h1>Hello</h1>
+      <Title as={Flex} justifyContent="space-between" alignItems="center" w="100%">
+        Notifications
+      </Title>
+      <InputWithAddon addon={<LuSearch color="var(--chakra-colors-cyan-500)" />} />
+      <Grid gridTemplateColumns={["repeat(1, 1fr)"]} gap={2} mt={2}>
+        {notificationsQuery.data?.notifications.map((notification) => (
+          <Notification key={notification.id} {...notification} />
+        ))}
+      </Grid>
       {/* <PushNotificationManager /> */}
     </div>
   );

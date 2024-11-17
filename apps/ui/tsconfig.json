@@ -1,6 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@did-you-forget/dto": ["../../packages/dto/src/index.ts"],
+      "@ui/components": ["src/components/index.ts"],
+      "@ui/common/*": ["src/common/*"]
+    },
     "noEmit": false,
     "jsx": "preserve",
     "module": "ESNext",
@@ -20,13 +26,8 @@
         "name": "next"
       }
     ],
-    "types": [
-      "jest",
-      "node"
-    ],
-    "lib": [
-      "DOM"
-    ]
+    "types": ["jest", "node"],
+    "lib": ["DOM"]
   },
   "include": [
     "**/*.js",
@@ -37,12 +38,7 @@
     "next-env.d.ts",
     "../../dist/apps/ui/.next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "jest.config.ts",
-    "**/*.spec.ts",
-    "**/*.test.ts"
-  ],
+  "exclude": ["node_modules", "jest.config.ts", "**/*.spec.ts", "**/*.test.ts"],
   "references": [
     {
       "path": "../../packages/dto"

@@ -7,11 +7,13 @@ interface ServerFetchResult<T> {
 
 export const serverFetch = async <T extends object = object>(
   url: string,
-  body?: object,
+  method?: string,
+  body?: object | null,
   headers?: HeadersInit
 ): Promise<ServerFetchResult<T>> => {
   const _cookies = await cookies();
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+    method: method ?? "GET",
     credentials: "include",
     body: body ? JSON.stringify(body) : null,
     headers: {

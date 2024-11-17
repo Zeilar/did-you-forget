@@ -1,5 +1,7 @@
 "use server";
 
+import { serverFetch } from "@ui/common/fetchers/server";
+import { revalidatePath } from "next/cache";
 import {
   sendNotification,
   setVapidDetails,
@@ -12,6 +14,12 @@ setVapidDetails(
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
   process.env.VAPID_PRIVATE_KEY
 );
+
+export async function deleteNotifications(ids: string[]): Promise<void> {
+  const x = await serverFetch(`/notification?ids=${ids.join(",")}`, "DELETE");
+  console.log({ x });
+  revalidatePath("/");
+}
 
 export async function subscribe(subscription: PushSubscriptionJSON) {
   console.log("subscribe", subscription);
