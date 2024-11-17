@@ -2,8 +2,7 @@ import { Flex } from "@chakra-ui/react";
 import { NotificationsForUserDto, UserWithoutPasswordDto } from "@did-you-forget/dto";
 import { serverFetch } from "@ui/common/fetchers/server";
 import { redirect } from "next/navigation";
-import { InputWithAddon, Title } from "@ui/components";
-import { LuSearch } from "react-icons/lu";
+import { Title } from "@ui/components";
 import { Notifications } from "./components";
 
 // import { useState, useEffect } from "react";
@@ -96,7 +95,6 @@ export default async function Page() {
       <Title as={Flex} justifyContent="space-between" alignItems="center" w="100%">
         Notifications
       </Title>
-      <InputWithAddon addon={<LuSearch color="var(--chakra-colors-cyan-500)" />} />
       <Notifications initialData={notificationsQuery.data?.notifications ?? []} />
       {/* <PushNotificationManager /> */}
     </div>
