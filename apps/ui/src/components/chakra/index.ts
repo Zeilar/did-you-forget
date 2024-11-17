@@ -5,3 +5,4 @@ export * from "./Accordion";
 export * from "./InputWithAddon";
 export * from "./Button";
 export * from "./Input";
+export * from "./Toaster";

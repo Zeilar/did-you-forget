@@ -1,20 +1,10 @@
-import { Box, Flex, Grid } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { NotificationsForUserDto, UserWithoutPasswordDto } from "@did-you-forget/dto";
 import { serverFetch } from "@ui/common/fetchers/server";
 import { redirect } from "next/navigation";
-import {
-  AccordionItem,
-  AccordionItemContent,
-  AccordionItemTrigger,
-  AccordionRoot,
-  Button,
-  Checkbox,
-  InputWithAddon,
-  Title,
-} from "@ui/components";
+import { InputWithAddon, Title } from "@ui/components";
 import { LuSearch } from "react-icons/lu";
-import { deleteNotifications } from "./actions";
-import { Notification } from "./components";
+import { Notifications } from "./components";
 
 // import { useState, useEffect } from "react";
 // import { subscribe, unsubscribe, notify } from "./actions";
@@ -107,11 +97,7 @@ export default async function Page() {
         Notifications
       </Title>
       <InputWithAddon addon={<LuSearch color="var(--chakra-colors-cyan-500)" />} />
-      <Grid gridTemplateColumns={["repeat(1, 1fr)"]} gap={2} mt={2}>
-        {notificationsQuery.data?.notifications.map((notification) => (
-          <Notification key={notification.id} {...notification} />
-        ))}
-      </Grid>
+      <Notifications initialData={notificationsQuery.data?.notifications ?? []} />
       {/* <PushNotificationManager /> */}
     </div>
   );

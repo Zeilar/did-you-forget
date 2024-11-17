@@ -1,7 +1,7 @@
 "use client";
 
 import { Box } from "@chakra-ui/react";
-import type { NotificationDto } from "@did-you-forget/dto";
+import type { DeletedNotificationsDto, NotificationDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import {
   AccordionItem,
@@ -10,15 +10,48 @@ import {
   AccordionRoot,
   Button,
   Checkbox,
+  toaster,
 } from "@ui/components";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 export function Notification({ id, title }: NotificationDto) {
-  const { data, status, mutate } = useMutation(["deleteNotification", id], () =>
-    clientFetch(`/notification/delete?ids=${id}`, "DELETE")
+  const queryClient = useQueryClient();
+  const { isLoading, mutate } = useMutation<NotificationDto[]>(
+    ["deleteNotification", id],
+    async () => {
+      const { data } = await clientFetch<DeletedNotificationsDto>(
+        `/notification/delete?ids=${id}`,
+        "DELETE"
+      );
+      return data?.deletedNotifications ?? [];
+    },
+    {
+      onSuccess: (data) => {
+        queryClient.setQueryData(
+          "notifications",
+          (oldData: NotificationDto[] | undefined): NotificationDto[] => {
+            return (
+              oldData?.filter(({ id }) => !data?.some((notification) => notification.id === id)) ??
+              []
+            );
+          }
+        );
+        toaster.create({
+          title: "Deleted",
+          description: "Successfully deleted notification.",
+          type: "success",
+        });
+      },
+      onError: (error) => {
+        console.error(error);
+        toaster.create({
+          title: "Error",
+          description: "Failed to delete notification.",
+          type: "error",
+        });
+      },
+    }
   );
-
-  console.log(data, status);
 
   return (
     <AccordionRoot
@@ -37,7 +70,7 @@ export function Notification({ id, title }: NotificationDto) {
         </AccordionItemTrigger>
         <AccordionItemContent pb={3}>
           <Box padding="1px">
-            <Button bgColor="danger" onClick={() => mutate()}>
+            <Button bgColor="danger" onClick={() => mutate()} loading={isLoading}>
               Delete
             </Button>
           </Box>
