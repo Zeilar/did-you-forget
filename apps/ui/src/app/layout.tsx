@@ -19,13 +19,10 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <body>
         <Providers>
           <Flex as="main" h="100svh" direction="column">
-            <Navbar />
-            <Box overflow="auto" h="100%" px={4}>
+            <Box overflow="auto" h="100%" p={4}>
               {children}
             </Box>
-            <Box as="footer" textAlign="center" mt="auto" p={4}>
-              I am footer
-            </Box>
+            <Navbar />
           </Flex>
         </Providers>
       </body>

@@ -1,9 +1,10 @@
 import { Flex } from "@chakra-ui/react";
 import type { NotificationsForUserDto } from "@did-you-forget/dto";
 import { serverFetch } from "@ui/common/fetchers/server";
-import { Title } from "@ui/components";
+import { EmptyState, Title } from "@ui/components";
 import { Notifications } from "./components";
 import { withAuth } from "src/app/components";
+import { BsAlarm } from "react-icons/bs";
 
 // import { useState, useEffect } from "react";
 // import { subscribe, unsubscribe, notify } from "./actions";
@@ -84,13 +85,22 @@ import { withAuth } from "src/app/components";
 
 async function Page() {
   const notificationsQuery = await serverFetch<NotificationsForUserDto>("/notification");
+  const notifications = notificationsQuery.data?.notifications ?? [];
 
   return (
     <div>
       <Title as={Flex} justifyContent="space-between" alignItems="center" w="100%">
         Notifications
       </Title>
-      <Notifications initialData={notificationsQuery.data?.notifications ?? []} />
+      {notifications.length > 0 ? (
+        <Notifications initialData={notifications} />
+      ) : (
+        <EmptyState
+          icon={<BsAlarm color="var(--chakra-colors-accent)" />}
+          title="No notifications found"
+          description="Add some notifications before you forget"
+        />
+      )}
       {/* <PushNotificationManager /> */}
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import type { NotificationDto } from "@did-you-forget/dto";
 import {
   AccordionItem,
@@ -9,6 +9,14 @@ import {
   AccordionRoot,
   Button,
   Checkbox,
+  DialogActionTrigger,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogRoot,
+  DialogTitle,
+  DialogTrigger,
   Input,
 } from "@ui/components";
 import { useState } from "react";
@@ -33,28 +41,44 @@ export function Notification({ id, title, createdAt }: NotificationDto) {
     >
       <AccordionItem value={id}>
         <AccordionItemTrigger>
-          {!isEditing ? (
-            title
-          ) : (
-            <Input value={titleInput} onChange={(e) => setTitleInput(e.target.value)} autoFocus />
-          )}
+          <Text>{title}</Text>
           <Checkbox ml="auto" />
         </AccordionItemTrigger>
         <AccordionItemContent pb={3}>
-          <Flex gap={2} justify="space-between">
-            {!isEditing ? (
-              <Button onClick={() => setIsEditing(true)}>Edit</Button>
-            ) : (
-              <Flex gap={2}>
-                <Button
-                  onClick={() => editNotification.mutate()}
-                  loading={editNotification.isLoading}
-                >
-                  Save
-                </Button>
-                <Button onClick={() => setIsEditing(false)}>Cancel</Button>
-              </Flex>
-            )}
+          <Flex gap={2} justify="flex-end">
+            <DialogRoot open={isEditing} lazyMount onOpenChange={(e) => setIsEditing(e.open)}>
+              <DialogTrigger asChild>
+                <Button onClick={() => setIsEditing(true)}>Edit</Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Edit notification</DialogTitle>
+                </DialogHeader>
+                <DialogBody>
+                  <Input
+                    value={titleInput}
+                    onChange={(e) => setTitleInput(e.target.value)}
+                    autoFocus
+                  />
+                </DialogBody>
+                <DialogFooter>
+                  <DialogActionTrigger asChild>
+                    <Flex gap={2}>
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          editNotification.mutate();
+                        }}
+                        loading={editNotification.isLoading}
+                      >
+                        Save
+                      </Button>
+                      <Button onClick={() => setIsEditing(false)}>Cancel</Button>
+                    </Flex>
+                  </DialogActionTrigger>
+                </DialogFooter>
+              </DialogContent>
+            </DialogRoot>
             <Button
               bgColor="danger"
               onClick={() => deleteNotification.mutate()}

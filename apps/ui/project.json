@@ -19,7 +19,7 @@
     "theme-types": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "npx @chakra-ui/cli typegen apps/ui/src/theme/index.ts"
+        "command": "npx chakra typegen apps/ui/src/theme/index.ts"
       }
     },
     "generate-vapid-keys": {
@@ -32,6 +32,12 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "npx nx dev ui --experimental-https"
+      }
+    },
+    "snippet": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx chakra snippet add"
       }
     }
   }

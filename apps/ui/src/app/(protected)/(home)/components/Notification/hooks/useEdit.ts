@@ -17,6 +17,7 @@ export function useEdit(id: string, input: EditNotificationDto, onSuccess?: Void
         "PATCH",
         input
       );
+      console.log({ data });
       return data;
     },
     {

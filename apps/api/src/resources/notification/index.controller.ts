@@ -63,7 +63,6 @@ export class NotificationController {
     @Body() editNotificationDto: EditNotificationDto,
     @Param("id") id: string
   ): Promise<NotificationDto> {
-    console.log(editNotificationDto);
     const { id: userId } = await this.userService.getUserBySessionId(sessionId);
     return this.notificationService.editNotification(id, userId, editNotificationDto);
   }
