@@ -19,7 +19,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(func
     <Portal disabled={!portalled} container={portalRef}>
       {backdrop && <ChakraDialog.Backdrop />}
       <ChakraDialog.Positioner>
-        <ChakraDialog.Content ref={ref} marginInline={2} {...rest}>
+        <ChakraDialog.Content ref={ref} marginInline={4} {...rest}>
           {children}
         </ChakraDialog.Content>
       </ChakraDialog.Positioner>

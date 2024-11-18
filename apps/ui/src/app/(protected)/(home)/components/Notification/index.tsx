@@ -64,6 +64,7 @@ export function Notification({ id, title, createdAt }: NotificationDto) {
                 <DialogFooter>
                   <DialogActionTrigger asChild>
                     <Flex gap={2}>
+                      <Button onClick={() => setIsEditing(false)}>Cancel</Button>
                       <Button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -73,7 +74,6 @@ export function Notification({ id, title, createdAt }: NotificationDto) {
                       >
                         Save
                       </Button>
-                      <Button onClick={() => setIsEditing(false)}>Cancel</Button>
                     </Flex>
                   </DialogActionTrigger>
                 </DialogFooter>
