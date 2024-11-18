@@ -21,6 +21,13 @@ const ChakraButton = chakra("button", {
         color: "white",
         rounded: "md",
       },
+      outline: {
+        bg: "transparent",
+        color: "white",
+        rounded: "md",
+        border: "1px solid",
+        borderColor: "border",
+      },
     },
     size: {
       "2xs": { px: 4, py: 2, fontSize: "0.75rem" },

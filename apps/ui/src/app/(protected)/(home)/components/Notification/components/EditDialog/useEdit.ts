@@ -1,5 +1,3 @@
-// UseMutationOptions
-
 import { EditNotificationDto, NotificationDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import { toaster } from "@ui/components";
@@ -17,7 +15,6 @@ export function useEdit(id: string, input: EditNotificationDto, onSuccess?: Void
         "PATCH",
         input
       );
-      console.log({ data });
       return data;
     },
     {

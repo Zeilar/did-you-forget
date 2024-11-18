@@ -3,7 +3,7 @@ import { clientFetch } from "@ui/common/fetchers/client";
 import { toaster } from "@ui/components";
 import { useMutation, useQueryClient } from "react-query";
 
-export function useDelete(id: string) {
+export function useDelete(id: string, onSuccess?: VoidFunction) {
   const queryClient = useQueryClient();
 
   return useMutation<NotificationDto[]>(
@@ -39,6 +39,7 @@ export function useDelete(id: string) {
           description: "Failed to delete notification.",
           type: "error",
         });
+        onSuccess?.();
       },
     }
   );

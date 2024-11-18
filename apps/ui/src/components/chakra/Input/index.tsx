@@ -11,10 +11,10 @@ export const Input = chakra("input", {
         rounded: "md",
         border: "1px solid",
         borderColor: "border",
-        outlineColor: "accent",
+        outlineColor: "accent.600",
         _focus: {
-          outline: "2px solid",
-          outlineColor: "accent",
+          outline: "3px solid",
+          outlineColor: "accent.600",
         },
       },
     },

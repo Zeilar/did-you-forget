@@ -96,7 +96,7 @@ async function Page() {
         <Notifications initialData={notifications} />
       ) : (
         <EmptyState
-          icon={<BsAlarm color="var(--chakra-colors-accent)" />}
+          icon={<BsAlarm color="var(--chakra-colors-accent-500)" />}
           title="No notifications found"
           description="Add some notifications before you forget"
         />
