@@ -27,6 +27,7 @@ function NavLink({ children, href, icon: Icon, activeIcon: ActiveIcon }: NavLink
       flexDir="column"
       justifyContent="flex-end"
       outline={0}
+      textDecor="none"
     >
       <IconComponent size="1.5em" />
       <span>{children}</span>
