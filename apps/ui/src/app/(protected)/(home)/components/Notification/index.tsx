@@ -1,12 +1,7 @@
 "use client";
 
 import { Flex } from "@chakra-ui/react";
-import type {
-  DeletedNotificationsDto,
-  EditNotificationDto,
-  NotificationDto,
-} from "@did-you-forget/dto";
-import { clientFetch } from "@ui/common/fetchers/client";
+import type { NotificationDto } from "@did-you-forget/dto";
 import {
   AccordionItem,
   AccordionItemContent,
@@ -15,89 +10,15 @@ import {
   Button,
   Checkbox,
   Input,
-  toaster,
 } from "@ui/components";
 import { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { useDelete, useEdit } from "./hooks";
 
 export function Notification({ id, title, createdAt }: NotificationDto) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [titleInput, setTitleInput] = useState<string>(title);
-  const queryClient = useQueryClient();
-  const deleteNotification = useMutation<NotificationDto[]>(
-    ["deleteNotification", id],
-    async () => {
-      const { data } = await clientFetch<DeletedNotificationsDto>(
-        `/notification/delete?ids=${id}`,
-        "DELETE"
-      );
-      return data?.deletedNotifications ?? [];
-    },
-    {
-      onSuccess: (data) => {
-        queryClient.setQueryData(
-          "notifications",
-          (oldData: NotificationDto[] | undefined): NotificationDto[] => {
-            return (
-              oldData?.filter(({ id }) => !data?.some((notification) => notification.id === id)) ??
-              []
-            );
-          }
-        );
-        toaster.create({
-          title: "Deleted",
-          description: "Successfully deleted notification.",
-          type: "success",
-        });
-      },
-      onError: (error) => {
-        console.error(error);
-        toaster.create({
-          title: "Error",
-          description: "Failed to delete notification.",
-          type: "error",
-        });
-      },
-    }
-  );
-  const editNotification = useMutation<NotificationDto | null>(
-    ["editNotification", id],
-    async () => {
-      // Use react hook form and validate title etc
-      const { data } = await clientFetch<NotificationDto>(`/notification/edit/${id}`, "PATCH", {
-        title: titleInput,
-      } satisfies EditNotificationDto);
-      return data;
-    },
-    {
-      onSuccess: (data) => {
-        queryClient.setQueryData(
-          "notifications",
-          (oldData: NotificationDto[] | undefined): NotificationDto[] => {
-            return (
-              oldData?.map((notification) =>
-                notification.id === data?.id ? data : notification
-              ) ?? []
-            );
-          }
-        );
-        toaster.create({
-          title: "Saved",
-          description: "Successfully edited notification.",
-          type: "success",
-        });
-        setIsEditing(false);
-      },
-      onError: (error) => {
-        console.error(error);
-        toaster.create({
-          title: "Error",
-          description: "Failed to edit notification.",
-          type: "error",
-        });
-      },
-    }
-  );
+  const deleteNotification = useDelete(id);
+  const editNotification = useEdit(id, { title: titleInput }, () => setIsEditing(false));
 
   return (
     <AccordionRoot

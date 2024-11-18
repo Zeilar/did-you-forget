@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export function Login() {
-  const { push } = useRouter();
+  const { replace } = useRouter();
   const { handleSubmit, register } = useForm();
 
   return (
@@ -16,7 +16,7 @@ export function Login() {
           console.log(fields);
           const { status } = await clientFetch("/auth/sign-in", "POST", fields);
           if (status === 204) {
-            push("/");
+            replace("/");
           }
           return null;
         })}

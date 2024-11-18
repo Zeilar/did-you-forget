@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from "react";
-import { Providers } from "@ui/components";
+import { Navbar, Providers } from "@ui/components";
 import { Box, Flex } from "@chakra-ui/react";
 import { Inter } from "next/font/google";
 
@@ -19,11 +19,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <body>
         <Providers>
           <Flex as="main" h="100svh" direction="column">
-            <header>
-              <Box as="nav" textAlign="center" p={4}>
-                I am nav
-              </Box>
-            </header>
+            <Navbar />
             <Box overflow="auto" h="100%" px={4}>
               {children}
             </Box>

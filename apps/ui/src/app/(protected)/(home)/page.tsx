@@ -1,9 +1,9 @@
 import { Flex } from "@chakra-ui/react";
-import { NotificationsForUserDto, UserWithoutPasswordDto } from "@did-you-forget/dto";
+import type { NotificationsForUserDto } from "@did-you-forget/dto";
 import { serverFetch } from "@ui/common/fetchers/server";
-import { redirect } from "next/navigation";
 import { Title } from "@ui/components";
 import { Notifications } from "./components";
+import { withAuth } from "src/app/components";
 
 // import { useState, useEffect } from "react";
 // import { subscribe, unsubscribe, notify } from "./actions";
@@ -82,12 +82,7 @@ import { Notifications } from "./components";
 //   );
 // }
 
-export default async function Page() {
-  const profileQuery = await serverFetch<UserWithoutPasswordDto>("/user/profile");
-  if (profileQuery.status >= 400) {
-    redirect("/login");
-    return null;
-  }
+async function Page() {
   const notificationsQuery = await serverFetch<NotificationsForUserDto>("/notification");
 
   return (
@@ -100,3 +95,5 @@ export default async function Page() {
     </div>
   );
 }
+
+export default withAuth(Page);
