@@ -11,10 +11,14 @@ import {
 } from "@ui/components";
 import { DeletePrompt, EditPrompt } from "./components";
 
-export function Notification({ id, title, createdAt }: NotificationDto) {
+interface NotificationProps extends NotificationDto {
+  onSelect(id: string): void;
+  isSelected: boolean;
+}
+
+export function Notification({ onSelect, isSelected, id, title, createdAt }: NotificationProps) {
   return (
     <AccordionRoot
-      key={id}
       collapsible
       variant="plain"
       rounded="lg"
@@ -26,12 +30,12 @@ export function Notification({ id, title, createdAt }: NotificationDto) {
       <AccordionItem value={id}>
         <AccordionItemTrigger>
           <Text>{title}</Text>
-          <Checkbox ml="auto" />
+          <Checkbox ml="auto" onCheckedChange={() => onSelect(id)} checked={isSelected} />
         </AccordionItemTrigger>
         <AccordionItemContent pb={3}>
           <Flex gap={2} justify="flex-end">
             <EditPrompt id={id} originalTitle={title} />
-            <DeletePrompt id={id} />
+            <DeletePrompt ids={[id]} />
           </Flex>
           <p>Created: {new Date(createdAt).toISOString()}</p>
         </AccordionItemContent>

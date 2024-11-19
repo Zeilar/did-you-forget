@@ -1,6 +1,7 @@
 "use client";
 
-import { Text, useDisclosure } from "@chakra-ui/react";
+import { Flex, Text, useDisclosure } from "@chakra-ui/react";
+import { pluralizeWithS } from "@ui/common/pluralize";
 import {
   Button,
   DialogActionTrigger,
@@ -13,23 +14,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@ui/components";
-import { useDelete } from "./useDelete";
+import { useDeleteNotification } from "@ui/resources/notification";
 
 interface DeletePromptProps {
-  id: string;
+  ids: string[];
 }
 
-export function DeletePrompt({ id }: DeletePromptProps) {
+export function DeletePrompt({ ids }: DeletePromptProps) {
   const { open, onClose, onOpen } = useDisclosure();
-  const { mutate, isLoading } = useDelete(id, onClose);
+  const { mutate, isLoading } = useDeleteNotification(ids, onClose);
 
   return (
-    <DialogRoot
-      lazyMount
-      role="alertdialog"
-      open={open}
-      onOpenChange={(e) => (e.open ? onOpen() : onClose())}
-    >
+    <DialogRoot lazyMount open={open} onOpenChange={(e) => (e.open ? onOpen() : onClose())}>
       <DialogTrigger asChild>
         <Button bgColor="danger" onClick={onOpen}>
           Delete
@@ -40,24 +36,27 @@ export function DeletePrompt({ id }: DeletePromptProps) {
           <DialogTitle>Are you sure?</DialogTitle>
         </DialogHeader>
         <DialogBody>
-          <Text>This action cannot be undone. The notification will be gone forever.</Text>
+          <Text>
+            This action cannot be undone. The {pluralizeWithS("notification", 1)} will be gone
+            forever.
+          </Text>
         </DialogBody>
         <DialogFooter>
           <DialogActionTrigger asChild>
-            <Button variant="outline" onClick={onClose}>
-              Cancel
-            </Button>
+            <Flex gap={2}>
+              <Button onClick={onClose}>Cancel</Button>
+              <Button
+                bgColor="danger"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  mutate();
+                }}
+                loading={isLoading}
+              >
+                Confirm
+              </Button>
+            </Flex>
           </DialogActionTrigger>
-          <Button
-            bgColor="danger"
-            onClick={(e) => {
-              e.stopPropagation();
-              mutate();
-            }}
-            loading={isLoading}
-          >
-            Delete
-          </Button>
         </DialogFooter>
         <DialogCloseTrigger onClick={onClose} />
       </DialogContent>

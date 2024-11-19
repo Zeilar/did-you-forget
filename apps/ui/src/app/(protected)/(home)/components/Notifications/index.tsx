@@ -6,17 +6,30 @@ import { Notification } from "../Notification";
 import type { NotificationDto, NotificationsForUserDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import { AnimatePresence, motion } from "motion/react";
-import { InputWithAddon } from "@ui/components";
+import {
+  ActionBarContent,
+  ActionBarRoot,
+  ActionBarSelectionTrigger,
+  ActionBarSeparator,
+  Button,
+  InputWithAddon,
+} from "@ui/components";
 import { LuSearch, LuX } from "react-icons/lu";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { BsTrash } from "react-icons/bs";
+import { useDeleteNotification } from "@ui/resources/notification";
 
 interface NotificationsProps {
   initialData: NotificationDto[];
 }
 
 export function Notifications({ initialData }: NotificationsProps) {
+  const [checked, setChecked] = useState<string[]>([]); // Notification id array.
+  const deleteNotification = useDeleteNotification(checked, (deletedIds) =>
+    setChecked((p) => p.filter((id) => !deletedIds.includes(id)))
+  );
   const [search, setSearch] = useState<string>("");
-  const { data } = useQuery<NotificationDto[]>(
+  const { data = [] } = useQuery<NotificationDto[]>(
     "notifications",
     async () => {
       const { data } = await clientFetch<NotificationsForUserDto>("/notification");
@@ -27,13 +40,32 @@ export function Notifications({ initialData }: NotificationsProps) {
   const searchedNotifications = useMemo<NotificationDto[]>(
     () =>
       search
-        ? (data || []).filter(({ title }) => title.toLowerCase().includes(search.toLowerCase()))
-        : data ?? [],
+        ? data.filter(({ title }) => title.toLowerCase().includes(search.toLowerCase()))
+        : data,
     [data, search]
+  );
+  const onSelect = useCallback(
+    (id: string): void =>
+      setChecked((p) => (p.includes(id) ? p.filter((element) => element !== id) : [...p, id])),
+    []
   );
 
   return (
     <>
+      <ActionBarRoot open={checked.length > 0}>
+        <ActionBarContent>
+          <ActionBarSelectionTrigger>{checked.length} selected</ActionBarSelectionTrigger>
+          <ActionBarSeparator />
+          <Button
+            variant="outline"
+            onClick={() => deleteNotification.mutate()}
+            loading={deleteNotification.isLoading}
+          >
+            <BsTrash />
+            <span>Delete</span>
+          </Button>
+        </ActionBarContent>
+      </ActionBarRoot>
       <InputWithAddon
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -44,15 +76,24 @@ export function Notifications({ initialData }: NotificationsProps) {
       <Grid gridTemplateColumns={["repeat(1, 1fr)"]} gap={2} mt={2}>
         {!search ? (
           <AnimatePresence>
-            {data?.map((notification) => (
+            {data.map((notification) => (
               <motion.div key={notification.id} exit={{ opacity: 0 }}>
-                <Notification {...notification} />
+                <Notification
+                  isSelected={checked.includes(notification.id)}
+                  onSelect={onSelect}
+                  {...notification}
+                />
               </motion.div>
             ))}
           </AnimatePresence>
         ) : (
           searchedNotifications.map((notification) => (
-            <Notification key={notification.id} {...notification} />
+            <Notification
+              key={notification.id}
+              isSelected={checked.includes(notification.id)}
+              onSelect={onSelect}
+              {...notification}
+            />
           ))
         )}
       </Grid>

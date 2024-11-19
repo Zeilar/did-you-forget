@@ -9,7 +9,7 @@ interface ActionBarContentProps extends ActionBar.ContentProps {
 
 export const ActionBarContent = forwardRef<HTMLDivElement, ActionBarContentProps>(
   function ActionBarContent(props, ref) {
-    const { children, portalled = true, portalRef, ...rest } = props;
+    const { children, portalled = false, portalRef, ...rest } = props;
 
     return (
       <Portal disabled={!portalled} container={portalRef}>

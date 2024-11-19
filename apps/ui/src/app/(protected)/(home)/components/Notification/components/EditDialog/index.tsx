@@ -32,7 +32,7 @@ export function EditPrompt({ id, originalTitle }: EditPromptProps) {
   }, [originalTitle]);
 
   return (
-    <DialogRoot open={open} lazyMount onOpenChange={(e) => (e.open ? onOpen() : onClose())}>
+    <DialogRoot lazyMount open={open} onOpenChange={(e) => (e.open ? onOpen() : onClose())}>
       <DialogTrigger asChild>
         <Button onClick={onOpen}>Edit</Button>
       </DialogTrigger>

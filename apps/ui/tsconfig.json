@@ -5,7 +5,9 @@
     "paths": {
       "@did-you-forget/dto": ["../../packages/dto/src/index.ts"],
       "@ui/components": ["src/components/index.ts"],
-      "@ui/common/*": ["src/common/*"]
+      "@ui/common/*": ["src/common/*"],
+      "@ui/resources/*": ["src/resources/*"],
+      "@ui/theme/*": ["src/theme/*"]
     },
     "noEmit": false,
     "jsx": "preserve",
