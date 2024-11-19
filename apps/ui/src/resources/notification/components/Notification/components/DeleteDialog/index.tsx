@@ -15,6 +15,7 @@ import {
   DialogTrigger,
 } from "@ui/components";
 import { useDeleteNotification } from "@ui/resources/notification";
+import { BsTrash } from "react-icons/bs";
 
 interface DeletePromptProps {
   ids: string[];
@@ -28,7 +29,8 @@ export function DeletePrompt({ ids }: DeletePromptProps) {
     <DialogRoot lazyMount open={open} onOpenChange={(e) => (e.open ? onOpen() : onClose())}>
       <DialogTrigger asChild>
         <Button bgColor="danger" onClick={onOpen}>
-          Delete
+          <BsTrash />
+          <span>Delete</span>
         </Button>
       </DialogTrigger>
       <DialogContent>

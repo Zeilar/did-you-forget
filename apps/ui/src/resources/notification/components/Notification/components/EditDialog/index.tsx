@@ -16,6 +16,7 @@ import {
 } from "@ui/components";
 import { useEdit } from "./useEdit";
 import { useEffect, useState } from "react";
+import { BsPencilSquare } from "react-icons/bs";
 
 interface EditPromptProps {
   id: string;
@@ -34,7 +35,10 @@ export function EditPrompt({ id, originalTitle }: EditPromptProps) {
   return (
     <DialogRoot lazyMount open={open} onOpenChange={(e) => (e.open ? onOpen() : onClose())}>
       <DialogTrigger asChild>
-        <Button onClick={onOpen}>Edit</Button>
+        <Button onClick={onOpen}>
+          <BsPencilSquare />
+          <span>Edit</span>
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
