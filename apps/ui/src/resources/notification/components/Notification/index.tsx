@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Separator, Text } from "@chakra-ui/react";
 import type { NotificationDto } from "@did-you-forget/dto";
 import {
   AccordionItem,
@@ -16,7 +16,7 @@ interface NotificationProps extends NotificationDto {
   isSelected: boolean;
 }
 
-export function Notification({ onSelect, isSelected, id, title, createdAt }: NotificationProps) {
+export function Notification({ onSelect, isSelected, id, title }: NotificationProps) {
   return (
     <Flex gap={2}>
       <AccordionRoot>
@@ -24,12 +24,12 @@ export function Notification({ onSelect, isSelected, id, title, createdAt }: Not
           <AccordionItemTrigger>
             <Text>{title}</Text>
           </AccordionItemTrigger>
-          <AccordionItemContent pb={3}>
-            <Flex gap={2} justify="flex-end">
+          <AccordionItemContent>
+            <Separator mb={3} />
+            <Flex gap={2} justify="flex-end" px={3}>
               <EditPrompt id={id} originalTitle={title} />
               <DeletePrompt ids={[id]} />
             </Flex>
-            <p>Created: {new Date(createdAt).toISOString()}</p>
           </AccordionItemContent>
         </AccordionItem>
       </AccordionRoot>

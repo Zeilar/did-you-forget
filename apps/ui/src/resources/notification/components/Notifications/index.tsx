@@ -57,12 +57,16 @@ export function Notifications({ initialData }: NotificationsProps) {
           <ActionBarSelectionTrigger>{checked.length} selected</ActionBarSelectionTrigger>
           <ActionBarSeparator />
           <Button
-            variant="outline"
             onClick={() => deleteNotification.mutate()}
             loading={deleteNotification.isLoading}
           >
             <BsTrash />
             <span>Delete</span>
+          </Button>
+          <ActionBarSeparator />
+          <Button onClick={() => setChecked([])}>
+            <LuX />
+            <span>Clear</span>
           </Button>
         </ActionBarContent>
       </ActionBarRoot>

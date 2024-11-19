@@ -10,7 +10,7 @@ export const AccordionItemTrigger = forwardRef<HTMLButtonElement, AccordionItemT
   function AccordionItemTrigger(props, ref) {
     const { children, indicatorPlacement = "end", ...rest } = props;
     return (
-      <Accordion.ItemTrigger {...rest} ref={ref}>
+      <Accordion.ItemTrigger px={3} {...rest} ref={ref}>
         {indicatorPlacement === "start" && (
           <Accordion.ItemIndicator rotate={{ base: "-90deg", _open: "0deg" }}>
             <LuChevronDown />
@@ -33,7 +33,7 @@ export const AccordionItemContent = forwardRef<HTMLDivElement, Accordion.ItemCon
   function AccordionItemContent(props, ref) {
     return (
       <Accordion.ItemContent>
-        <Accordion.ItemBody {...props} ref={ref} />
+        <Accordion.ItemBody pb={3} {...props} ref={ref} />
       </Accordion.ItemContent>
     );
   }
@@ -51,10 +51,11 @@ export const AccordionRoot = forwardRef<HTMLDivElement, Accordion.RootProps>(fun
       border="1px solid"
       borderColor="border"
       bgColor="gray.900"
-      px={3}
+      p={0}
       ref={ref}
       {...props}
     />
   );
 });
+
 export const AccordionItem = Accordion.Item;

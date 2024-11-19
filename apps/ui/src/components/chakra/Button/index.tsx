@@ -21,6 +21,7 @@ export const Button = forwardRef<HTMLButtonElement, ChakraButtonProps & ButtonLo
         gap={2}
         cursor={loading || disabled ? "not-allowed" : "pointer"}
         {...rest}
+        variant="outline"
       >
         {loading && !loadingText ? (
           <>

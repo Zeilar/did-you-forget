@@ -28,9 +28,8 @@ export function DeletePrompt({ ids }: DeletePromptProps) {
   return (
     <DialogRoot lazyMount open={open} onOpenChange={(e) => (e.open ? onOpen() : onClose())}>
       <DialogTrigger asChild>
-        <Button bgColor="danger" onClick={onOpen}>
+        <Button colorPalette="red" variant="outline" onClick={onOpen}>
           <BsTrash />
-          <span>Delete</span>
         </Button>
       </DialogTrigger>
       <DialogContent>
