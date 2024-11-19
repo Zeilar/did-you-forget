@@ -1,4 +1,4 @@
-interface ServerFetchResult<T> {
+export interface ServerFetchResult<T> {
   data: T | null;
   status: number;
 }

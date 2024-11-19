@@ -83,11 +83,8 @@ export class NotificationController {
         `ids must be a comma separated string that starts and ends with an id.`
       );
     }
-    const { id: userId } = await this.userService.getUserBySessionId(sessionId);
-    const deletedNotifications = await this.notificationService.deleteNotifications(
-      parsedIds,
-      userId
-    );
+    const { id } = await this.userService.getUserBySessionId(sessionId);
+    const deletedNotifications = await this.notificationService.deleteNotifications(parsedIds, id);
     return { deletedNotifications };
   }
 }

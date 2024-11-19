@@ -39,5 +39,22 @@ export const AccordionItemContent = forwardRef<HTMLDivElement, Accordion.ItemCon
   }
 );
 
-export const AccordionRoot = Accordion.Root;
+export const AccordionRoot = forwardRef<HTMLDivElement, Accordion.RootProps>(function AccordionRoot(
+  props,
+  ref
+) {
+  return (
+    <Accordion.Root
+      collapsible
+      variant="plain"
+      rounded="lg"
+      border="1px solid"
+      borderColor="border"
+      bgColor="gray.900"
+      px={3}
+      ref={ref}
+      {...props}
+    />
+  );
+});
 export const AccordionItem = Accordion.Item;
