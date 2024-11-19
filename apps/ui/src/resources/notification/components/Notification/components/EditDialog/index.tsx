@@ -50,7 +50,9 @@ export function EditPrompt({ id, originalTitle }: EditPromptProps) {
         <DialogFooter>
           <DialogActionTrigger asChild>
             <Flex gap={2}>
-              <Button onClick={onClose}>Cancel</Button>
+              <Button bgColor="gray.900" onClick={onClose}>
+                Cancel
+              </Button>
               <Button
                 bgColor="accent.600"
                 onClick={(e) => {

@@ -11,7 +11,7 @@ interface ButtonLoadingProps {
 
 export const Button = forwardRef<HTMLButtonElement, ChakraButtonProps & ButtonLoadingProps>(
   function Button(props, ref) {
-    const { loading, disabled, loadingText, children, ...rest } = props;
+    const { loading, variant = "subtle", disabled, loadingText, children, ...rest } = props;
     return (
       <ChakraButton
         disabled={loading || disabled}
@@ -20,8 +20,8 @@ export const Button = forwardRef<HTMLButtonElement, ChakraButtonProps & ButtonLo
         alignItems="center"
         gap={2}
         cursor={loading || disabled ? "not-allowed" : "pointer"}
+        variant={variant}
         {...rest}
-        variant="outline"
       >
         {loading && !loadingText ? (
           <>

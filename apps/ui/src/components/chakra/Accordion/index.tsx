@@ -50,7 +50,7 @@ export const AccordionRoot = forwardRef<HTMLDivElement, Accordion.RootProps>(fun
       rounded="lg"
       border="1px solid"
       borderColor="border"
-      bgColor="gray.900"
+      bgColor="bg.panel"
       p={0}
       ref={ref}
       {...props}
