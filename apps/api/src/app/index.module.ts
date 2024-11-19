@@ -1,9 +1,10 @@
+import config from "../config";
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { UserModule } from "../resources/user/index.module";
 import { AuthModule } from "../resources/auth/index.module";
 import { NotificationModule } from "../resources/notification/index.module";
-import config from "../config";
+import { SessionModule } from "../resources/session/index.module";
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import config from "../config";
     UserModule,
     AuthModule,
     NotificationModule,
+    SessionModule,
   ],
 })
 export class AppModule {}

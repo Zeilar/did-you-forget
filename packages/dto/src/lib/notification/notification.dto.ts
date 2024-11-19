@@ -3,7 +3,7 @@ import {
   ArrayNotEmpty,
   IsArray,
   IsBoolean,
-  IsDate,
+  IsDateString,
   IsInt,
   IsOptional,
   IsString,
@@ -35,13 +35,13 @@ export class NotificationDto implements Notification {
   @IsString()
   title: string;
 
-  @IsDate()
+  @IsDateString()
   time: Date;
 
-  @IsDate()
+  @IsDateString()
   createdAt: Date;
 
-  @IsDate()
+  @IsDateString()
   updatedAt: Date;
 
   @IsUUID("4")

@@ -2,7 +2,7 @@ import type { Prisma } from "@prisma/client";
 import {
   IsArray,
   IsBoolean,
-  IsDate,
+  IsDateString,
   IsInt,
   IsOptional,
   IsPositive,
@@ -30,7 +30,7 @@ export class CreateNotificationDto
   @Validate(RepeatValidator)
   repeat?: number[];
 
-  @IsDate()
+  @IsDateString()
   time: Date;
 
   @MinLength(3)

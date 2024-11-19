@@ -2,7 +2,7 @@ import type { Prisma } from "@prisma/client";
 import {
   IsArray,
   IsBoolean,
-  IsDate,
+  IsDateString,
   IsInt,
   IsOptional,
   IsPositive,
@@ -31,7 +31,7 @@ export class EditNotificationDto
   repeat?: number[];
 
   @IsOptional()
-  @IsDate()
+  @IsDateString()
   time?: Date;
 
   @IsOptional()

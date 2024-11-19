@@ -1,5 +1,5 @@
 import type { User } from "@prisma/client";
-import { IsDate, IsEmail, IsUUID } from "class-validator";
+import { IsDateString, IsEmail, IsUUID } from "class-validator";
 
 export class UserWithoutPasswordDto implements Omit<User, "password"> {
   @IsUUID("4")
@@ -8,9 +8,9 @@ export class UserWithoutPasswordDto implements Omit<User, "password"> {
   @IsEmail()
   email: string;
 
-  @IsDate()
+  @IsDateString()
   createdAt: Date;
 
-  @IsDate()
+  @IsDateString()
   updatedAt: Date;
 }
