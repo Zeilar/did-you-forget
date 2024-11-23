@@ -10,7 +10,7 @@
     "src/**/*.test.ts",
     "src/**/*.spec.ts",
     "src/**/*.d.ts",
-    "src/resources/notification/dto/repeat.dto.ts"
+    "src/features/notification/dto/repeat.dto.ts"
   ],
   "references": [{ "path": "../../packages/dto" }]
 }

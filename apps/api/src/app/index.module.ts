@@ -1,10 +1,10 @@
 import config from "../config";
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { UserModule } from "../resources/user/index.module";
-import { AuthModule } from "../resources/auth/index.module";
-import { NotificationModule } from "../resources/notification/index.module";
-import { SessionModule } from "../resources/session/index.module";
+import { UserModule } from "../features/user/index.module";
+import { AuthModule } from "../features/auth/index.module";
+import { NotificationModule } from "../features/notification/index.module";
+import { SessionModule } from "../features/session/index.module";
 
 @Module({
   imports: [
