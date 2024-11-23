@@ -1,12 +1,11 @@
 "use client";
 
-import { Grid } from "@chakra-ui/react";
+import { Button, Grid } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { Session } from "../Session";
 import type { SessionForUserDto, SessionsForUserDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import { AnimatePresence, motion } from "motion/react";
-import { Button } from "@ui/components";
 import { BsTrash } from "react-icons/bs";
 import { useDeleteAllSessions } from "../../hooks";
 
@@ -27,7 +26,7 @@ export function Sessions({ initialData }: NotificationsProps) {
 
   return (
     <>
-      <Button bgColor="danger" onClick={() => deleteAllSessions.mutate()}>
+      <Button onClick={() => deleteAllSessions.mutate()}>
         <BsTrash />
         <span>Delete all sessions</span>
       </Button>

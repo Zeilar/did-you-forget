@@ -1,10 +1,17 @@
+"use client";
+
+import { useToast } from "@chakra-ui/react";
 import { EditNotificationDto, NotificationDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
-import { toaster } from "@ui/components";
 import { useMutation, useQueryClient } from "react-query";
 
-export function useEdit(id: string, input: EditNotificationDto, onSuccess?: VoidFunction) {
+export function useEditNotification(
+  id: string,
+  input: EditNotificationDto,
+  onSuccess?: VoidFunction
+) {
   const queryClient = useQueryClient();
+  const toast = useToast();
 
   return useMutation<NotificationDto | null>(
     ["editNotification", id],
@@ -29,19 +36,19 @@ export function useEdit(id: string, input: EditNotificationDto, onSuccess?: Void
             );
           }
         );
-        toaster.create({
+        toast({
           title: "Saved",
           description: "Successfully edited notification.",
-          type: "success",
+          status: "success",
         });
         onSuccess?.();
       },
       onError: (error) => {
         console.error(error);
-        toaster.create({
+        toast({
           title: "Error",
           description: "Failed to edit notification.",
-          type: "error",
+          status: "error",
         });
       },
     }

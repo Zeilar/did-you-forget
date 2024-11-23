@@ -1,13 +1,14 @@
 "use client";
 
+import { useToast } from "@chakra-ui/react";
 import type { DeletedSessionsDto, SessionDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import { pluralizeWithS } from "@ui/common/pluralize";
-import { toaster } from "@ui/components";
 import { useMutation, useQueryClient } from "react-query";
 
 export function useDeleteSession(ids: string[], onSuccess?: (ids: string[]) => void) {
   const queryClient = useQueryClient();
+  const toast = useToast();
 
   return useMutation<SessionDto[]>(
     "deleteNotification",
@@ -25,19 +26,19 @@ export function useDeleteSession(ids: string[], onSuccess?: (ids: string[]) => v
             oldData?.filter(({ id }) => !data?.some((notification) => notification.id === id)) ?? []
           );
         });
-        toaster.create({
+        toast({
           title: "Deleted",
           description: `Successfully deleted ${pluralizeWithS("session", data.length)}.`,
-          type: "success",
+          status: "success",
         });
         onSuccess?.(data.flatMap(({ id }) => id));
       },
       onError: (error) => {
         console.error(error);
-        toaster.create({
+        toast({
           title: "Error",
           description: `Failed to delete ${pluralizeWithS("session", ids.length)}.`,
-          type: "error",
+          status: "error",
         });
       },
     }

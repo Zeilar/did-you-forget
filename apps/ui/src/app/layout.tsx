@@ -1,9 +1,16 @@
 import type { PropsWithChildren } from "react";
-import { Navbar, Providers } from "@ui/components";
-import { Box, Flex } from "@chakra-ui/react";
-import { Inter } from "next/font/google";
+import { Navbar, Paper, Providers } from "@ui/components";
+import { Inter, Roboto } from "next/font/google";
+import { Box, Flex, Heading } from "@chakra-ui/react";
+import classNames from "classnames";
 
 const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const roboto = Roboto({
+  weight: ["400", "500", "700"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -15,11 +22,21 @@ export const metadata = {
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
-      <body>
+    <html
+      lang="en"
+      className={classNames(inter.className, roboto.className)}
+      data-theme="dark"
+      style={{ colorScheme: "dark" }}
+    >
+      <body className="chakra-ui-dark">
         <Providers>
-          <Flex as="main" h="100svh" direction="column">
-            <Box overflow="auto" h="100%" p={4}>
+          <Flex h="100svh" flexDir="column" bgColor="gray.900">
+            <Paper as="header" p={4} rounded="none">
+              <Heading textAlign="center" as="h1" size="lg" mb={0}>
+                Did you forget?
+              </Heading>
+            </Paper>
+            <Box w="full" h="full" overflow="auto" p={4}>
               {children}
             </Box>
             <Navbar />

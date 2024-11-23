@@ -1,14 +1,15 @@
 "use client";
 
+import { useToast } from "@chakra-ui/react";
 import type { SessionForUserDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
-import { toaster } from "@ui/components";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "react-query";
 
 export function useDeleteAllSessions() {
   const queryClient = useQueryClient();
   const { replace } = useRouter();
+  const toast = useToast();
 
   return useMutation<number>(
     "deleteSessions",
@@ -27,19 +28,19 @@ export function useDeleteAllSessions() {
             return [];
           }
         );
-        toaster.create({
+        toast({
           title: "Deleted",
           description: "Successfully deleted all sessions.",
-          type: "success",
+          status: "success",
         });
         replace("/login");
       },
       onError: (error) => {
         console.error(error);
-        toaster.create({
+        toast({
           title: "Error",
           description: "Failed to delete sessions.",
-          type: "error",
+          status: "error",
         });
       },
     }

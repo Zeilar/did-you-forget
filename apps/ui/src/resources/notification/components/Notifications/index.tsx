@@ -6,18 +6,11 @@ import { Notification } from "../Notification";
 import type { NotificationDto, NotificationsForUserDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import { AnimatePresence, motion } from "motion/react";
-import {
-  ActionBarContent,
-  ActionBarRoot,
-  ActionBarSelectionTrigger,
-  ActionBarSeparator,
-  Button,
-  InputWithAddon,
-} from "@ui/components";
 import { LuSearch, LuX } from "react-icons/lu";
 import { useCallback, useMemo, useState } from "react";
 import { BsTrash } from "react-icons/bs";
-import { useDeleteNotification } from "@ui/resources/notification";
+import { Input } from "@ui/components";
+import { useDeleteNotification } from "../../hooks";
 
 interface NotificationsProps {
   initialData: NotificationDto[];
@@ -52,7 +45,7 @@ export function Notifications({ initialData }: NotificationsProps) {
 
   return (
     <>
-      <ActionBarRoot open={checked.length > 0}>
+      {/* <ActionBarRoot open={checked.length > 0}>
         <ActionBarContent>
           <ActionBarSelectionTrigger>{checked.length} selected</ActionBarSelectionTrigger>
           <ActionBarSeparator />
@@ -69,15 +62,15 @@ export function Notifications({ initialData }: NotificationsProps) {
             <span>Clear</span>
           </Button>
         </ActionBarContent>
-      </ActionBarRoot>
-      <InputWithAddon
+      </ActionBarRoot> */}
+      <Input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Search"
-        start={<LuSearch />}
-        end={search && <LuX role="button" onClick={() => setSearch("")} cursor="pointer" />}
+        // start={<LuSearch />}
+        // end={search && <LuX role="button" onClick={() => setSearch("")} cursor="pointer" />}
       />
-      <Grid gridTemplateColumns={["repeat(1, 1fr)"]} gap={2} mt={2}>
+      <Grid gridTemplateColumns={["repeat(1, 1fr)"]} gap={2} mt={2} overflow="auto">
         {!search ? (
           <AnimatePresence>
             {data.map((notification) => (

@@ -1,15 +1,10 @@
 "use client";
 
-import { Flex, Separator, Text } from "@chakra-ui/react";
+import { Flex, IconButton, Menu, MenuButton, MenuDivider, MenuList, Text } from "@chakra-ui/react";
 import type { NotificationDto } from "@did-you-forget/dto";
-import {
-  AccordionItem,
-  AccordionItemContent,
-  AccordionItemTrigger,
-  AccordionRoot,
-  Checkbox,
-} from "@ui/components";
 import { DeletePrompt, EditPrompt } from "./components";
+import { Paper } from "@ui/components";
+import { LuMoreVertical } from "react-icons/lu";
 
 interface NotificationProps extends NotificationDto {
   onSelect(id: string): void;
@@ -18,32 +13,26 @@ interface NotificationProps extends NotificationDto {
 
 export function Notification({ onSelect, isSelected, id, title }: NotificationProps) {
   return (
-    <Flex gap={2}>
-      <AccordionRoot>
-        <AccordionItem value={id}>
-          <AccordionItemTrigger>
-            <Text>{title}</Text>
-          </AccordionItemTrigger>
-          <AccordionItemContent>
-            <Separator mb={3} />
-            <Flex gap={2} justify="flex-end" px={3}>
-              <EditPrompt id={id} originalTitle={title} />
-              <DeletePrompt ids={[id]} />
-            </Flex>
-          </AccordionItemContent>
-        </AccordionItem>
-      </AccordionRoot>
-      <Flex
-        hideBelow="md"
-        rounded="md"
-        border="1px solid"
-        borderColor="border"
-        bgColor="gray.900"
-        p={3}
-        h="fit-content"
-      >
-        <Checkbox onCheckedChange={() => onSelect(id)} checked={isSelected} />
+    <Paper>
+      <Flex justify="space-between" align="center">
+        <Text>{title}</Text>
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            minWidth="35px"
+            w="35px"
+            h="35px"
+            variant="ghost"
+            aria-label="Actions"
+            icon={<LuMoreVertical />}
+          />
+          <MenuList>
+            <EditPrompt originalTitle={title} id={id} />
+            <MenuDivider borderColor="border" />
+            <DeletePrompt ids={[id]} />
+          </MenuList>
+        </Menu>
       </Flex>
-    </Flex>
+    </Paper>
   );
 }

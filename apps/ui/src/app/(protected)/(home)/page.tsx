@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Flex, Heading } from "@chakra-ui/react";
 import type { NotificationsForUserDto } from "@did-you-forget/dto";
 import { serverFetch } from "@ui/common/fetchers/server";
 import { EmptyState, Title } from "@ui/components";
@@ -89,17 +89,15 @@ async function Page() {
 
   return (
     <div>
-      <Title as={Flex} justifyContent="space-between" alignItems="center" w="100%">
-        Notifications
-      </Title>
+      <Heading>Notifications</Heading>
       {notifications.length > 0 ? (
         <Notifications initialData={notifications} />
       ) : (
-        <EmptyState
-          icon={<BsAlarm color="var(--chakra-colors-accent-500)" />}
-          title="No notifications found"
-          description="Add some notifications before you forget"
-        />
+        <Alert status="info" variant="subtle" flexDir="column" rounded="md" p={8} gap={2}>
+          <BsAlarm size={40} color="var(--chakra-colors-accent-500)" />
+          <AlertTitle mt={2}>No notifications found</AlertTitle>
+          <AlertDescription>Add some notifications before you forget</AlertDescription>
+        </Alert>
       )}
       {/* <PushNotificationManager /> */}
     </div>

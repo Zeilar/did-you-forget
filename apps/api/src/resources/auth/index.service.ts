@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { compare } from "bcrypt";
 import { PrismaService } from "../db/prisma/index.service";
-import type { SignInDto, SignInResultDto } from "./dto";
+import type { SignInDto, SignInResultDto } from "@did-you-forget/dto";
 import type { Session } from "@prisma/client";
 import type { Response } from "express";
 import { ConfigService } from "@nestjs/config";

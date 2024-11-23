@@ -1,36 +1,32 @@
 "use client";
 
-import { Flex, Link } from "@chakra-ui/react";
-import NextLink from "next/link";
+import { Link } from "@chakra-ui/next-js";
 import { usePathname } from "next/navigation";
 import type { PropsWithChildren } from "react";
-import { BsHouseDoor, BsHouseDoorFill, BsPerson, BsPersonFill } from "react-icons/bs";
+import { BsHouseDoor, BsPerson } from "react-icons/bs";
 import type { IconType } from "react-icons/lib";
+import { Flex } from "@chakra-ui/react";
 
 interface NavLinkProps extends PropsWithChildren {
   href: string;
   icon: IconType;
-  activeIcon: IconType;
 }
 
-function NavLink({ children, href, icon: Icon, activeIcon: ActiveIcon }: NavLinkProps) {
+function NavLink({ children, href, icon: Icon }: NavLinkProps) {
   const pathname = usePathname();
   const active = pathname === href;
-  const IconComponent = active ? ActiveIcon : Icon;
 
   return (
     <Link
       href={href}
-      as={NextLink}
-      color={active ? "accent.600" : undefined}
+      color={active ? "cyan.600" : "gray.100"}
       display="flex"
       flexDir="column"
-      justifyContent="flex-end"
-      outline={0}
-      textDecor="none"
+      alignItems="center"
       userSelect="none"
+      fontWeight={500}
     >
-      <IconComponent size="1.5em" />
+      <Icon size="1.5em" />
       <span>{children}</span>
     </Link>
   );
@@ -38,23 +34,22 @@ function NavLink({ children, href, icon: Icon, activeIcon: ActiveIcon }: NavLink
 
 export function Navbar() {
   return (
-    <header>
-      <Flex
-        as="nav"
-        justify="center"
-        gap={8}
-        bgColor="gray.900"
-        p={2}
-        border="1px solid"
-        borderColor="border"
-      >
-        <NavLink href="/" icon={BsHouseDoor} activeIcon={BsHouseDoorFill}>
-          Home
-        </NavLink>
-        <NavLink href="/account" icon={BsPerson} activeIcon={BsPersonFill}>
-          Account
-        </NavLink>
-      </Flex>
-    </header>
+    <Flex
+      as="nav"
+      bgColor="gray.800"
+      shadow="md"
+      justifyContent="center"
+      pt={3}
+      pb={2}
+      gap={8}
+      mt="auto"
+    >
+      <NavLink href="/" icon={BsHouseDoor}>
+        Home
+      </NavLink>
+      <NavLink href="/account" icon={BsPerson}>
+        Account
+      </NavLink>
+    </Flex>
   );
 }

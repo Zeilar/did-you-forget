@@ -1,10 +1,10 @@
+import { Flex } from "@chakra-ui/react";
 import { Login } from "./Login";
 
 export default function Page() {
   return (
-    <div>
-      <h1>Login</h1>
+    <Flex m="auto" h="full" align="center" justify="center">
       <Login />
-    </div>
+    </Flex>
   );
 }

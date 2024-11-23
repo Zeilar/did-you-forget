@@ -7,7 +7,9 @@
       "@ui/components": ["src/components/index.ts"],
       "@ui/common/*": ["src/common/*"],
       "@ui/resources/*": ["src/resources/*"],
-      "@ui/theme/*": ["src/theme/*"]
+      "@ui/theme/*": ["src/theme/*"],
+      "@ui/styles/*": ["src/styles/*"],
+      "@ui/hooks": ["src/hooks/index.ts"]
     },
     "noEmit": false,
     "jsx": "preserve",

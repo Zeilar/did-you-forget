@@ -1,22 +1,21 @@
 "use client";
 
-import { Flex, useDisclosure } from "@chakra-ui/react";
 import {
   Button,
-  DialogActionTrigger,
-  DialogBody,
-  DialogCloseTrigger,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogRoot,
-  DialogTitle,
-  DialogTrigger,
-  Input,
-} from "@ui/components";
-import { useEdit } from "./useEdit";
+  MenuItem,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { BsPencilSquare } from "react-icons/bs";
+import { Input } from "@ui/components";
+import { useEditNotification } from "@ui/resources/notification/hooks";
 
 interface EditPromptProps {
   id: string;
@@ -25,49 +24,36 @@ interface EditPromptProps {
 
 export function EditPrompt({ id, originalTitle }: EditPromptProps) {
   const [title, setTitle] = useState<string>(originalTitle);
-  const { open, onOpen, onClose } = useDisclosure();
-  const { mutate, isLoading } = useEdit(id, { title }, onClose);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { mutate, isLoading } = useEditNotification(id, { title }, onClose);
 
   useEffect(() => {
     setTitle(originalTitle);
   }, [originalTitle]);
 
   return (
-    <DialogRoot lazyMount open={open} onOpenChange={(e) => (e.open ? onOpen() : onClose())}>
-      <DialogTrigger asChild>
-        <Button onClick={onOpen}>
-          <BsPencilSquare />
-          <span>Edit</span>
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Edit notification</DialogTitle>
-        </DialogHeader>
-        <DialogBody>
-          <Input value={title} onChange={(e) => setTitle(e.target.value)} autoFocus />
-        </DialogBody>
-        <DialogFooter>
-          <DialogActionTrigger asChild>
-            <Flex gap={2}>
-              <Button bgColor="gray.900" onClick={onClose}>
-                Cancel
-              </Button>
-              <Button
-                bgColor="accent.600"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  mutate();
-                }}
-                loading={isLoading}
-              >
-                Save
-              </Button>
-            </Flex>
-          </DialogActionTrigger>
-        </DialogFooter>
-        <DialogCloseTrigger onClick={onClose} />
-      </DialogContent>
-    </DialogRoot>
+    <>
+      <MenuItem icon={<BsPencilSquare size="1.5em" />} onClick={onOpen}>
+        Edit
+      </MenuItem>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Edit notification</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Input value={title} onChange={(e) => setTitle(e.target.value)} autoFocus />
+          </ModalBody>
+          <ModalFooter gap={2} px={4}>
+            <Button onClick={() => mutate()} isLoading={isLoading}>
+              Save
+            </Button>
+            <Button variant="ghost" onClick={onClose}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 }

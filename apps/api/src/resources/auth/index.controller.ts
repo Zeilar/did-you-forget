@@ -8,7 +8,7 @@ import {
   Res,
 } from "@nestjs/common";
 import { AuthService } from "./index.service";
-import type { SignInDto } from "./dto";
+import type { SignInDto } from "@did-you-forget/dto";
 import type { Response } from "express";
 import { SessionId } from "../../common/decorators/session-id.decorator";
 import { IpAddress } from "../../common/decorators";
