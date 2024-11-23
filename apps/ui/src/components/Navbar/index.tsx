@@ -36,7 +36,7 @@ export function Navbar() {
   return (
     <Flex
       as="nav"
-      bgColor="gray.800"
+      bgColor="gray.900"
       shadow="md"
       justifyContent="center"
       pt={3}

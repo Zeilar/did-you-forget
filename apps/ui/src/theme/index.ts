@@ -57,7 +57,8 @@ export const theme = extendTheme({
   colors: {
     border: "var(--chakra-colors-gray-600)",
     bg: {
-      paper: "var(--chakra-colors-gray-800)",
+      body: "#0e1014",
+      paper: "var(--chakra-colors-gray-900)",
     },
     text: {
       danger: "var(--chakra-colors-red-400)",
@@ -72,19 +73,7 @@ export const theme = extendTheme({
       600: "#50617C",
       700: "#3C495D",
       800: "#28313E",
-      900: "#14181F",
-    },
-    purple: {
-      50: "#E4D4F4", // Closer to the mid-tone, very subtle lightness
-      100: "#CBB6EB", // Still light but closer to 500
-      200: "#B297E2", // Slightly lighter than 500
-      300: "#9A79D9", // Approaching mid-tone
-      400: "#825BD0", // A soft transition to 500
-      500: "#6C21DE", // Mid-tone unchanged
-      600: "#631FC4", // Slightly deeper, but close to 500
-      700: "#5920AA", // Muted, soft depth
-      800: "#4F2190", // Closer to 700 than original
-      900: "#452377", // A more subdued dark
+      900: "#161b23",
     },
   },
   shadows: {
@@ -93,11 +82,15 @@ export const theme = extendTheme({
   styles: {
     global: {
       "*, *::before, *::after": {
-        borderColor: "gray.600",
+        borderColor: "gray.700",
       },
       "html, body": {
         color: "gray.100",
         bgColor: "gray.900",
+      },
+      "::selection": {
+        bgColor: "cyan.500",
+        color: "gray.900",
       },
     },
   },

@@ -29,9 +29,9 @@ export function DeletePrompt({ ids }: DeletePromptProps) {
       <MenuItem
         icon={<BsTrash size="1.5em" />}
         onClick={onOpen}
-        bgColor="red.700"
+        bgColor="red.600"
         _hover={{
-          bgColor: "red.600",
+          bgColor: "red.700",
         }}
       >
         Delete

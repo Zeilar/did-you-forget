@@ -5,7 +5,6 @@ const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpe
   menuAnatomy.keys
 );
 
-// define the base component styles
 const baseStyle = definePartsStyle({
   list: {
     bgColor: "bg.paper",
@@ -17,7 +16,7 @@ const baseStyle = definePartsStyle({
     mx: 2,
     rounded: "md",
     _hover: {
-      bgColor: "gray.700",
+      bgColor: "gray.800",
     },
   },
 });
