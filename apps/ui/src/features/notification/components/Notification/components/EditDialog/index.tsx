@@ -15,7 +15,7 @@ import {
 import { useEffect, useState } from "react";
 import { BsPencilSquare } from "react-icons/bs";
 import { Input } from "@ui/components";
-import { useEditNotification } from "@ui/resources/notification/hooks";
+import { useEditNotification } from "@ui/features/notification/hooks";
 
 interface EditPromptProps {
   id: string;

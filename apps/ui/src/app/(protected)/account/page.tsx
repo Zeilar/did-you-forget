@@ -2,7 +2,7 @@ import { Flex } from "@chakra-ui/react";
 import type { SessionsForUserDto } from "@did-you-forget/dto";
 import { serverFetch } from "@ui/common/fetchers/server";
 import { Title } from "@ui/components";
-import { Sessions } from "@ui/resources/session";
+import { Sessions } from "@ui/features/session";
 import { withAuth } from "src/app/components";
 
 async function Page() {

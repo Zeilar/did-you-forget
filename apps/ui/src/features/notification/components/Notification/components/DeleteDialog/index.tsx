@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { pluralizeWithS } from "@ui/common/pluralize";
-import { useDeleteNotification } from "@ui/resources/notification";
+import { useDeleteNotification } from "@ui/features/notification";
 import { BsTrash } from "react-icons/bs";
 
 interface DeletePromptProps {

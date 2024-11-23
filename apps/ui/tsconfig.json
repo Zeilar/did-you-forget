@@ -6,7 +6,7 @@
       "@did-you-forget/dto": ["../../packages/dto/src/index.ts"],
       "@ui/components": ["src/components/index.ts"],
       "@ui/common/*": ["src/common/*"],
-      "@ui/resources/*": ["src/resources/*"],
+      "@ui/features/*": ["src/features/*"],
       "@ui/theme/*": ["src/theme/*"],
       "@ui/styles/*": ["src/styles/*"],
       "@ui/hooks": ["src/hooks/index.ts"]
