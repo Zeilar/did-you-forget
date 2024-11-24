@@ -30,15 +30,15 @@ export const theme = extendTheme({
       },
       variants: {
         "solid-primary": {
-          bgColor: "cyan.700",
+          bgColor: "primary.600",
           _hover: {
-            bgColor: "cyan.800",
+            bgColor: "primary.700",
             _loading: {
-              bgColor: "cyan.700",
+              bgColor: "primary.600",
             },
           },
           _active: {
-            bgColor: "cyan.800",
+            bgColor: "primary.800",
           },
         },
         "solid-secondary": {
@@ -74,17 +74,29 @@ export const theme = extendTheme({
     text: {
       danger: "var(--chakra-colors-red-400)",
     },
+    primary: {
+      50: "#f0f9f7",
+      100: "#c4e8df",
+      200: "#8ed3c2",
+      300: "#49b89d",
+      400: "#1fa786",
+      500: "#008e6b",
+      600: "#00785b",
+      700: "#006149",
+      800: "#00523e",
+      900: "#003b2d",
+    },
     gray: {
-      50: "#F0F2F5",
-      100: "#D4DAE3",
-      200: "#B8C2D1",
-      300: "#9CAABF",
-      400: "#8091AC",
-      500: "#65799A",
-      600: "#50617C",
-      700: "#3C495D",
-      800: "#28313E",
-      900: "#161b23",
+      50: "#f9faf7",
+      100: "#f1f1f0",
+      200: "#e6e7e4",
+      300: "#d2d4d2",
+      400: "#a9adb0",
+      500: "#79808a",
+      600: "#4d5653",
+      700: "#2e3741",
+      800: "#192026",
+      900: "#141a1e",
     },
   },
   shadows: {
@@ -100,7 +112,7 @@ export const theme = extendTheme({
         bgColor: "gray.900",
       },
       "::selection": {
-        bgColor: "cyan.500",
+        bgColor: "primary.500",
         color: "gray.900",
       },
     },

@@ -12,9 +12,9 @@ export const Input = forwardRef<HTMLInputElement, ChakraInputProps>(
           borderColor: "gray.600",
         }}
         _focusVisible={{
-          borderColor: "cyan.600",
+          borderColor: "primary.600",
           outline: "2px solid",
-          outlineColor: "cyan.600",
+          outlineColor: "primary.600", // Must come after the `outline` property.
           ..._focusVisible,
         }}
         {...props}

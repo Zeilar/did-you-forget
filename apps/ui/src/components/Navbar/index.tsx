@@ -19,13 +19,13 @@ function NavLink({ children, href, icon: Icon }: NavLinkProps) {
   return (
     <Link
       href={href}
-      color={active ? "cyan.600" : "gray.100"}
+      color={active ? "primary.600" : "gray.100"}
       display="flex"
       flexDir="column"
       alignItems="center"
       userSelect="none"
       fontWeight={500}
-      _hover={{ textDecor: "none", color: !active && "cyan.600" }}
+      _hover={{ textDecor: "none", color: !active && "primary.600" }}
     >
       <Icon size="1.5em" />
       <span>{children}</span>
