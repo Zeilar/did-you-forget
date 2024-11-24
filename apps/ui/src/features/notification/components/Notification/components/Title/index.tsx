@@ -20,6 +20,7 @@ export function Title({ id, title }: Pick<NotificationDto, "id" | "title">) {
       <Input
         w={["full", 500]}
         placeholder="Title"
+        autoFocus
         {...register("title", {
           minLength: {
             value: 3,
