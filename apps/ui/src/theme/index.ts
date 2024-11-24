@@ -73,6 +73,7 @@ export const theme = extendTheme({
     },
     text: {
       danger: "var(--chakra-colors-red-400)",
+      muted: "var(--chakra-colors-gray-500)",
     },
     primary: {
       50: "#f0f9f7",

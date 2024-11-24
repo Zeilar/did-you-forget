@@ -1,2 +1,3 @@
 export * from "./DeleteDialog";
-export * from "./EditDialog";
+export * from "./Title";
+export * from "./Repeat";

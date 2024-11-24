@@ -28,7 +28,7 @@ export function Notifications({ initialData }: NotificationsProps) {
       const { data } = await clientFetch<NotificationsForUserDto>("/notification");
       return data?.notifications ?? [];
     },
-    { initialData }
+    { initialData, cacheTime: 0 } // For some reason the cache invalidation in useEditNotification doesn't work
   );
   const searchedNotifications = useMemo<NotificationDto[]>(
     () =>
