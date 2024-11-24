@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, IconButton, Menu, MenuButton, MenuDivider, MenuList, Text } from "@chakra-ui/react";
+import { Flex, IconButton, Menu, MenuButton, MenuList, Text } from "@chakra-ui/react";
 import type { NotificationDto } from "@did-you-forget/dto";
 import { DeletePrompt, EditPrompt } from "./components";
 import { Paper } from "@ui/components";
@@ -28,7 +28,6 @@ export function Notification({ onSelect, isSelected, id, title }: NotificationPr
           />
           <MenuList>
             <EditPrompt originalTitle={title} id={id} />
-            <MenuDivider borderColor="border" />
             <DeletePrompt ids={[id]} />
           </MenuList>
         </Menu>

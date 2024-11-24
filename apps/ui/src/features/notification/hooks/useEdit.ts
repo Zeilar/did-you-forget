@@ -5,22 +5,18 @@ import { EditNotificationDto, NotificationDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import { useMutation, useQueryClient } from "react-query";
 
-export function useEditNotification(
-  id: string,
-  input: EditNotificationDto,
-  onSuccess?: VoidFunction
-) {
+export function useEditNotification(id: string, onSuccess?: VoidFunction) {
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  return useMutation<NotificationDto | null>(
+  return useMutation<NotificationDto | null, unknown, EditNotificationDto>(
     ["editNotification", id],
-    async () => {
+    async (editNotificationDto) => {
       // Use react hook form and validate title etc
       const { data } = await clientFetch<NotificationDto>(
         `/notification/edit/${id}`,
         "PATCH",
-        input
+        editNotificationDto
       );
       return data;
     },

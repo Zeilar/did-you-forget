@@ -14,6 +14,11 @@ export const theme = extendTheme({
   components: {
     Modal,
     Menu,
+    FormLabel: defineStyleConfig({
+      baseStyle: {
+        w: "fit-content",
+      },
+    }),
     Heading: defineStyleConfig({
       baseStyle: {
         mb: 4,
@@ -28,6 +33,9 @@ export const theme = extendTheme({
           bgColor: "cyan.700",
           _hover: {
             bgColor: "cyan.800",
+            _loading: {
+              bgColor: "cyan.700",
+            },
           },
           _active: {
             bgColor: "cyan.800",
@@ -37,6 +45,9 @@ export const theme = extendTheme({
           bgColor: "gray.600",
           _hover: {
             bgColor: "gray.700",
+            _loading: {
+              bgColor: "gray.600",
+            },
           },
           _active: {
             bgColor: "gray.700",

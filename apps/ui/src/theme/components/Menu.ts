@@ -14,6 +14,7 @@ const baseStyle = definePartsStyle({
     bgColor: "bg.paper",
     w: "fill-available",
     mx: 2,
+    py: 2,
     rounded: "md",
     _hover: {
       bgColor: "gray.800",

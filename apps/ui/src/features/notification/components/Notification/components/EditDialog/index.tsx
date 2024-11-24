@@ -2,6 +2,9 @@
 
 import {
   Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
   MenuItem,
   Modal,
   ModalBody,
@@ -12,10 +15,12 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BsPencilSquare } from "react-icons/bs";
 import { Input } from "@ui/components";
 import { useEditNotification } from "@ui/features/notification/hooks";
+import { useForm } from "react-hook-form";
+import { EditNotificationDto } from "@did-you-forget/dto";
 
 interface EditPromptProps {
   id: string;
@@ -23,13 +28,13 @@ interface EditPromptProps {
 }
 
 export function EditPrompt({ id, originalTitle }: EditPromptProps) {
-  const [title, setTitle] = useState<string>(originalTitle);
+  const { register, formState, handleSubmit, setValue } = useForm<EditNotificationDto>();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { mutate, isLoading } = useEditNotification(id, { title }, onClose);
+  const { mutate, isLoading } = useEditNotification(id, onClose);
 
   useEffect(() => {
-    setTitle(originalTitle);
-  }, [originalTitle]);
+    setValue("title", originalTitle);
+  }, [originalTitle, setValue]);
 
   return (
     <>
@@ -38,14 +43,28 @@ export function EditPrompt({ id, originalTitle }: EditPromptProps) {
       </MenuItem>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent as="form" onSubmit={handleSubmit((fields) => mutate(fields))}>
           <ModalHeader>Edit notification</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Input value={title} onChange={(e) => setTitle(e.target.value)} autoFocus />
+            <FormControl isInvalid={!!formState.errors.title}>
+              <FormLabel>Title</FormLabel>
+              <Input
+                {...register("title", {
+                  minLength: {
+                    value: 3,
+                    message: "Title must be at least 3 characters long.",
+                  },
+                })}
+                autoFocus
+              />
+              {formState.errors.title?.message && (
+                <FormErrorMessage>{formState.errors.title.message}</FormErrorMessage>
+              )}
+            </FormControl>
           </ModalBody>
           <ModalFooter gap={2} px={4}>
-            <Button onClick={() => mutate()} isLoading={isLoading}>
+            <Button isLoading={isLoading} type="submit">
               Save
             </Button>
             <Button variant="ghost" onClick={onClose}>

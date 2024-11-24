@@ -25,6 +25,7 @@ function NavLink({ children, href, icon: Icon }: NavLinkProps) {
       alignItems="center"
       userSelect="none"
       fontWeight={500}
+      _hover={{ textDecor: "none", color: !active && "cyan.600" }}
     >
       <Icon size="1.5em" />
       <span>{children}</span>
@@ -36,7 +37,7 @@ export function Navbar() {
   return (
     <Flex
       as="nav"
-      bgColor="gray.900"
+      bgColor="bg.paper"
       shadow="md"
       justifyContent="center"
       pt={3}
