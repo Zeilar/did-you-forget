@@ -32,11 +32,6 @@ export function useEditNotification(id: string, onSuccess?: VoidFunction) {
             );
           }
         );
-        toast({
-          title: "Saved",
-          description: "Successfully edited notification.",
-          status: "success",
-        });
         onSuccess?.();
       },
       onError: (error) => {
