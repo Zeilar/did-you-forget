@@ -51,7 +51,6 @@ export function Reminder({ id, reminder, reminders }: ReminderProps) {
       const hours = parseInt(`${h1}${h2}`);
       const minutes = parseInt(`${m1}${m2}`);
       const totalSeconds = hours * 60 * 60 + minutes * 60;
-      console.log(reminders, totalSeconds);
       mutate({
         reminders: reminders.map((element) => (element === reminder ? `${totalSeconds}` : element)),
       });
