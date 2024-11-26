@@ -1,10 +1,8 @@
 import type { Notification } from "@prisma/client";
 import {
-  ArrayNotEmpty,
   IsArray,
   IsBoolean,
   IsDateString,
-  IsInt,
   IsOptional,
   IsString,
   IsUUID,
@@ -23,9 +21,8 @@ export class NotificationDto implements Notification {
   email: boolean | null;
 
   @IsArray()
-  @ArrayNotEmpty()
-  @IsInt({ each: true })
-  reminders: number[];
+  @IsString({ each: true })
+  reminders: string[];
 
   @Validate(RepeatValidator)
   repeat: number[];

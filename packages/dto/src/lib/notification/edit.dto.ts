@@ -3,7 +3,6 @@ import {
   IsArray,
   IsBoolean,
   IsDateString,
-  IsInt,
   IsOptional,
   IsPositive,
   IsString,
@@ -23,8 +22,8 @@ export class EditNotificationDto
   @IsOptional()
   @IsArray()
   @IsPositive({ each: true })
-  @IsInt({ each: true })
-  reminders?: number[];
+  @IsString({ each: true })
+  reminders?: string[];
 
   @IsOptional()
   @Validate(RepeatValidator)

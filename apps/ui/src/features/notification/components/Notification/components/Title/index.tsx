@@ -40,7 +40,7 @@ export function Title({ id, title }: Pick<NotificationDto, "id" | "title">) {
   ) : (
     <Flex gap={2} align="center">
       <IconButton variant="ghost" icon={<BsPencil />} aria-label="Edit title" onClick={onOpen} />
-      <Text>{title}</Text>
+      <Text fontWeight={500}>{title}</Text>
     </Flex>
   );
 }

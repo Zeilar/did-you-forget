@@ -11,8 +11,8 @@ model Notification {
   id String @id @default(uuid())
   title String
   time DateTime
-  repeat Int[] // Unique ints ranging 0-6, each number representing the day's index of the week.
-  reminders Int[] // Unique UNIX timestamp offsets, e.g 1000 would mean a reminder 1000 milliseconds prior.
+  repeat Int[] // Unique ints ranging 0-6, each number representing the day's index of the week. Unsorted.
+  reminders String[] // How many seconds prior to the `time` the reminder should fire.
   email Boolean? // Whether to send an email to the user's registered address.
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

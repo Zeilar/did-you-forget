@@ -2,7 +2,7 @@
 
 import { Flex, FormLabel, IconButton, Menu, MenuButton, MenuList } from "@chakra-ui/react";
 import type { NotificationDto } from "@did-you-forget/dto";
-import { DeletePrompt, Repeat, Title } from "./components";
+import { DeletePrompt, Reminders, Repeat, Title } from "./components";
 import { Paper } from "@ui/components";
 import { LuMoreVertical } from "react-icons/lu";
 
@@ -13,9 +13,17 @@ interface NotificationProps extends NotificationDto {
 
 const DAYS: string[] = ["m", "t", "w", "t", "f", "s", "s"];
 
-export function Notification({ onSelect, isSelected, id, title, repeat }: NotificationProps) {
+export function Notification({
+  onSelect,
+  isSelected,
+  id,
+  title,
+  repeat,
+  reminders,
+  time,
+}: NotificationProps) {
   return (
-    <Paper>
+    <Paper gap={3}>
       <Flex justify="space-between" align="center">
         <Title id={id} title={title} />
         <Menu>
@@ -35,15 +43,22 @@ export function Notification({ onSelect, isSelected, id, title, repeat }: Notifi
         </Menu>
       </Flex>
       <div>
-        <FormLabel color="text.muted">Repeat</FormLabel>
-        <Flex gap={3}>
+        <FormLabel>Repeat</FormLabel>
+        <Flex gap={3} bgColor="gray.800" p={3} rounded="md">
           {DAYS.map((day, i) => (
-            <Repeat key={`${id}-${day}-${i}`} id={id} isActive={repeat.includes(i)} index={i} repeat={repeat}>
+            <Repeat
+              key={`${id}-${day}-${i}`}
+              id={id}
+              isActive={repeat.includes(i)}
+              index={i}
+              repeat={repeat}
+            >
               {day}
             </Repeat>
           ))}
         </Flex>
       </div>
+      <Reminders id={id} reminders={reminders} />
     </Paper>
   );
 }
