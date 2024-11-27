@@ -31,7 +31,12 @@ export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "remin
         </Button>
         <Flex flexDir="column" gap={2} mt={2}>
           {reminders.map((reminder, i) => (
-            <Reminder key={`${reminder}-${i}`} id={id} reminders={reminders} reminder={reminder} />
+            <Reminder
+              key={`${id}-${reminder}-${i}`}
+              id={id}
+              reminders={reminders}
+              reminder={reminder}
+            />
           ))}
         </Flex>
       </Accordion>
