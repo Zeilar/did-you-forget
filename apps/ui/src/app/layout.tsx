@@ -31,12 +31,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <body className="chakra-ui-dark">
         <Providers>
           <Flex h="100svh" flexDir="column" bgColor="bg.body">
-            <Paper as="header" rounded="none">
-              <Heading textAlign="center" as="h1" size="lg" mb={0}>
-                Did you forget?
-              </Heading>
-            </Paper>
-            <Box w="full" h="full" overflow="auto" p={4}>
+            <Box w="full" h="full" overflow="auto">
               {children}
             </Box>
             <Navbar />

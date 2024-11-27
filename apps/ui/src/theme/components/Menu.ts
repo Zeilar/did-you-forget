@@ -7,17 +7,17 @@ const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpe
 
 const baseStyle = definePartsStyle({
   list: {
-    bgColor: "bg.paper",
+    bgColor: "gray.800",
     border: 0,
   },
   item: {
-    bgColor: "bg.paper",
+    bgColor: "gray.800",
     w: "fill-available",
     mx: 2,
     py: 2,
     rounded: "md",
     _hover: {
-      bgColor: "gray.800",
+      bgColor: "gray.700",
     },
   },
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, FormLabel, IconButton, Menu, MenuButton, MenuList } from "@chakra-ui/react";
+import { Box, Flex, IconButton, Menu, MenuButton, MenuList, Text } from "@chakra-ui/react";
 import type { NotificationDto } from "@did-you-forget/dto";
 import { DeletePrompt, Reminders, Repeat, Title } from "./components";
 import { Paper } from "@ui/components";
@@ -24,7 +24,7 @@ export function Notification({
 }: NotificationProps) {
   return (
     <Paper gap={3}>
-      <Flex justify="space-between" align="center">
+      <Flex justify="space-between">
         <Title id={id} title={title} />
         <Menu>
           <MenuButton
@@ -42,9 +42,9 @@ export function Notification({
           </MenuList>
         </Menu>
       </Flex>
-      <div>
-        <FormLabel>Repeat</FormLabel>
-        <Flex gap={3} bgColor="gray.800" p={3} rounded="md">
+      <Box bgColor="gray.800" p={3} rounded="md">
+        <Text mb={3}>Repeat</Text>
+        <Flex gap={3}>
           {DAYS.map((day, i) => (
             <Repeat
               key={`${id}-${day}-${i}`}
@@ -57,7 +57,7 @@ export function Notification({
             </Repeat>
           ))}
         </Flex>
-      </div>
+      </Box>
       <Reminders id={id} reminders={reminders} />
     </Paper>
   );

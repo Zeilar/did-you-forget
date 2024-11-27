@@ -7,13 +7,9 @@ import humanFormat from "human-format";
 import { useCallback } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { BsTrash } from "react-icons/bs";
-import { EditDialog } from "./components";
+import { Dialog, type DialogFields } from "../Dialog";
 
 interface ReminderProps extends Pick<NotificationDto, "id" | "reminders"> {
-  reminder: string;
-}
-
-export interface EditFields {
   reminder: string;
 }
 
@@ -26,11 +22,11 @@ const timeScale = new humanFormat.Scale({
 });
 
 export function Reminder({ id, reminder, reminders }: ReminderProps) {
-  const editForm = useForm<EditFields>();
+  const editForm = useForm<DialogFields>();
   const editModal = useDisclosure();
   const { mutate, isLoading } = useEditNotification(id, editModal.onClose);
 
-  const onEditSubmit = useCallback<SubmitHandler<EditFields>>(
+  const onEditSubmit = useCallback<SubmitHandler<DialogFields>>(
     (fields) => {
       const [h1, h2, m1, m2] = fields.reminder;
       const hours = parseInt(`${h1}${h2}`);
@@ -70,7 +66,7 @@ export function Reminder({ id, reminder, reminders }: ReminderProps) {
           onClick={() => mutate({ reminders: reminders.filter((element) => element !== reminder) })}
         />
       </Flex>
-      <EditDialog
+      <Dialog
         control={editForm.control}
         disclosure={editModal}
         error={editForm.formState.errors.reminder}

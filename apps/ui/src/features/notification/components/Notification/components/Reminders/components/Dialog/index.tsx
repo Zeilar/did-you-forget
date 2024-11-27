@@ -17,18 +17,21 @@ import {
 } from "@chakra-ui/react";
 import { Input } from "@ui/components";
 import { Controller, type FieldError, type Control } from "react-hook-form";
-import type { EditFields } from "../..";
 import type { BaseSyntheticEvent } from "react";
 
-interface EditDialogProps {
+interface DialogProps {
   disclosure: UseDisclosureReturn;
   isLoading: boolean;
   onSubmit: (e?: BaseSyntheticEvent) => Promise<void>;
-  control: Control<EditFields>;
+  control: Control<DialogFields>;
   error: FieldError | undefined;
 }
 
-export function EditDialog({ disclosure, isLoading, onSubmit, control, error }: EditDialogProps) {
+export interface DialogFields {
+  reminder: string;
+}
+
+export function Dialog({ disclosure, isLoading, onSubmit, control, error }: DialogProps) {
   return (
     <Modal isOpen={disclosure.isOpen} onClose={disclosure.onClose}>
       <ModalOverlay />

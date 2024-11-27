@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Flex, Heading } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertTitle, Flex } from "@chakra-ui/react";
 import type { NotificationsForUserDto } from "@did-you-forget/dto";
 import { serverFetch } from "@ui/common/fetchers/server";
 import { EmptyState, Title } from "@ui/components";
@@ -88,8 +88,7 @@ async function Page() {
   const notifications = notificationsQuery.data?.notifications ?? [];
 
   return (
-    <div>
-      <Heading>Notifications</Heading>
+    <>
       {notifications.length > 0 ? (
         <Notifications initialData={notifications} />
       ) : (
@@ -100,7 +99,7 @@ async function Page() {
         </Alert>
       )}
       {/* <PushNotificationManager /> */}
-    </div>
+    </>
   );
 }
 

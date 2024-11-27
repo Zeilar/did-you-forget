@@ -3,7 +3,7 @@
 import { Link } from "@chakra-ui/next-js";
 import { usePathname } from "next/navigation";
 import type { PropsWithChildren } from "react";
-import { BsHouseDoor, BsPerson } from "react-icons/bs";
+import { BsHouseDoorFill, BsPersonFill } from "react-icons/bs";
 import type { IconType } from "react-icons/lib";
 import { Flex } from "@chakra-ui/react";
 
@@ -19,7 +19,7 @@ function NavLink({ children, href, icon: Icon }: NavLinkProps) {
   return (
     <Link
       href={href}
-      color={active ? "primary.500" : "gray.100"}
+      color={active ? "primary.400" : "gray.100"}
       display="flex"
       flexDir="column"
       alignItems="center"
@@ -27,7 +27,7 @@ function NavLink({ children, href, icon: Icon }: NavLinkProps) {
       fontWeight={500}
       _hover={{ textDecor: "none", color: !active && "primary.600" }}
     >
-      <Icon size="1.5em" />
+      <Icon size="1.25em" />
       <span>{children}</span>
     </Link>
   );
@@ -45,10 +45,10 @@ export function Navbar() {
       gap={8}
       mt="auto"
     >
-      <NavLink href="/" icon={BsHouseDoor}>
+      <NavLink href="/" icon={BsHouseDoorFill}>
         Home
       </NavLink>
-      <NavLink href="/account" icon={BsPerson}>
+      <NavLink href="/account" icon={BsPersonFill}>
         Account
       </NavLink>
     </Flex>

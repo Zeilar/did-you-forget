@@ -30,15 +30,16 @@ export const theme = extendTheme({
       },
       variants: {
         "solid-primary": {
-          bgColor: "primary.600",
+          color: "text.dark",
+          bgColor: "primary.400",
           _hover: {
-            bgColor: "primary.700",
+            bgColor: "primary.500",
             _loading: {
-              bgColor: "primary.600",
+              bgColor: "primary.400",
             },
           },
           _active: {
-            bgColor: "primary.800",
+            bgColor: "primary.700",
           },
         },
         "solid-secondary": {
@@ -59,7 +60,18 @@ export const theme = extendTheme({
             bgColor: "red.700",
           },
           _active: {
-            bgColor: "red.700",
+            bgColor: "red.800",
+          },
+        },
+        "outline-primary": {
+          border: "1px solid",
+          color: "primary.400",
+          borderColor: "currentColor",
+          _hover: {
+            bgColor: "whiteAlpha.50",
+          },
+          _active: {
+            bgColor: "whiteAlpha.100",
           },
         },
       },
@@ -72,6 +84,7 @@ export const theme = extendTheme({
       paper: "var(--chakra-colors-gray-900)",
     },
     text: {
+      dark: "var(--chakra-colors-gray-900)",
       danger: "var(--chakra-colors-red-400)",
       muted: "var(--chakra-colors-gray-500)",
     },
@@ -109,12 +122,12 @@ export const theme = extendTheme({
         borderColor: "gray.700",
       },
       "html, body": {
-        color: "gray.100",
+        color: "gray.300",
         bgColor: "gray.900",
       },
       "::selection": {
-        bgColor: "primary.500",
-        color: "gray.900",
+        bgColor: "black",
+        color: "primary.400",
       },
     },
   },
