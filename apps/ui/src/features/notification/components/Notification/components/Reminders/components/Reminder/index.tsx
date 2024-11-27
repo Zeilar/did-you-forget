@@ -4,8 +4,7 @@ import { Flex, IconButton, useDisclosure } from "@chakra-ui/react";
 import type { NotificationDto } from "@did-you-forget/dto";
 import { useEditNotification } from "@ui/features/notification/hooks";
 import humanFormat from "human-format";
-import { useCallback } from "react";
-import { type SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { BsTrash } from "react-icons/bs";
 import { Dialog, type DialogFields } from "../Dialog";
 import { getTotalSeconds } from "../../common";
@@ -26,17 +25,6 @@ export function Reminder({ id, reminder, reminders }: ReminderProps) {
   const editForm = useForm<DialogFields>();
   const editModal = useDisclosure();
   const { mutate, isLoading } = useEditNotification(id, editModal.onClose);
-
-  const onEditSubmit = useCallback<SubmitHandler<DialogFields>>(
-    (fields) => {
-      mutate({
-        reminders: reminders.map((element) =>
-          element === reminder ? `${getTotalSeconds(fields.reminder)}` : element
-        ),
-      });
-    },
-    [mutate, reminders, reminder]
-  );
 
   return (
     <>
@@ -70,7 +58,16 @@ export function Reminder({ id, reminder, reminders }: ReminderProps) {
         disclosure={editModal}
         error={editForm.formState.errors.reminder}
         isLoading={isLoading}
-        onSubmit={editForm.handleSubmit(onEditSubmit)}
+        onSubmit={editForm.handleSubmit((fields) => {
+          mutate(
+            {
+              reminders: reminders.map((element) =>
+                element === reminder ? `${getTotalSeconds(fields.reminder)}` : element
+              ),
+            },
+            { onSuccess: () => editForm.reset() }
+          );
+        })}
       />
     </>
   );

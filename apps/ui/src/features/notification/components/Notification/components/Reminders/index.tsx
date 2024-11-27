@@ -13,8 +13,8 @@ const flexProps: FlexProps = { bgColor: "gray.800", shadow: "none" };
 
 export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "reminders">) {
   const addModal = useDisclosure();
+  const addForm = useForm<DialogFields>();
   const { mutate, isLoading } = useEditNotification(id, addModal.onClose);
-  const { control, formState, handleSubmit } = useForm<DialogFields>();
 
   return (
     <>
@@ -37,12 +37,15 @@ export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "remin
       </Accordion>
       <Dialog
         disclosure={addModal}
-        error={formState.errors.reminder}
+        error={addForm.formState.errors.reminder}
         isLoading={isLoading}
-        onSubmit={handleSubmit(({ reminder }) =>
-          mutate({ reminders: [...reminders, getTotalSeconds(reminder)] })
+        onSubmit={addForm.handleSubmit(({ reminder }) =>
+          mutate(
+            { reminders: [...reminders, getTotalSeconds(reminder)] },
+            { onSuccess: () => addForm.reset() }
+          )
         )}
-        control={control}
+        control={addForm.control}
       />
     </>
   );
