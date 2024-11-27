@@ -7,6 +7,7 @@ import { Dialog, type DialogFields, Reminder } from "./components";
 import { BsPlus } from "react-icons/bs";
 import { useEditNotification } from "@ui/features/notification/hooks";
 import { useForm } from "react-hook-form";
+import { getTotalSeconds } from "./common";
 
 const flexProps: FlexProps = { bgColor: "gray.800", shadow: "none" };
 
@@ -38,7 +39,9 @@ export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "remin
         disclosure={addModal}
         error={formState.errors.reminder}
         isLoading={isLoading}
-        onSubmit={handleSubmit(({ reminder }) => mutate({ reminders: [...reminders, reminder] }))}
+        onSubmit={handleSubmit(({ reminder }) =>
+          mutate({ reminders: [...reminders, getTotalSeconds(reminder)] })
+        )}
         control={control}
       />
     </>

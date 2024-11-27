@@ -8,6 +8,7 @@ import { useCallback } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { BsTrash } from "react-icons/bs";
 import { Dialog, type DialogFields } from "../Dialog";
+import { getTotalSeconds } from "../../common";
 
 interface ReminderProps extends Pick<NotificationDto, "id" | "reminders"> {
   reminder: string;
@@ -28,12 +29,10 @@ export function Reminder({ id, reminder, reminders }: ReminderProps) {
 
   const onEditSubmit = useCallback<SubmitHandler<DialogFields>>(
     (fields) => {
-      const [h1, h2, m1, m2] = fields.reminder;
-      const hours = parseInt(`${h1}${h2}`);
-      const minutes = parseInt(`${m1}${m2}`);
-      const totalSeconds = hours * 60 * 60 + minutes * 60;
       mutate({
-        reminders: reminders.map((element) => (element === reminder ? `${totalSeconds}` : element)),
+        reminders: reminders.map((element) =>
+          element === reminder ? `${getTotalSeconds(fields.reminder)}` : element
+        ),
       });
     },
     [mutate, reminders, reminder]
