@@ -4,8 +4,6 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-COPY apps/ui/.env .
-
 RUN yarn install --frozen-lockfile
 
 RUN npx nx build ui --prod
