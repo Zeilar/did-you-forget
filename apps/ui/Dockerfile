@@ -8,7 +8,13 @@ RUN yarn install --frozen-lockfile
 
 RUN yarn nx prisma-generate api
 
-RUN npx nx build ui --verbose
+# Verify Nx CLI version
+RUN yarn nx --version
+
+# Build the app with detailed logs
+RUN yarn nx build ui --debug
+
+# RUN npx nx build ui
 
 FROM node:alpine as main
 
