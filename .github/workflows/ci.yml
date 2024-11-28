@@ -26,17 +26,15 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
-        # Build the UI app
-      - name: Build the UI
-        run: yarn nx build ui --prod
-
-        # Build the API app
-      - name: Build the API
-        run: yarn nx build api --prod
-
-        # Generate Prisma client to avoid type errors.
+      # Generate Prisma client to avoid type errors.
       - name: Generate Prisma client
         run: yarn nx prisma-generate api
+
+      - name: Build UI
+        run: yarn nx build ui --prod
+
+      - name: Build  API
+        run: yarn nx build api --prod
 
       - name: Build UI image
         run: |
