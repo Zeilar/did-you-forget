@@ -12,7 +12,7 @@ RUN yarn nx build api --prod
 
 FROM node:alpine as main
 
-COPY --from=build /usr/src/app/api .
+COPY --from=build /usr/src/app/dist/apps/api .
 COPY --from=build /usr/src/app/api/.env .
 COPY --from=build /usr/src/app/api/prisma .
 

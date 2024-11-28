@@ -12,7 +12,7 @@ RUN yarn nx build ui
 
 FROM node:alpine as main
 
-COPY --from=build /usr/src/app .
+COPY --from=build /usr/src/app/dist/apps/ui .
 
 RUN yarn install --frozen-lockfile
 
