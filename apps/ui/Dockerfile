@@ -10,6 +10,8 @@ RUN yarn nx prisma-generate api
 
 RUN yarn nx build ui
 
+RUN ls -a && ls -a dist && ls -a dist/apps && ls -a dist/apps/ui
+
 COPY dist/apps/ui ui
 
 FROM node:alpine as main

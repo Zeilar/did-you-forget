@@ -31,7 +31,6 @@ jobs:
           echo "NEXT_PUBLIC_VAPID_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_VAPID_PUBLIC_KEY }}" >> apps/ui/.env
           echo "VAPID_PRIVATE_KEY=${{ secrets.VAPID_PRIVATE_KEY }}" >> apps/ui/.env
           echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> apps/ui/.env
-          echo "UI_PORT=${{ secrets.UI_PORT }}" >> apps/ui/.env
           docker build -t did-you-forget_ui -f apps/ui/Dockerfile .
 
       - name: Build API image
