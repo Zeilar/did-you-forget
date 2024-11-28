@@ -8,7 +8,7 @@ RUN yarn install --frozen-lockfile
 
 RUN yarn nx prisma-generate api
 
-RUN yarn nx build ui
+RUN yarn nx build ui --verbose
 
 FROM node:alpine as main
 
@@ -18,4 +18,4 @@ RUN yarn install --frozen-lockfile
 
 EXPOSE 4025
 
-CMD ["npm", "start", "--", "-p", "4025"]
+CMD ["yarn", "start", "--", "-p", "4025"]
