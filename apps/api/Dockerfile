@@ -13,8 +13,8 @@ RUN yarn nx build api --prod
 FROM node:alpine as main
 
 COPY --from=build /usr/src/app/dist/apps/api .
-COPY --from=build /usr/src/app/api/.env .
-COPY --from=build /usr/src/app/api/prisma .
+COPY --from=build /usr/src/app/apps/api/.env .
+COPY --from=build /usr/src/app/apps/api/prisma .
 
 # RUN yarn add -g dotenv-cli
 
