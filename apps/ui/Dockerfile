@@ -6,9 +6,15 @@ COPY . .
 
 RUN yarn install --frozen-lockfile
 
-RUN npx nx prisma-generate api
+RUN yarn nx prisma-generate api
 
-RUN npx nx build ui
+# Verify Nx CLI version
+RUN yarn nx --version
+
+# Build the app with detailed logs
+RUN yarn nx build ui --debug
+
+# RUN npx nx build ui
 
 FROM node:alpine as main
 
@@ -18,4 +24,4 @@ RUN yarn install --frozen-lockfile
 
 EXPOSE 4025
 
-CMD ["npm", "start", "--", "-p", "4025"]
+CMD ["yarn", "start", "--", "-p", "4025"]
