@@ -34,6 +34,10 @@ jobs:
       - name: Build the API
         run: yarn nx build api --prod
 
+        # Generate Prisma client to avoid type errors.
+      - name: Generate Prisma client
+        run: yarn nx prisma-generate api
+
       - name: Build UI image
         run: |
           echo "NEXT_PUBLIC_VAPID_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_VAPID_PUBLIC_KEY }}" >> apps/ui/.env
