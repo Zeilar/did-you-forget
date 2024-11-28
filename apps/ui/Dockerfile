@@ -2,16 +2,22 @@ FROM node:22-alpine as build
 
 WORKDIR /usr/src/app
 
+COPY . .
+
 COPY apps/ui/.env .
 
-COPY dist/apps/ui .
+RUN yarn install --frozen-lockfile
 
-RUN yarn
+RUN npx nx build ui --prod
+
+COPY dist/apps/ui ui
 
 FROM node:alpine as main
 
-COPY --from=build /usr/src/app .
+COPY --from=build /usr/src/app/ui .
 
-EXPOSE 3000
+RUN yarn install --frozen-lockfile
 
-CMD ["npm", "start"]
+EXPOSE 4025
+
+CMD ["npm", "start", "--", "-p", "4025"]

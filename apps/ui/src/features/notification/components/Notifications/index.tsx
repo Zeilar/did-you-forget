@@ -6,11 +6,8 @@ import { Notification } from "../Notification";
 import type { NotificationDto, NotificationsForUserDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import { AnimatePresence, motion } from "motion/react";
-import { LuSearch, LuX } from "react-icons/lu";
 import { useCallback, useMemo, useState } from "react";
-import { BsTrash } from "react-icons/bs";
 import { Input, Paper } from "@ui/components";
-import { useDeleteNotification } from "../../hooks";
 
 interface NotificationsProps {
   initialData: NotificationDto[];
@@ -18,9 +15,9 @@ interface NotificationsProps {
 
 export function Notifications({ initialData }: NotificationsProps) {
   const [checked, setChecked] = useState<string[]>([]); // Notification id array.
-  const deleteNotification = useDeleteNotification(checked, (deletedIds) =>
-    setChecked((p) => p.filter((id) => !deletedIds.includes(id)))
-  );
+  // const deleteNotification = useDeleteNotification(checked, (deletedIds) =>
+  //   setChecked((p) => p.filter((id) => !deletedIds.includes(id)))
+  // );
   const [search, setSearch] = useState<string>("");
   const { data = [] } = useQuery<NotificationDto[]>(
     "notifications",

@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Cache node_modules
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "yarn"
+
+      - run: yarn install --frozen-lockfile
+
+      - name: Build UI image
+        run: |
+          echo "NEXT_PUBLIC_VAPID_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_VAPID_PUBLIC_KEY }}" >> apps/ui/.env
+          echo "VAPID_PRIVATE_KEY=${{ secrets.VAPID_PRIVATE_KEY }}" >> apps/ui/.env
+          echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> apps/ui/.env
+          echo "UI_PORT=${{ secrets.UI_PORT }}" >> apps/ui/.env
+          docker build -t did-you-forget_ui -f apps/ui/Dockerfile .
+
+      - name: Build API image
+        run: |
+          echo "PORT=${{ secrets.API_PORT }}" >> apps/api/.env
+          echo "CORS=${{ secrets.CORS }}" >> apps/api/.env
+          echo "SESSION_COOKIE_DOMAIN=${{ secrets.SESSION_COOKIE_DOMAIN }}" >> apps/api/.env
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> apps/api/.env
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> apps/api/.env
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> apps/api/.env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> apps/api/.env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> apps/api/.env
+          echo "DB_URL=${{ secrets.DB_URL }}" >> apps/api/.env
+          docker build -t did-you-forget_api -f apps/api/Dockerfile .
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push UI image
+        run: |
+          docker tag did-you-forget_ui:latest zeilar/did-you-forget_ui:latest
+          docker push zeilar/did-you-forget_ui:latest
+
+      - name: Push API image
+        run: |
+          docker tag did-you-forget_api:latest zeilar/did-you-forget_api:latest
+          docker push zeilar/did-you-forget_api:latest
+
+      - name: Deploy containers
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh -o StrictHostKeyChecking=no root@angelin.dev << 'EOF'
+            cd repositories/did-you-forget
+            rm apps/api/.env
+            rm apps/ui/.env
+            echo "PORT=${{ secrets.API_PORT }}" >> apps/api/.env
+            echo "CORS=${{ secrets.CORS }}" >> apps/api/.env
+            echo "SESSION_COOKIE_DOMAIN=${{ secrets.SESSION_COOKIE_DOMAIN }}" >> apps/api/.env
+            echo "DB_PORT=${{ secrets.DB_PORT }}" >> apps/api/.env
+            echo "DB_HOST=${{ secrets.DB_HOST }}" >> apps/api/.env
+            echo "DB_NAME=${{ secrets.DB_NAME }}" >> apps/api/.env
+            echo "DB_USER=${{ secrets.DB_USER }}" >> apps/api/.env
+            echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> apps/api/.env
+            echo "DB_URL=${{ secrets.DB_URL }}" >> apps/api/.env
+            echo "NEXT_PUBLIC_VAPID_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_VAPID_PUBLIC_KEY }}" >> apps/ui/.env
+            echo "VAPID_PRIVATE_KEY=${{ secrets.VAPID_PRIVATE_KEY }}" >> apps/ui/.env
+            echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> apps/ui/.env
+            docker pull zeilar/did-you-forget_ui:latest
+            docker pull zeilar/did-you-forget_api:latest
+            docker-compose down
+            docker-compose up -d
+          EOF

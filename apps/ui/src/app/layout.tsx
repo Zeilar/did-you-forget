@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react";
-import { Navbar, Paper, Providers } from "@ui/components";
+import { Navbar, Providers } from "@ui/components";
 import { Inter, Roboto } from "next/font/google";
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import classNames from "classnames";
 
 const inter = Inter({

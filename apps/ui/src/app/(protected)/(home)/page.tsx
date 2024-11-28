@@ -1,7 +1,6 @@
-import { Alert, AlertDescription, AlertTitle, Flex } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertTitle } from "@chakra-ui/react";
 import type { NotificationsForUserDto } from "@did-you-forget/dto";
 import { serverFetch } from "@ui/common/fetchers/server";
-import { EmptyState, Title } from "@ui/components";
 import { Notifications } from "@ui/features/notification";
 import { withAuth } from "src/app/components";
 import { BsAlarm } from "react-icons/bs";
