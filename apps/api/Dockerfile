@@ -6,9 +6,11 @@ COPY . .
 
 RUN yarn install --frozen-lockfile
 
-RUN npx nx prisma-generate api
+RUN yarn nx prisma-generate api
 
-RUN npx nx build api
+RUN yarn nx --version
+
+RUN yarn nx build ui --debug
 
 FROM node:alpine as main
 
@@ -24,4 +26,3 @@ EXPOSE 4020
 # If this stops being the case, it must happen in runtime instead.
 CMD npx prisma migrate deploy && node main.js
 # CMD yarn prisma migrate deploy && dotenv -e .env -- node main.js
-
