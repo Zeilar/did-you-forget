@@ -8,7 +8,7 @@ RUN yarn install --frozen-lockfile
 
 RUN yarn nx prisma-generate api
 
-RUN yarn nx build api --prod
+RUN yarn nx build api
 
 FROM node:alpine as main
 
