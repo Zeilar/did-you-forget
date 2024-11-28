@@ -6,7 +6,9 @@ COPY . .
 
 RUN yarn install --frozen-lockfile
 
-RUN npx nx build ui --prod
+RUN yarn nx prisma-generate api
+
+RUN yarn nx build ui --prod
 
 COPY dist/apps/ui ui
 

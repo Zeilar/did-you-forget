@@ -6,9 +6,9 @@ COPY . .
 
 RUN yarn install --frozen-lockfile
 
-RUN npx nx prisma-generate api
+RUN yarn nx prisma-generate api
 
-RUN npx nx build api --prod
+RUN yarn nx build api --prod
 
 COPY dist/apps/api api
 
@@ -26,6 +26,6 @@ EXPOSE 4020
 
 # Running migrations here mean that they should happen after the db container is ready.
 # If this stops being the case, it must happen in runtime instead.
-CMD npx prisma migrate deploy && node main.js
-# CMD npx prisma migrate deploy && dotenv -e .env -- node main.js
+CMD yarn prisma migrate deploy && node main.js
+# CMD yarn prisma migrate deploy && dotenv -e .env -- node main.js
 

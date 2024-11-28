@@ -26,6 +26,14 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
+        # Build the UI app
+      - name: Build the UI
+        run: yarn nx build ui --prod
+
+        # Build the API app
+      - name: Build the API
+        run: yarn nx build api --prod
+
       - name: Build UI image
         run: |
           echo "NEXT_PUBLIC_VAPID_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_VAPID_PUBLIC_KEY }}" >> apps/ui/.env
