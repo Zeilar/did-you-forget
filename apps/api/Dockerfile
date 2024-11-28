@@ -10,7 +10,7 @@ RUN yarn nx prisma-generate api
 
 RUN yarn nx --version
 
-RUN yarn nx build api --debug
+RUN yarn nx build api
 
 FROM node:alpine as main
 
