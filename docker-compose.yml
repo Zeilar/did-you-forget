@@ -12,18 +12,14 @@ services:
       - ${DB_PORT}:${DB_PORT}
   api:
     container_name: dyf_api
-    build:
-      dockerfile: ./apps/api/Dockerfile
-      context: .
+    image: zeilar/did-you-forget_api:latest
     depends_on:
       - db
     expose:
       - 4020:4020
   ui:
     container_name: dyf_ui
-    build:
-      dockerfile: ./apps/ui/Dockerfile
-      context: .
+    image: zeilar/did-you-forget_ui:latest
     expose:
       - 4025:4025
 

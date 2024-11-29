@@ -72,20 +72,16 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@angelin.dev << 'EOF'
             cd repositories/did-you-forget
             git pull
-            rm apps/api/.env
-            rm apps/ui/.env
-            echo "PORT=${{ secrets.API_PORT }}" >> apps/api/.env
-            echo "CORS=${{ secrets.CORS }}" >> apps/api/.env
-            echo "SESSION_COOKIE_DOMAIN=${{ secrets.SESSION_COOKIE_DOMAIN }}" >> apps/api/.env
-            echo "DB_PORT=${{ secrets.DB_PORT }}" >> apps/api/.env
-            echo "DB_HOST=${{ secrets.DB_HOST }}" >> apps/api/.env
-            echo "DB_NAME=${{ secrets.DB_NAME }}" >> apps/api/.env
-            echo "DB_USER=${{ secrets.DB_USER }}" >> apps/api/.env
-            echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> apps/api/.env
-            echo "DB_URL=${{ secrets.DB_URL }}" >> apps/api/.env
-            echo "NEXT_PUBLIC_VAPID_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_VAPID_PUBLIC_KEY }}" >> apps/ui/.env
-            echo "VAPID_PRIVATE_KEY=${{ secrets.VAPID_PRIVATE_KEY }}" >> apps/ui/.env
-            echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> apps/ui/.env
+            rm .env
+            echo "PORT=${{ secrets.PORT }}" >> .env
+            echo "CORS=${{ secrets.CORS }}" >> .env
+            echo "SESSION_COOKIE_DOMAIN=${{ secrets.SESSION_COOKIE_DOMAIN }}" >> .env
+            echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
+            echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+            echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+            echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+            echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+            echo "DB_URL=${{ secrets.DB_URL }}" >> .env
             docker pull zeilar/did-you-forget_ui:latest
             docker pull zeilar/did-you-forget_api:latest
             docker-compose down
