@@ -35,7 +35,7 @@ jobs:
 
       - name: Build API image
         run: |
-          echo "PORT=${{ secrets.API_PORT }}" >> apps/api/.env
+          echo "PORT=${{ secrets.PORT }}" >> apps/api/.env
           echo "CORS=${{ secrets.CORS }}" >> apps/api/.env
           echo "SESSION_COOKIE_DOMAIN=${{ secrets.SESSION_COOKIE_DOMAIN }}" >> apps/api/.env
           echo "DB_PORT=${{ secrets.DB_PORT }}" >> apps/api/.env
