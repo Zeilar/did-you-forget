@@ -18,13 +18,10 @@ COPY --from=build /usr/src/app/dist/apps/api .
 COPY --from=build /usr/src/app/apps/api/.env .
 COPY --from=build /usr/src/app/apps/api/prisma .
 
-RUN yarn add prisma@5.22.0
-
-# RUN yarn add -g dotenv-cli
+RUN yarn global add prisma@5.22.0
 
 EXPOSE 4020
 
 # Running migrations here mean that they should happen after the db container is ready.
 # If this stops being the case, it must happen in runtime instead.
-CMD npx prisma migrate deploy && node main.js
-# CMD yarn prisma migrate deploy && dotenv -e .env -- node main.js
+CMD prisma migrate deploy && node main.js
