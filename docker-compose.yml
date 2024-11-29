@@ -13,6 +13,7 @@ services:
   api:
     container_name: dyf_api
     image: zeilar/did-you-forget_api:latest
+    restart: always
     depends_on:
       - db
     ports:

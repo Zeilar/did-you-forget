@@ -20,6 +20,9 @@ COPY --from=build /usr/src/app/apps/api/prisma .
 
 RUN yarn global add prisma@5.22.0
 
+# Is needed in runtime for some reason.
+RUN yarn add tslib
+
 EXPOSE 4020
 
 # Running migrations here mean that they should happen after the db container is ready.

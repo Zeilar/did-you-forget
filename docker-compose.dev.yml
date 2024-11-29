@@ -10,22 +10,22 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - ${DB_PORT}:${DB_PORT}
-  api:
-    container_name: dyf_api
-    build:
-      dockerfile: ./apps/api/Dockerfile
-      context: .
-    depends_on:
-      - db
-    expose:
-      - 4020:4020
-  ui:
-    container_name: dyf_ui
-    build:
-      dockerfile: ./apps/ui/Dockerfile
-      context: .
-    expose:
-      - 4025:4025
+  # api:
+  #   container_name: dyf_api
+  #   build:
+  #     dockerfile: ./apps/api/Dockerfile
+  #     context: .
+  #   depends_on:
+  #     - db
+  #   expose:
+  #     - 4020:4020
+  # ui:
+  #   container_name: dyf_ui
+  #   build:
+  #     dockerfile: ./apps/ui/Dockerfile
+  #     context: .
+  #   expose:
+  #     - 4025:4025
   nginx:
     container_name: dyf_nginx
     image: nginx:latest
