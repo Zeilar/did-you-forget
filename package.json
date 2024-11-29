@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "docker-dev": "docker compose --env-file apps/api/.env up"
+    "docker-dev": "docker compose --env-file apps/api/.env -f docker-compose.dev.yml up"
   },
   "private": true,
   "devDependencies": {

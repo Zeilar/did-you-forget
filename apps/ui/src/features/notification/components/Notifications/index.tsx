@@ -1,13 +1,13 @@
 "use client";
 
-import { Grid, Heading } from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { Notification } from "../Notification";
 import type { NotificationDto, NotificationsForUserDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useMemo, useState } from "react";
-import { Input, Paper } from "@ui/components";
+import { Input } from "@ui/components";
 
 interface NotificationsProps {
   initialData: NotificationDto[];
@@ -60,16 +60,13 @@ export function Notifications({ initialData }: NotificationsProps) {
           </Button>
         </ActionBarContent>
       </ActionBarRoot> */}
-      <Paper zIndex={1} rounded="none" pos="sticky" top={0}>
-        <Heading>Notifications</Heading>
-        <Input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search"
-          // start={<LuSearch />}
-          // end={search && <LuX role="button" onClick={() => setSearch("")} cursor="pointer" />}
-        />
-      </Paper>
+      <Input
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search"
+        // start={<LuSearch />}
+        // end={search && <LuX role="button" onClick={() => setSearch("")} cursor="pointer" />}
+      />
       <Grid gridTemplateColumns={["repeat(1, 1fr)"]} gap={3} p={3}>
         {!search ? (
           <AnimatePresence>

@@ -1,9 +1,10 @@
-import { Alert, AlertDescription, AlertTitle } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertTitle, Heading } from "@chakra-ui/react";
 import type { NotificationsForUserDto } from "@did-you-forget/dto";
 import { serverFetch } from "@ui/common/fetchers/server";
 import { Notifications } from "@ui/features/notification";
 import { withAuth } from "src/app/components";
 import { BsAlarm } from "react-icons/bs";
+import { Paper } from "@ui/components";
 
 // import { useState, useEffect } from "react";
 // import { subscribe, unsubscribe, notify } from "./actions";
@@ -88,10 +89,23 @@ async function Page() {
 
   return (
     <>
+      <Paper zIndex={1} rounded="none" pos="sticky" top={0}>
+        <Heading m={0}>Notifications</Heading>
+      </Paper>
       {notifications.length > 0 ? (
         <Notifications initialData={notifications} />
       ) : (
-        <Alert status="info" variant="subtle" flexDir="column" rounded="md" p={8} gap={2}>
+        <Alert
+          bgColor="bg.paper"
+          status="info"
+          variant="subtle"
+          flexDir="column"
+          rounded="md"
+          p={8}
+          gap={2}
+          m={3}
+          w="auto"
+        >
           <BsAlarm size={40} color="var(--chakra-colors-accent-500)" />
           <AlertTitle mt={2}>No notifications found</AlertTitle>
           <AlertDescription>Add some notifications before you forget</AlertDescription>

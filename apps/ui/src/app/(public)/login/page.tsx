@@ -3,7 +3,7 @@ import { Login } from "./Login";
 
 export default function Page() {
   return (
-    <Flex m="auto" h="full" align="center" justify="center">
+    <Flex p={3} m="auto" h="full" align="center" justify="center">
       <Login />
     </Flex>
   );
