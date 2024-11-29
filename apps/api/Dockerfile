@@ -18,6 +18,8 @@ COPY --from=build /usr/src/app/dist/apps/api .
 COPY --from=build /usr/src/app/apps/api/.env .
 COPY --from=build /usr/src/app/apps/api/prisma .
 
+RUN yarn add prisma@5.22.0
+
 # RUN yarn add -g dotenv-cli
 
 EXPOSE 4020
