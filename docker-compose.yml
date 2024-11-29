@@ -9,7 +9,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - ${DB_PORT}:${DB_PORT}
+      - ${DB_PORT}:5432
   api:
     container_name: dyf_api
     image: zeilar/did-you-forget_api:latest
