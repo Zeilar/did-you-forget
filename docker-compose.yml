@@ -15,12 +15,12 @@ services:
     image: zeilar/did-you-forget_api:latest
     depends_on:
       - db
-    expose:
+    ports:
       - 4020:4020
   ui:
     container_name: dyf_ui
     image: zeilar/did-you-forget_ui:latest
-    expose:
+    ports:
       - 4025:4025
 
 volumes:
