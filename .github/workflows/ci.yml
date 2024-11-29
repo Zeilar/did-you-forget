@@ -71,6 +71,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh -o StrictHostKeyChecking=no root@angelin.dev << 'EOF'
             cd repositories/did-you-forget
+            git pull
             rm apps/api/.env
             rm apps/ui/.env
             echo "PORT=${{ secrets.API_PORT }}" >> apps/api/.env
