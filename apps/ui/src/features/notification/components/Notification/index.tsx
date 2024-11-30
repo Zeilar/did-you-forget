@@ -6,22 +6,9 @@ import { DeletePrompt, Reminders, Repeat, Title } from "./components";
 import { Paper } from "@ui/components";
 import { LuMoreVertical } from "react-icons/lu";
 
-interface NotificationProps extends NotificationDto {
-  onSelect(id: string): void;
-  isSelected: boolean;
-}
-
 const DAYS: string[] = ["m", "t", "w", "t", "f", "s", "s"];
 
-export function Notification({
-  onSelect,
-  isSelected,
-  id,
-  title,
-  repeat,
-  reminders,
-  time,
-}: NotificationProps) {
+export function Notification({ id, title, repeat, reminders, time }: NotificationDto) {
   return (
     <Paper gap={3}>
       <Flex justify="space-between">

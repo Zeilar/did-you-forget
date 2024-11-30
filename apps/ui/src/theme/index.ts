@@ -129,6 +129,9 @@ export const theme = extendTheme({
         bgColor: "black",
         color: "primary.400",
       },
+      "::placeholder": {
+        color: "text.muted",
+      },
     },
   },
 });

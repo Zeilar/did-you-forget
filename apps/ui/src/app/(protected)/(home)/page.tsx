@@ -89,7 +89,7 @@ async function Page() {
 
   return (
     <>
-      <Paper zIndex={1} rounded="none" pos="sticky" top={0}>
+      <Paper zIndex={1} rounded="none">
         <Heading m={0}>Notifications</Heading>
       </Paper>
       {notifications.length > 0 ? (
