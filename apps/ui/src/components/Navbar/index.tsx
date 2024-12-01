@@ -45,8 +45,10 @@ export function Navbar() {
       pb={2}
       gap={8}
       mt="auto"
+      pos="sticky"
+      bottom={0}
     >
-      <NavLink href="/" icon={BsHouseDoorFill}>
+      <NavLink href="/home" icon={BsHouseDoorFill}>
         Home
       </NavLink>
       <NavLink href="/account" icon={BsPersonFill}>

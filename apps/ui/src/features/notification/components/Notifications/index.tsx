@@ -62,7 +62,7 @@ export function Notifications({ initialData }: NotificationsProps) {
   );
 
   return (
-    <>
+    <Box>
       <Paper rounded="none" flexDir="row" justify="space-between" gap={4}>
         <Heading m={0}>Notifications</Heading>
         <Button leftIcon={<LuPlus size="1.25em" />} onClick={createDialog.onOpen}>
@@ -107,10 +107,12 @@ export function Notifications({ initialData }: NotificationsProps) {
         <ModalContent
           as="form"
           mx={4}
-          onSubmit={createForm.handleSubmit(({ time, ...fields }) => createNotification.mutate({
-            ...fields,
-            time: new Date(time).toISOString()
-          }))}
+          onSubmit={createForm.handleSubmit(({ time, ...fields }) =>
+            createNotification.mutate({
+              ...fields,
+              time: new Date(time).toISOString(),
+            })
+          )}
         >
           <ModalHeader>Create notification</ModalHeader>
           <ModalBody as={Stack} spacing={4}>
@@ -158,6 +160,6 @@ export function Notifications({ initialData }: NotificationsProps) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </>
+    </Box>
   );
 }

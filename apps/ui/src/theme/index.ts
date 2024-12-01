@@ -143,7 +143,7 @@ export const theme = extendTheme({
       },
       "html, body": {
         color: "text.default",
-        bgColor: "gray.900",
+        bgColor: "bg.body",
       },
       "::selection": {
         bgColor: "black",
