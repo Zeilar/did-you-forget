@@ -12,7 +12,6 @@ export function useCreateNotification(onSuccess?: VoidFunction) {
   return useMutation<NotificationDto | null, unknown, CreateNotificationDto>(
     "createNotification",
     async (notificationDto) => {
-      // Use react hook form and validate title etc
       const { data } = await clientFetch<NotificationDto>("/notification", "POST", notificationDto);
       return data;
     },
