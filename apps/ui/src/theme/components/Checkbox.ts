@@ -8,10 +8,16 @@ const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpe
 const baseStyle = definePartsStyle({
   control: {
     p: 2,
+    transitionProperty: "all",
     _checked: {
       bgColor: "primary.600",
       borderColor: "primary.600",
       color: "text.default",
+      _hover: {
+        bgColor: "primary.600",
+        borderColor: "primary.600",
+        color: "text.default",
+      },
     },
   },
 });
