@@ -43,7 +43,7 @@ export function Title({ id, title }: Pick<NotificationDto, "id" | "title">) {
         aria-label="Edit title"
         variant="ghost"
         size="icon"
-        color="primary.text"
+        color="text.primary"
         onClick={onOpen}
         icon={<BsPencilSquare size="1.25em" />}
       />

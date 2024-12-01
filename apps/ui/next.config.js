@@ -15,6 +15,13 @@ const nextConfig = {
   logging: {
     fetches: { fullUrl: true },
   },
+  redirects: async () => [
+    {
+      source: "/",
+      destination: "/home",
+      permanent: true,
+    },
+  ],
   async headers() {
     return [
       {

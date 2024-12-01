@@ -4,7 +4,7 @@ import type { PropsWithChildren } from "react";
 
 export default function Page({ children }: PropsWithChildren) {
   return (
-    <Flex p={4} m="auto" h="full" align="center" justify="center" flexDir="column">
+    <Flex p={4} m="auto" w="full" h="full" align="center" justify="center" flexDir="column">
       <Heading>Register</Heading>
       {children}
       <Text mt={4}>

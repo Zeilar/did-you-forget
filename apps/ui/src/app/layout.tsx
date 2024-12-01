@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
-import { Navbar, Providers } from "@ui/components";
-import { Box, Flex } from "@chakra-ui/react";
+import { Providers } from "@ui/components";
+import { Flex } from "@chakra-ui/react";
 import classNames from "classnames";
 import { plusJakartaSans, roboto } from "@ui/theme/fonts";
 
@@ -20,10 +20,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <body className="chakra-ui-dark">
         <Providers>
           <Flex h="100svh" flexDir="column" bgColor="bg.body">
-            <Box w="full" h="full" overflow="auto">
-              {children}
-            </Box>
-            <Navbar />
+            {children}
           </Flex>
         </Providers>
       </body>

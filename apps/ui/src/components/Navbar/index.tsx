@@ -19,7 +19,7 @@ function NavLink({ children, href, icon: Icon }: NavLinkProps) {
   return (
     <Link
       href={href}
-      color={active ? "primary.text" : "gray.100"}
+      color={active ? "text.primary" : "gray.100"}
       display="flex"
       flexDir="column"
       alignItems="center"

@@ -1,6 +1,6 @@
 import { defineStyleConfig, extendTheme, type ThemeConfig } from "@chakra-ui/react";
 import { Checkbox, Menu, Modal } from "./components";
-import { plusJakartaSans, roboto } from "./fonts";
+import { plusJakartaSans, roboto } from "./fonts"; // Comment this out when running the types script.
 
 export const theme = extendTheme({
   fonts: {
@@ -18,7 +18,7 @@ export const theme = extendTheme({
     Menu,
     Link: defineStyleConfig({
       baseStyle: {
-        color: "primary.text",
+        color: "text.primary",
       },
     }),
     FormLabel: defineStyleConfig({
@@ -103,6 +103,7 @@ export const theme = extendTheme({
     },
     text: {
       default: "var(--chakra-colors-gray-50)",
+      text: "var(--chakra-colors-green-400)",
       dark: "var(--chakra-colors-gray-900)",
       danger: "var(--chakra-colors-red-400)",
       muted: "var(--chakra-colors-gray-500)",
@@ -118,7 +119,6 @@ export const theme = extendTheme({
       700: "var(--chakra-colors-green-700)",
       800: "var(--chakra-colors-green-800)",
       900: "var(--chakra-colors-green-900)",
-      text: "var(--chakra-colors-green-400)",
     },
     gray: {
       50: "#f9faf7",
@@ -147,7 +147,7 @@ export const theme = extendTheme({
       },
       "::selection": {
         bgColor: "black",
-        color: "primary.text",
+        color: "text.primary",
       },
       "::placeholder": {
         color: "text.muted",
