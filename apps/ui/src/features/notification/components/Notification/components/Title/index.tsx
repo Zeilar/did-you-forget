@@ -45,7 +45,7 @@ export function Title({ id, title }: Pick<NotificationDto, "id" | "title">) {
         size="icon"
         color="text.primary"
         onClick={onOpen}
-        icon={<BsPencilSquare size="1.25em" />}
+        icon={<BsPencilSquare size="1.25em" color="var(--chakra-colors-text-primary)" />}
       />
       <Text fontWeight={500}>{title}</Text>
     </Flex>

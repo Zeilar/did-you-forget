@@ -103,7 +103,7 @@ export const theme = extendTheme({
     },
     text: {
       default: "var(--chakra-colors-gray-50)",
-      text: "var(--chakra-colors-green-400)",
+      primary: "var(--chakra-colors-green-400)",
       dark: "var(--chakra-colors-gray-900)",
       danger: "var(--chakra-colors-red-400)",
       muted: "var(--chakra-colors-gray-500)",
