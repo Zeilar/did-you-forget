@@ -7,6 +7,8 @@ import {
   InputLeftElement,
   InputRightElement,
   Input,
+  Heading,
+  Button,
 } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { Notification } from "../Notification";
@@ -15,7 +17,8 @@ import { clientFetch } from "@ui/common/fetchers/client";
 import { AnimatePresence, motion } from "motion/react";
 import { useMemo, useState } from "react";
 import { LuSearch, LuX } from "react-icons/lu";
-import { inputProps } from "@ui/components";
+import { inputProps, Paper } from "@ui/components";
+import { BsPlusSquare } from "react-icons/bs";
 
 interface NotificationsProps {
   initialData: NotificationDto[];
@@ -41,24 +44,10 @@ export function Notifications({ initialData }: NotificationsProps) {
 
   return (
     <>
-      {/* <ActionBarRoot open={checked.length > 0}>
-        <ActionBarContent>
-          <ActionBarSelectionTrigger>{checked.length} selected</ActionBarSelectionTrigger>
-          <ActionBarSeparator />
-          <Button
-            onClick={() => deleteNotification.mutate()}
-            loading={deleteNotification.isLoading}
-          >
-            <BsTrash />
-            <span>Delete</span>
-          </Button>
-          <ActionBarSeparator />
-          <Button onClick={() => setChecked([])}>
-            <LuX />
-            <span>Clear</span>
-          </Button>
-        </ActionBarContent>
-      </ActionBarRoot> */}
+      <Paper rounded="none" flexDir="row" justify="space-between">
+        <Heading m={0}>Notifications</Heading>
+        <Button leftIcon={<BsPlusSquare />}>Add</Button>
+      </Paper>
       <Box px={3} mt={3}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">

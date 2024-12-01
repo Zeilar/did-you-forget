@@ -1,10 +1,9 @@
-import { Alert, AlertDescription, AlertTitle, Heading } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertTitle } from "@chakra-ui/react";
 import type { NotificationsForUserDto } from "@did-you-forget/dto";
 import { serverFetch } from "@ui/common/fetchers/server";
 import { Notifications } from "@ui/features/notification";
 import { withAuth } from "src/app/components";
 import { BsAlarm } from "react-icons/bs";
-import { Paper } from "@ui/components";
 
 // import { useState, useEffect } from "react";
 // import { subscribe, unsubscribe, notify } from "./actions";
@@ -89,9 +88,6 @@ async function Page() {
 
   return (
     <>
-      <Paper zIndex={1} rounded="none">
-        <Heading m={0}>Notifications</Heading>
-      </Paper>
       {notifications.length > 0 ? (
         <Notifications initialData={notifications} />
       ) : (

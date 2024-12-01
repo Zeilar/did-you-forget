@@ -25,21 +25,31 @@ export const theme = extendTheme({
       },
     }),
     Button: defineStyleConfig({
+      baseStyle: {
+        fontWeight: 500,
+      },
       defaultProps: {
         variant: "solid-primary",
       },
+      sizes: {
+        icon: {
+          h: "auto",
+          minW: "auto",
+          p: "0.5rem !important",
+        },
+      },
       variants: {
         "solid-primary": {
-          color: "text.dark",
-          bgColor: "primary.400",
+          color: "text.default",
+          bgColor: "green.600",
           _hover: {
-            bgColor: "primary.500",
+            bgColor: "primary.700",
             _loading: {
-              bgColor: "primary.400",
+              bgColor: "primary.800",
             },
           },
           _active: {
-            bgColor: "primary.700",
+            bgColor: "primary.800",
           },
         },
         "solid-secondary": {
@@ -65,7 +75,7 @@ export const theme = extendTheme({
         },
         "outline-primary": {
           border: "1px solid",
-          color: "primary.400",
+          color: "primary.600",
           borderColor: "currentColor",
           _hover: {
             bgColor: "whiteAlpha.50",
@@ -84,21 +94,23 @@ export const theme = extendTheme({
       paper: "var(--chakra-colors-gray-900)",
     },
     text: {
+      default: "var(--chakra-colors-gray-50)",
       dark: "var(--chakra-colors-gray-900)",
       danger: "var(--chakra-colors-red-400)",
       muted: "var(--chakra-colors-gray-500)",
     },
     primary: {
-      50: "#f0f9f7",
-      100: "#c4e8df",
-      200: "#8ed3c2",
-      300: "#49b89d",
-      400: "#1fa786",
-      500: "#008e6b",
-      600: "#00785b",
-      700: "#006149",
-      800: "#00523e",
-      900: "#003b2d",
+      50: "var(--chakra-colors-green-50)",
+      100: "var(--chakra-colors-green-100)",
+      200: "var(--chakra-colors-green-200)",
+      300: "var(--chakra-colors-green-300)",
+      400: "var(--chakra-colors-green-400)",
+      500: "var(--chakra-colors-green-500)",
+      600: "var(--chakra-colors-green-600)",
+      700: "var(--chakra-colors-green-700)",
+      800: "var(--chakra-colors-green-800)",
+      900: "var(--chakra-colors-green-900)",
+      text: "var(--chakra-colors-green-400)",
     },
     gray: {
       50: "#f9faf7",
@@ -122,12 +134,12 @@ export const theme = extendTheme({
         borderColor: "gray.700",
       },
       "html, body": {
-        color: "gray.300",
+        color: "text.default",
         bgColor: "gray.900",
       },
       "::selection": {
         bgColor: "black",
-        color: "primary.400",
+        color: "primary.text",
       },
       "::placeholder": {
         color: "text.muted",

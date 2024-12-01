@@ -4,7 +4,7 @@ import { Input } from "@ui/components";
 import { useEditNotification } from "@ui/features/notification/hooks";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { BsPencil } from "react-icons/bs";
+import { BsPencilSquare } from "react-icons/bs";
 
 export function Title({ id, title }: Pick<NotificationDto, "id" | "title">) {
   const { register, handleSubmit, setValue, formState } = useForm<EditNotificationDto>();
@@ -39,7 +39,14 @@ export function Title({ id, title }: Pick<NotificationDto, "id" | "title">) {
     </Box>
   ) : (
     <Flex gap={2} align="center">
-      <IconButton variant="ghost" icon={<BsPencil />} aria-label="Edit title" onClick={onOpen} />
+      <IconButton
+        aria-label="Edit title"
+        variant="ghost"
+        size="icon"
+        color="primary.text"
+        onClick={onOpen}
+        icon={<BsPencilSquare size="1.25em" />}
+      />
       <Text fontWeight={500}>{title}</Text>
     </Flex>
   );

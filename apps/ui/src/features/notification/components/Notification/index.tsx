@@ -8,7 +8,7 @@ import { LuMoreVertical } from "react-icons/lu";
 
 const DAYS: string[] = ["m", "t", "w", "t", "f", "s", "s"];
 
-export function Notification({ id, title, repeat, reminders, time }: NotificationDto) {
+export function Notification({ id, title, repeat, reminders }: NotificationDto) {
   return (
     <Paper gap={3}>
       <Flex justify="space-between">

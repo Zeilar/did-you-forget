@@ -20,8 +20,8 @@ export function Repeat({ id, repeat, isActive, index, children }: RepeatProps) {
       rounded="full"
       display="flex"
       textTransform="uppercase"
-      bgColor={isActive ? "primary.400" : "inherit"}
-      color={isActive ? "black" : "inherit"}
+      bgColor={isActive ? "primary.600" : "inherit"}
+      color={isActive ? "text.default" : "inherit"}
       isLoading={isLoading}
       onClick={() =>
         mutate({

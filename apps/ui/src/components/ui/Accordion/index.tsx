@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Flex, type FlexProps, Text, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, type FlexProps, useDisclosure } from "@chakra-ui/react";
 import { Paper } from "../Paper";
 import { LuChevronDown } from "react-icons/lu";
 import { motion } from "motion/react";
@@ -26,7 +26,7 @@ export function Accordion({ title, children, disabled, flexProps }: AccordionPro
         align="center"
         userSelect="none"
       >
-        <Text fontWeight={500}>{title}</Text>
+        <Box fontWeight={500}>{title}</Box>
         <motion.span animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
           <LuChevronDown />
         </motion.span>
