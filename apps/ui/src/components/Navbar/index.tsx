@@ -25,6 +25,7 @@ function NavLink({ children, href, icon: Icon }: NavLinkProps) {
       alignItems="center"
       userSelect="none"
       fontWeight={500}
+      gap={1}
       _hover={{ textDecor: "none", color: !active && "primary.600" }}
     >
       <Icon size="1.25em" />

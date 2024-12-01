@@ -1,10 +1,11 @@
 import { defineStyleConfig, extendTheme, type ThemeConfig } from "@chakra-ui/react";
-import { Menu, Modal } from "./components";
+import { Checkbox, Menu, Modal } from "./components";
+import { plusJakartaSans, roboto } from "./fonts";
 
 export const theme = extendTheme({
   fonts: {
-    body: "Roboto",
-    heading: "Roboto",
+    heading: plusJakartaSans.style.fontFamily,
+    body: roboto.style.fontFamily,
   },
   config: {
     initialColorMode: "dark",
@@ -12,11 +13,18 @@ export const theme = extendTheme({
     useSystemColorMode: false,
   } satisfies ThemeConfig,
   components: {
+    Checkbox,
     Modal,
     Menu,
+    Link: defineStyleConfig({
+      baseStyle: {
+        color: "primary.text",
+      },
+    }),
     FormLabel: defineStyleConfig({
       baseStyle: {
         w: "fit-content",
+        fontWeight: 400,
       },
     }),
     Heading: defineStyleConfig({

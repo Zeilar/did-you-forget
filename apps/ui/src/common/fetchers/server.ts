@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 export interface ServerFetchResult<T> {
   data: T | null;
   status: number;
+  ok: boolean;
 }
 
 export const serverFetch = async <T extends object = object>(
@@ -23,5 +24,5 @@ export const serverFetch = async <T extends object = object>(
       ...headers,
     },
   });
-  return { data: await response.json(), status: response.status };
+  return { data: await response.json(), status: response.status, ok: response.ok };
 };

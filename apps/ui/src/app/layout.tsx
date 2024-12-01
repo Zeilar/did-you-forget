@@ -1,19 +1,8 @@
 import type { PropsWithChildren } from "react";
 import { Navbar, Providers } from "@ui/components";
-import { Inter, Roboto } from "next/font/google";
 import { Box, Flex } from "@chakra-ui/react";
 import classNames from "classnames";
-
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const roboto = Roboto({
-  weight: ["400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-});
+import { plusJakartaSans, roboto } from "@ui/theme/fonts";
 
 export const metadata = {
   title: "Welcome to UI",
@@ -24,7 +13,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
   return (
     <html
       lang="en"
-      className={classNames(inter.className, roboto.className)}
+      className={classNames(roboto.className, plusJakartaSans.className)}
       data-theme="dark"
       style={{ colorScheme: "dark" }}
     >

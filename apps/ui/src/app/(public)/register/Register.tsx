@@ -3,8 +3,6 @@
 import { clientFetch } from "@ui/common/fetchers/client";
 import {
   Button,
-  Checkbox,
-  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -13,7 +11,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { Input, Paper } from "@ui/components";
-import type { SignInDto } from "@did-you-forget/dto";
+import type { RegisterUserDto } from "@did-you-forget/dto";
 import { useToast } from "@ui/hooks";
 
 const errorToastOptions: UseToastOptions = {
@@ -22,9 +20,9 @@ const errorToastOptions: UseToastOptions = {
   status: "error",
 };
 
-export function Login() {
+export function Register() {
   const { replace } = useRouter();
-  const { handleSubmit, register, formState } = useForm<SignInDto>({ mode: "onSubmit" });
+  const { handleSubmit, register, formState } = useForm<RegisterUserDto>({ mode: "onSubmit" });
   const toast = useToast();
 
   return (
@@ -33,7 +31,7 @@ export function Login() {
       as="form"
       onSubmit={handleSubmit(async (fields) => {
         try {
-          const { ok } = await clientFetch("/auth/sign-in", "POST", fields);
+          const { ok } = await clientFetch("/user/register", "POST", fields);
           if (!ok) {
             toast(errorToastOptions);
             return;
@@ -82,13 +80,8 @@ export function Login() {
           <FormErrorMessage>{formState.errors.password.message}</FormErrorMessage>
         )}
       </FormControl>
-      <Flex justify="space-between">
-        <Checkbox {...register("rememberMe")} w="fit-content">
-          Remember me
-        </Checkbox>
-      </Flex>
       <Button mt={2} type="submit" isLoading={formState.isSubmitting}>
-        Sign in
+        Register
       </Button>
     </Paper>
   );
