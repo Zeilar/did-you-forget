@@ -9,6 +9,9 @@ const baseStyle = definePartsStyle({
   dialog: {
     bgColor: "bg.paper",
   },
+  header: {
+    fontWeight: 500,
+  },
 });
 
 export const Modal = defineMultiStyleConfig({ baseStyle });

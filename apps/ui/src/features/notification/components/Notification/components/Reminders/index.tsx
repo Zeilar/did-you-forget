@@ -4,10 +4,10 @@ import { Button, Flex, useDisclosure, type FlexProps } from "@chakra-ui/react";
 import { NotificationDto } from "@did-you-forget/dto";
 import { Accordion } from "@ui/components";
 import { Dialog, type DialogFields, Reminder } from "./components";
-import { BsPlusSquare } from "react-icons/bs";
 import { useEditNotification } from "@ui/features/notification/hooks";
 import { useForm } from "react-hook-form";
 import { getTotalSeconds } from "./common";
+import { LuPlus } from "react-icons/lu";
 
 const flexProps: FlexProps = { bgColor: "gray.800", shadow: "none" };
 
@@ -19,7 +19,7 @@ export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "remin
   return (
     <>
       <Accordion title="Reminders" flexProps={flexProps}>
-        <Button onClick={addModal.onOpen} leftIcon={<BsPlusSquare size="1.25em" />} mb={2}>
+        <Button onClick={addModal.onOpen} leftIcon={<LuPlus size="1.25em" />} mb={2}>
           New reminder
         </Button>
         {reminders.length > 0 && (

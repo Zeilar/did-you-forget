@@ -7,7 +7,7 @@ export class SessionDto implements Session {
 
   @IsOptional()
   @IsDateString()
-  expires: Date | null;
+  expires: Date;
 
   @IsOptional()
   @IsIP()

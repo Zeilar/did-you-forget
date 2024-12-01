@@ -1,7 +1,7 @@
 "use client";
 
 import { useToast } from "@chakra-ui/react";
-import { EditNotificationDto, NotificationDto } from "@did-you-forget/dto";
+import type { EditNotificationDto, NotificationDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import { useMutation, useQueryClient } from "react-query";
 

@@ -46,7 +46,7 @@ export class NotificationController {
 
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.CREATED)
-  @Post("/create")
+  @Post("/")
   public async createNotification(
     @SessionId() sessionId: string,
     @Body() createNotificationDto: CreateNotificationDto
@@ -69,7 +69,7 @@ export class NotificationController {
 
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
-  @Delete("/delete")
+  @Delete("/")
   /**
    * Should be used for single deletions also.
    */

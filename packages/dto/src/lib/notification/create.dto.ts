@@ -30,7 +30,7 @@ export class CreateNotificationDto
   repeat?: number[];
 
   @IsDateString()
-  time: Date;
+  time: string;
 
   @MinLength(3)
   @MaxLength(30)

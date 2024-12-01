@@ -9,22 +9,41 @@ import {
   Input,
   Heading,
   Button,
+  ModalFooter,
+  FormErrorMessage,
+  ModalContent,
+  ModalOverlay,
+  Modal,
+  ModalBody,
+  FormControl,
+  useDisclosure,
+  FormLabel,
+  ModalHeader,
+  Stack,
 } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { Notification } from "../Notification";
-import type { NotificationDto, NotificationsForUserDto } from "@did-you-forget/dto";
+import type {
+  CreateNotificationDto,
+  NotificationDto,
+  NotificationsForUserDto,
+} from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import { AnimatePresence, motion } from "motion/react";
 import { useMemo, useState } from "react";
-import { LuSearch, LuX } from "react-icons/lu";
-import { inputProps, Paper } from "@ui/components";
-import { BsPlusSquare } from "react-icons/bs";
+import { LuPlus, LuSearch, LuX } from "react-icons/lu";
+import { inputProps, Paper, Input as UiInput } from "@ui/components";
+import { useForm } from "react-hook-form";
+import { useCreateNotification } from "../../hooks";
 
 interface NotificationsProps {
   initialData: NotificationDto[];
 }
 
 export function Notifications({ initialData }: NotificationsProps) {
+  const createForm = useForm<CreateNotificationDto>();
+  const createDialog = useDisclosure();
+  const createNotification = useCreateNotification(createDialog.onClose);
   const [search, setSearch] = useState<string>("");
   const { data = [] } = useQuery<NotificationDto[]>(
     "notifications",
@@ -44,11 +63,13 @@ export function Notifications({ initialData }: NotificationsProps) {
 
   return (
     <>
-      <Paper rounded="none" flexDir="row" justify="space-between">
+      <Paper rounded="none" flexDir="row" justify="space-between" gap={4}>
         <Heading m={0}>Notifications</Heading>
-        <Button leftIcon={<BsPlusSquare />}>Add</Button>
+        <Button leftIcon={<LuPlus size="1.25em" />} onClick={createDialog.onOpen}>
+          New
+        </Button>
       </Paper>
-      <Box px={3} mt={3}>
+      <Box px={4} mt={4}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">
             <LuSearch color="var(--chakra-colors-text-muted)" />
@@ -66,7 +87,7 @@ export function Notifications({ initialData }: NotificationsProps) {
           )}
         </InputGroup>
       </Box>
-      <Grid gridTemplateColumns={["repeat(1, 1fr)"]} gap={3} p={3}>
+      <Grid gridTemplateColumns={["repeat(1, 1fr)"]} gap={4} p={4}>
         {!search ? (
           <AnimatePresence>
             {data.map((notification) => (
@@ -81,6 +102,62 @@ export function Notifications({ initialData }: NotificationsProps) {
           ))
         )}
       </Grid>
+      <Modal isOpen={createDialog.isOpen} onClose={createDialog.onClose}>
+        <ModalOverlay />
+        <ModalContent
+          as="form"
+          mx={4}
+          onSubmit={createForm.handleSubmit(({ time, ...fields }) => createNotification.mutate({
+            ...fields,
+            time: new Date(time).toISOString()
+          }))}
+        >
+          <ModalHeader>Create notification</ModalHeader>
+          <ModalBody as={Stack} spacing={4}>
+            <FormControl isInvalid={!!createForm.formState.errors.title}>
+              <FormLabel>Title</FormLabel>
+              <UiInput
+                {...createForm.register("title", {
+                  required: {
+                    value: true,
+                    message: "Title is required.",
+                  },
+                  minLength: {
+                    value: 3,
+                    message: "Title must be at least 3 character long.",
+                  },
+                })}
+              />
+              {createForm.formState.errors.title && (
+                <FormErrorMessage>{createForm.formState.errors.title.message}</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl isInvalid={!!createForm.formState.errors.title}>
+              <FormLabel>Time</FormLabel>
+              <UiInput
+                type="datetime-local"
+                {...createForm.register("time", {
+                  required: {
+                    value: true,
+                    message: "Time is required.",
+                  },
+                })}
+              />
+              {createForm.formState.errors.time && (
+                <FormErrorMessage>{createForm.formState.errors.time.message}</FormErrorMessage>
+              )}
+            </FormControl>
+          </ModalBody>
+          <ModalFooter gap={2}>
+            <Button isLoading={createNotification.isLoading} type="submit">
+              Save
+            </Button>
+            <Button variant="ghost" onClick={createDialog.onClose}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

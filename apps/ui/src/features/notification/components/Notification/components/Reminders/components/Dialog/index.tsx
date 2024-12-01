@@ -35,7 +35,7 @@ export function Dialog({ disclosure, isLoading, onSubmit, control, error }: Dial
   return (
     <Modal isOpen={disclosure.isOpen} onClose={disclosure.onClose}>
       <ModalOverlay />
-      <ModalContent w="fit-content" as="form" onSubmit={onSubmit}>
+      <ModalContent as="form" onSubmit={onSubmit} mx={4}>
         <ModalBody>
           <Controller
             control={control}

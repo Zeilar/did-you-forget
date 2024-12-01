@@ -11,10 +11,10 @@ export function useDeleteNotification(ids: string[], onSuccess?: (ids: string[])
   const toast = useToast();
 
   return useMutation<NotificationDto[]>(
-    "deleteNotification",
+    ["deleteNotification", ids],
     async () => {
       const { data } = await clientFetch<DeletedNotificationsDto>(
-        `/notification/delete?ids=${ids.join(",")}`,
+        `/notification?ids=${ids.join(",")}`,
         "DELETE"
       );
       return data?.deletedNotifications ?? [];

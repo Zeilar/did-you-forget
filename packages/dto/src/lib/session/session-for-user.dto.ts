@@ -11,7 +11,7 @@ export class SessionForUserDto implements SessionForUserDtoImplementation {
 
   @IsOptional()
   @IsDateString()
-  expires: Date | null;
+  expires: Date;
 
   @IsOptional()
   @IsIP()
