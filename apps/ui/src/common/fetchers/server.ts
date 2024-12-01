@@ -24,5 +24,8 @@ export const serverFetch = async <T extends object = object>(
       ...headers,
     },
   });
+  if (!response.ok) {
+    console.error(`Error: ${response.status}.`);
+  }
   return { data: await response.json(), status: response.status, ok: response.ok };
 };

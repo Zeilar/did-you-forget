@@ -17,12 +17,18 @@ export class AuthService {
     return new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 4); // 28 days (4 weeks).
   }
 
+  private getCookieRememberMeExpiresDate(): Date {
+    return new Date(Date.now() + 1000 * 60 * 60 * 24 * 365); // 365 days (1 year). Browsers don't like expirations of >2 years.
+  }
+
   public async signIn(
     { email, password, rememberMe, ipAddress }: SignInDto & Pick<Session, "ipAddress">,
     res: Response
   ): Promise<SignInResultDto & { expires: Session["expires"] }> {
     const { id } = await this.validateUser({ email, password });
-    const expires = !rememberMe ? this.getCookieExpiresDate() : null;
+    const expires = rememberMe
+      ? this.getCookieRememberMeExpiresDate()
+      : this.getCookieExpiresDate();
     const { id: sessionId } = await this.prismaService.session.create({
       data: { user: { connect: { id } }, expires, ipAddress },
     });
@@ -31,7 +37,7 @@ export class AuthService {
       sameSite: true,
       httpOnly: true,
       secure: process.env.SECURE === "true",
-      expires: expires ?? new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 10), // Remember me equals 10 years.
+      expires,
     });
     return { expires, sessionId };
   }

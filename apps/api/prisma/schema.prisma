@@ -32,7 +32,7 @@ model User {
 
 model Session {
   id String @id @default(uuid())
-  expires DateTime? // Null means it's permanent, particularly useful for "remember me".
+  expires DateTime
   ipAddress String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
