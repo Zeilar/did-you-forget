@@ -30,6 +30,7 @@ export const theme = extendTheme({
     Heading: defineStyleConfig({
       baseStyle: {
         mb: 4,
+        letterSpacing: 1,
       },
     }),
     Button: defineStyleConfig({
