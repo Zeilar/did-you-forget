@@ -2,7 +2,7 @@
 
 import {
   Button,
-  MenuItem,
+  IconButton,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -26,9 +26,13 @@ export function DeletePrompt({ ids }: DeletePromptProps) {
 
   return (
     <>
-      <MenuItem icon={<BsTrash size="1.5em" />} onClick={onOpen} color="text.danger">
-        Delete
-      </MenuItem>
+      <IconButton
+        aria-label="Delete notification"
+        variant="outline-danger"
+        size="icon"
+        icon={<BsTrash size="1.5em" />}
+        onClick={onOpen}
+      />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

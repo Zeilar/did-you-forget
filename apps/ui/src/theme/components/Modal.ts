@@ -8,6 +8,7 @@ const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpe
 const baseStyle = definePartsStyle({
   dialog: {
     bgColor: "bg.paper",
+    m: 4,
   },
   header: {
     fontWeight: 500,

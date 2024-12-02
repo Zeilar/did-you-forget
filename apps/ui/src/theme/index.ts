@@ -43,9 +43,10 @@ export const theme = extendTheme({
       },
       sizes: {
         icon: {
-          h: "auto",
+          h: "2em",
+          w: "2em",
           minW: "auto",
-          p: "0.5rem !important",
+          p: "0.35em !important",
         },
       },
       variants: {
@@ -86,6 +87,17 @@ export const theme = extendTheme({
         "outline-primary": {
           border: "1px solid",
           color: "primary.600",
+          borderColor: "currentColor",
+          _hover: {
+            bgColor: "whiteAlpha.50",
+          },
+          _active: {
+            bgColor: "whiteAlpha.100",
+          },
+        },
+        "outline-danger": {
+          border: "1px solid",
+          color: "text.danger",
           borderColor: "currentColor",
           _hover: {
             bgColor: "whiteAlpha.50",
