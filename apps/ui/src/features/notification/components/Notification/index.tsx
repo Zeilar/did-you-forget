@@ -2,13 +2,13 @@
 
 import { Box, Flex, IconButton, Menu, MenuButton, MenuList, Text } from "@chakra-ui/react";
 import type { NotificationDto } from "@did-you-forget/dto";
-import { DeletePrompt, Reminders, Repeat, Title } from "./components";
+import { DeletePrompt, Reminders, Repeat, Time, Title } from "./components";
 import { Paper } from "@ui/components";
 import { LuMoreVertical } from "react-icons/lu";
 
 const DAYS: string[] = ["m", "t", "w", "t", "f", "s", "s"];
 
-export function Notification({ id, title, repeat, reminders }: NotificationDto) {
+export function Notification({ id, title, repeat, reminders, time }: NotificationDto) {
   return (
     <Paper gap={3}>
       <Flex justify="space-between">
@@ -29,7 +29,8 @@ export function Notification({ id, title, repeat, reminders }: NotificationDto) 
           </MenuList>
         </Menu>
       </Flex>
-      <Box bgColor="gray.800" p={3} rounded="md">
+      <Time id={id} time={time} />
+      <Box bgColor="gray.800" p={4} rounded="md">
         <Text mb={3}>Repeat</Text>
         <Flex gap={3}>
           {DAYS.map((day, i) => (
