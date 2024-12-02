@@ -1,5 +1,5 @@
 import { defineStyleConfig, extendTheme, type ThemeConfig } from "@chakra-ui/react";
-import { Checkbox, Menu, Modal } from "./components";
+import { Checkbox, Menu, Modal, Switch } from "./components";
 import { plusJakartaSans, roboto } from "./fonts"; // Comment this out when running the types script.
 
 export const theme = extendTheme({
@@ -13,6 +13,7 @@ export const theme = extendTheme({
     useSystemColorMode: false,
   } satisfies ThemeConfig,
   components: {
+    Switch,
     Checkbox,
     Modal,
     Menu,
