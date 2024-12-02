@@ -1,8 +1,18 @@
 "use client";
 
-import { Box, Button, Flex, IconButton, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  IconButton,
+  Input,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import type { EditNotificationDto, NotificationDto } from "@did-you-forget/dto";
-import { Input } from "@ui/components";
+import { inputProps } from "@ui/components";
 import { useEditNotification } from "@ui/features/notification/hooks";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -19,17 +29,23 @@ export function Title({ id, title }: Pick<NotificationDto, "id" | "title">) {
 
   return isOpen ? (
     <Box as="form" onSubmit={handleSubmit((fields) => mutate(fields))} w="full">
-      <Input
-        w={["full", 500]}
-        placeholder="Title"
-        autoFocus
-        {...register("title", {
-          minLength: {
-            value: 3,
-            message: "Title must be at least 3 characters long.",
-          },
-        })}
-      />
+      <FormControl isInvalid={!!formState.errors.title}>
+        <Input
+          {...inputProps}
+          w={["full", 500]}
+          placeholder="Title"
+          autoFocus
+          {...register("title", {
+            minLength: {
+              value: 3,
+              message: "Title must be at least 3 characters long.",
+            },
+          })}
+        />
+        {formState.errors.title && (
+          <FormErrorMessage>{formState.errors.title.message}</FormErrorMessage>
+        )}
+      </FormControl>
       <Flex gap={2} align="center" mt={2}>
         <Button type="submit" isLoading={isLoading || formState.isSubmitting}>
           Save
