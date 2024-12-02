@@ -53,10 +53,15 @@ export function Repeat({ id, repeat }: Pick<NotificationDto, "id" | "repeat">) {
   return (
     <Box bgColor="gray.800" p={4} rounded="md">
       <Flex mb={4} justify="space-between">
-        <Text>Repeat</Text>
+        <Text color="text.secondary" fontWeight={500}>
+          Repeat
+        </Text>
         <Flex align="center">
-          <FormLabel mb={0}>Every day</FormLabel>
+          <FormLabel m={0} pr={2} htmlFor={id} cursor="pointer">
+            Every day
+          </FormLabel>
           <Switch
+            id={id}
             disabled={isLoading}
             isChecked={isAllSelected}
             onChange={() => mutate({ repeat: !isAllSelected ? REPEAT : [] })}

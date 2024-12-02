@@ -10,10 +10,10 @@ export const inputProps: InputProps = {
   },
   _focusVisible: {
     shadow: "none !important",
-    borderColor: "primary.600 !important",
+    borderColor: "text.primary !important",
     outlineOffset: 0,
-    outline: "2px solid",
-    outlineColor: "primary.600 !important", // Must come after the `outline` property.
+    outline: "1px solid",
+    outlineColor: "text.primary !important", // Must come after the `outline` property.
   },
 };
 

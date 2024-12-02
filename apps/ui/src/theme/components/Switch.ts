@@ -6,6 +6,11 @@ const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpe
 );
 
 const baseStyle = definePartsStyle({
+  label: {
+    fontWeight: 500,
+    color: "text.secondary",
+    cursor: "pointer",
+  },
   track: {
     _checked: {
       bgColor: "text.primary",

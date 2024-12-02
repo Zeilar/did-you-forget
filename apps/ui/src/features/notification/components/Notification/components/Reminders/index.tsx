@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Flex, useDisclosure, type FlexProps } from "@chakra-ui/react";
+import { Button, Flex, Text, useDisclosure, type FlexProps } from "@chakra-ui/react";
 import { NotificationDto } from "@did-you-forget/dto";
 import { Accordion } from "@ui/components";
 import { Dialog, type DialogFields, Reminder } from "./components";
@@ -18,7 +18,7 @@ export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "remin
 
   return (
     <>
-      <Accordion title="Reminders" flexProps={flexProps}>
+      <Accordion title={<Text color="text.secondary">Reminders</Text>} flexProps={flexProps}>
         <Button
           variant="outline-primary"
           onClick={addModal.onOpen}

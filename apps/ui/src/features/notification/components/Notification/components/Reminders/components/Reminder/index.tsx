@@ -43,10 +43,8 @@ export function Reminder({ id, reminder, reminders }: ReminderProps) {
           {humanFormat(parseInt(reminder), { scale: timeScale })}
         </Flex>
         <IconButton
-          variant="outline"
+          variant="outline-danger"
           size="icon"
-          borderColor="text.danger"
-          color="text.danger"
           icon={<Trash2 />}
           aria-label="Delete"
           isLoading={isLoading}

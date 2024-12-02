@@ -19,7 +19,7 @@ export function Time({ id, time }: Pick<NotificationDto, "id" | "time">) {
 
   return (
     <Box bgColor="gray.800" p={4} rounded="md">
-      <Text mb={4} fontWeight={500}>
+      <Text mb={4} fontWeight={500} color="text.secondary">
         Time
       </Text>
       {isOpen ? (

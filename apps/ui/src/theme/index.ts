@@ -25,7 +25,10 @@ export const theme = extendTheme({
     FormLabel: defineStyleConfig({
       baseStyle: {
         w: "fit-content",
-        fontWeight: 400,
+        fontWeight: 500,
+        color: "text.secondary",
+        cursor: "auto",
+        userSelect: "none",
       },
     }),
     Heading: defineStyleConfig({
@@ -46,7 +49,7 @@ export const theme = extendTheme({
           h: "2.25em",
           w: "2.25em",
           minW: "auto",
-          p: "0.5em !important",
+          p: "0.6em !important",
         },
       },
       variants: {
@@ -89,10 +92,10 @@ export const theme = extendTheme({
           color: "text.primary",
           borderColor: "currentColor",
           _hover: {
-            bgColor: "whiteAlpha.50",
+            color: "primary.500",
           },
           _active: {
-            bgColor: "whiteAlpha.100",
+            color: "primary.600",
           },
         },
         "outline-danger": {
@@ -100,10 +103,10 @@ export const theme = extendTheme({
           color: "text.danger",
           borderColor: "currentColor",
           _hover: {
-            bgColor: "whiteAlpha.50",
+            color: "red.500",
           },
           _active: {
-            bgColor: "whiteAlpha.100",
+            color: "red.600",
           },
         },
         icon: {
@@ -111,6 +114,11 @@ export const theme = extendTheme({
           borderColor: "border",
           _hover: {
             color: "text.primary",
+            borderColor: "text.primary",
+          },
+          _active: {
+            color: "primary.500",
+            borderColor: "primary.500",
           },
         },
       },
@@ -125,6 +133,7 @@ export const theme = extendTheme({
     text: {
       default: "var(--chakra-colors-gray-50)",
       primary: "var(--chakra-colors-green-400)",
+      secondary: "var(--chakra-colors-gray-300)",
       dark: "var(--chakra-colors-gray-900)",
       danger: "var(--chakra-colors-red-400)",
       muted: "var(--chakra-colors-gray-500)",

@@ -27,6 +27,7 @@ function NavLink({ children, href, icon: Icon }: NavLinkProps) {
       letterSpacing={0.5}
       gap={1}
       _hover={{ textDecor: "none", color: !active && "text.primary" }}
+      _active={{ color: !active && "primary.500" }}
     >
       <Icon />
       <span>{children}</span>
