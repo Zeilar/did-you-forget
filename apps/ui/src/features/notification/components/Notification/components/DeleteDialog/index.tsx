@@ -28,10 +28,11 @@ export function DeletePrompt({ ids }: DeletePromptProps) {
     <>
       <IconButton
         aria-label="Delete notification"
-        variant="outline-danger"
+        variant="icon"
         size="icon"
         icon={<BsTrash size="1.5em" />}
         onClick={onOpen}
+        _hover={{ color: "red.500" }}
       />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

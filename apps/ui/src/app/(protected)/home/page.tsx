@@ -102,7 +102,7 @@ async function Page() {
           m={3}
           w="auto"
         >
-          <BsAlarm size={40} color="var(--chakra-colors-accent-500)" />
+          <BsAlarm size={40} />
           <AlertTitle mt={2}>No notifications found</AlertTitle>
           <AlertDescription>Add some notifications before you forget</AlertDescription>
         </Alert>

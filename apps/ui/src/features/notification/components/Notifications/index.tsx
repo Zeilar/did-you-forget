@@ -154,7 +154,7 @@ export function Notifications({ initialData }: NotificationsProps) {
             <Button isLoading={createNotification.isLoading} type="submit">
               Save
             </Button>
-            <Button variant="ghost" onClick={createDialog.onClose}>
+            <Button variant="outline" onClick={createDialog.onClose}>
               Cancel
             </Button>
           </ModalFooter>

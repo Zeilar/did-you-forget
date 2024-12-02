@@ -70,7 +70,7 @@ export function Dialog({ disclosure, isLoading, onSubmit, control, error }: Dial
           <Button isLoading={isLoading} type="submit">
             Save
           </Button>
-          <Button variant="ghost" onClick={disclosure.onClose}>
+          <Button variant="outline" onClick={disclosure.onClose}>
             Cancel
           </Button>
         </ModalFooter>

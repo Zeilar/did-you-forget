@@ -4,7 +4,7 @@ import { Input } from "@ui/components";
 import { useEditNotification } from "@ui/features/notification/hooks";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { BsPencilSquare } from "react-icons/bs";
+import { LuPen } from "react-icons/lu";
 
 export function Title({ id, title }: Pick<NotificationDto, "id" | "title">) {
   const { register, handleSubmit, setValue, formState } = useForm<EditNotificationDto>();
@@ -32,7 +32,7 @@ export function Title({ id, title }: Pick<NotificationDto, "id" | "title">) {
         <Button type="submit" isLoading={isLoading || formState.isSubmitting}>
           Save
         </Button>
-        <Button variant="ghost" onClick={onClose}>
+        <Button variant="outline" onClick={onClose}>
           Cancel
         </Button>
       </Flex>
@@ -41,11 +41,10 @@ export function Title({ id, title }: Pick<NotificationDto, "id" | "title">) {
     <Flex gap={2} align="center">
       <IconButton
         aria-label="Edit title"
-        variant="ghost"
+        variant="icon"
         size="icon"
-        color="text.primary"
         onClick={onOpen}
-        icon={<BsPencilSquare size="1.25em" color="var(--chakra-colors-text-primary)" />}
+        icon={<LuPen size="1.25em" />}
       />
       <Text fontWeight={500}>{title}</Text>
     </Flex>

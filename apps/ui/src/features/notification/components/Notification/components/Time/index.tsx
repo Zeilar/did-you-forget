@@ -4,7 +4,7 @@ import { Input } from "@ui/components";
 import { useEditNotification } from "@ui/features/notification/hooks";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { BsPencilSquare } from "react-icons/bs";
+import { LuPen } from "react-icons/lu";
 
 export function Time({ id, time }: Pick<NotificationDto, "id" | "time">) {
   const { register, handleSubmit, setValue, formState } = useForm<EditNotificationDto>();
@@ -46,7 +46,7 @@ export function Time({ id, time }: Pick<NotificationDto, "id" | "time">) {
             <Button type="submit" isLoading={isLoading || formState.isSubmitting}>
               Save
             </Button>
-            <Button variant="ghost" onClick={onClose}>
+            <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
           </Flex>
@@ -55,11 +55,10 @@ export function Time({ id, time }: Pick<NotificationDto, "id" | "time">) {
         <Flex gap={2} align="center">
           <IconButton
             aria-label="Edit time"
-            variant="ghost"
+            variant="icon"
             size="icon"
-            color="text.primary"
             onClick={onOpen}
-            icon={<BsPencilSquare size="1.25em" color="var(--chakra-colors-text-primary)" />}
+            icon={<LuPen size="1.25em" />}
           />
           <Text>{new Date(time).toLocaleString()}</Text>
         </Flex>

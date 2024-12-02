@@ -46,7 +46,7 @@ export const theme = extendTheme({
           h: "2em",
           w: "2em",
           minW: "auto",
-          p: "0.35em !important",
+          p: "0.5em !important",
         },
       },
       variants: {
@@ -104,6 +104,13 @@ export const theme = extendTheme({
           },
           _active: {
             bgColor: "whiteAlpha.100",
+          },
+        },
+        icon: {
+          border: "1px solid",
+          borderColor: "border",
+          _hover: {
+            color: "text.primary",
           },
         },
       },
