@@ -19,11 +19,11 @@ export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "remin
   return (
     <>
       <Accordion title="Reminders" flexProps={flexProps}>
-        <Button onClick={addModal.onOpen} leftIcon={<LuPlus size="1.25em" />} mb={2}>
-          New reminder
+        <Button size="sm" onClick={addModal.onOpen} leftIcon={<LuPlus size="1.25em" />}>
+          New
         </Button>
         {reminders.length > 0 && (
-          <Flex flexDir="column" gap={2} mt={2}>
+          <Flex flexDir="column" gap={2} mt={4}>
             {reminders.map((reminder, i) => (
               <Reminder
                 key={`${id}-${reminder}-${i}`}

@@ -35,14 +35,14 @@ export function Dialog({ disclosure, isLoading, onSubmit, control, error }: Dial
   return (
     <Modal isOpen={disclosure.isOpen} onClose={disclosure.onClose}>
       <ModalOverlay />
-      <ModalContent as="form" onSubmit={onSubmit} mx={4}>
+      <ModalContent as="form" w="fit-content" onSubmit={onSubmit} mx={4}>
         <ModalBody>
           <Controller
             control={control}
             name="reminder"
             render={({ field }) => (
               <FormControl>
-                <Flex pt={4} gap={2}>
+                <Flex pt={4} gap={2} justify="center">
                   <PinInput size="lg" placeholder="0" value={field.value} onChange={field.onChange}>
                     <PinInputField order={1} as={Input} aria-label="Hours" placeholder="M" />
                     <PinInputField order={2} as={Input} aria-label="Hours" placeholder="M" />
