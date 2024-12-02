@@ -32,6 +32,14 @@ function RepeatButton({ id, repeat, isActive, index, children, isLoading }: Repe
           repeat: isActive ? repeat.filter((element) => element !== index) : [...repeat, index],
         })
       }
+      _hover={{
+        bgColor: isActive ? "primary.700" : "gray.700",
+      }}
+      _loading={{
+        _hover: {
+          bgColor: isActive ? "primary.600" : "bg.paper",
+        },
+      }}
     >
       {children}
     </Button>
