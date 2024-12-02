@@ -5,7 +5,7 @@ import type { NotificationDto } from "@did-you-forget/dto";
 import { useEditNotification } from "@ui/features/notification/hooks";
 import humanFormat from "human-format";
 import { useForm } from "react-hook-form";
-import { BsTrash } from "react-icons/bs";
+import { Trash2 } from "lucide-react";
 import { Dialog, type DialogFields } from "../Dialog";
 import { getTotalSeconds } from "../../common";
 
@@ -46,7 +46,7 @@ export function Reminder({ id, reminder, reminders }: ReminderProps) {
           variant="outline"
           borderColor="text.danger"
           color="text.danger"
-          icon={<BsTrash />}
+          icon={<Trash2 />}
           aria-label="Delete"
           isLoading={isLoading}
           size="lg"

@@ -2,7 +2,7 @@
 
 import { Box, Flex, type FlexProps, useDisclosure } from "@chakra-ui/react";
 import { Paper } from "../Paper";
-import { LuChevronDown } from "react-icons/lu";
+import { ChevronDown } from "lucide-react";
 import { motion } from "motion/react";
 import type { PropsWithChildren, ReactNode } from "react";
 
@@ -28,7 +28,7 @@ export function Accordion({ title, children, disabled, flexProps }: AccordionPro
       >
         <Box fontWeight={500}>{title}</Box>
         <motion.span animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-          <LuChevronDown />
+          <ChevronDown />
         </motion.span>
       </Flex>
       <Box

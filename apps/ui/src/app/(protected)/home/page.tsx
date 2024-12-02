@@ -3,7 +3,7 @@ import type { NotificationsForUserDto } from "@did-you-forget/dto";
 import { serverFetch } from "@ui/common/fetchers/server";
 import { Notifications } from "@ui/features/notification";
 import { withAuth } from "src/app/components";
-import { BsAlarm } from "react-icons/bs";
+import { BellRing } from "lucide-react";
 
 // import { useState, useEffect } from "react";
 // import { subscribe, unsubscribe, notify } from "./actions";
@@ -102,7 +102,7 @@ async function Page() {
           m={3}
           w="auto"
         >
-          <BsAlarm size={40} />
+          <BellRing size={40} />
           <AlertTitle mt={2}>No notifications found</AlertTitle>
           <AlertDescription>Add some notifications before you forget</AlertDescription>
         </Alert>

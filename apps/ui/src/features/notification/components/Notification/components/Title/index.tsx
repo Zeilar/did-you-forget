@@ -1,10 +1,12 @@
+"use client";
+
 import { Box, Button, Flex, IconButton, Text, useDisclosure } from "@chakra-ui/react";
 import type { EditNotificationDto, NotificationDto } from "@did-you-forget/dto";
 import { Input } from "@ui/components";
 import { useEditNotification } from "@ui/features/notification/hooks";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { LuPen } from "react-icons/lu";
+import { Pen } from "lucide-react";
 
 export function Title({ id, title }: Pick<NotificationDto, "id" | "title">) {
   const { register, handleSubmit, setValue, formState } = useForm<EditNotificationDto>();
@@ -38,13 +40,13 @@ export function Title({ id, title }: Pick<NotificationDto, "id" | "title">) {
       </Flex>
     </Box>
   ) : (
-    <Flex gap={2} align="center">
+    <Flex gap={3} align="center">
       <IconButton
         aria-label="Edit title"
         variant="icon"
         size="icon"
         onClick={onOpen}
-        icon={<LuPen size="1.25em" />}
+        icon={<Pen size="1.25em" />}
       />
       <Text fontWeight={500}>{title}</Text>
     </Flex>

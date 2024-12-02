@@ -7,7 +7,7 @@ import { Dialog, type DialogFields, Reminder } from "./components";
 import { useEditNotification } from "@ui/features/notification/hooks";
 import { useForm } from "react-hook-form";
 import { getTotalSeconds } from "./common";
-import { LuPlus } from "react-icons/lu";
+import { Plus } from "lucide-react";
 
 const flexProps: FlexProps = { bgColor: "gray.800", shadow: "none" };
 
@@ -19,7 +19,11 @@ export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "remin
   return (
     <>
       <Accordion title="Reminders" flexProps={flexProps}>
-        <Button size="sm" onClick={addModal.onOpen} leftIcon={<LuPlus size="1.25em" />}>
+        <Button
+          variant="outline-primary"
+          onClick={addModal.onOpen}
+          leftIcon={<Plus size="1.25em" />}
+        >
           New
         </Button>
         {reminders.length > 0 && (

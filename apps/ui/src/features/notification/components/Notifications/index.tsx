@@ -31,7 +31,7 @@ import type {
 import { clientFetch } from "@ui/common/fetchers/client";
 import { AnimatePresence, motion } from "motion/react";
 import { useMemo, useState } from "react";
-import { LuPlus, LuSearch, LuX } from "react-icons/lu";
+import { Plus, Search, X } from "lucide-react";
 import { inputProps, Paper, Input as UiInput } from "@ui/components";
 import { useForm } from "react-hook-form";
 import { useCreateNotification } from "../../hooks";
@@ -65,14 +65,18 @@ export function Notifications({ initialData }: NotificationsProps) {
     <Box>
       <Paper rounded="none" flexDir="row" justify="space-between" gap={4}>
         <Heading m={0}>Notifications</Heading>
-        <Button leftIcon={<LuPlus size="1.25em" />} onClick={createDialog.onOpen}>
+        <Button
+          variant="outline-primary"
+          leftIcon={<Plus size="1.25em" />}
+          onClick={createDialog.onOpen}
+        >
           New
         </Button>
       </Paper>
       <Box px={4} mt={4}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">
-            <LuSearch color="var(--chakra-colors-text-muted)" />
+            <Search size="1em" color="var(--chakra-colors-text-muted)" />
           </InputLeftElement>
           <Input
             {...inputProps}
@@ -82,7 +86,7 @@ export function Notifications({ initialData }: NotificationsProps) {
           />
           {search && (
             <InputRightElement>
-              <LuX role="button" onClick={() => setSearch("")} cursor="pointer" />
+              <X role="button" onClick={() => setSearch("")} cursor="pointer" />
             </InputRightElement>
           )}
         </InputGroup>

@@ -6,7 +6,7 @@ import { Session } from "../Session";
 import type { SessionForUserDto, SessionsForUserDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import { AnimatePresence, motion } from "motion/react";
-import { BsTrash } from "react-icons/bs";
+import { Trash2 } from "lucide-react";
 import { useDeleteAllSessions } from "../../hooks";
 
 interface NotificationsProps {
@@ -27,7 +27,7 @@ export function Sessions({ initialData }: NotificationsProps) {
   return (
     <>
       <Button onClick={() => deleteAllSessions.mutate()}>
-        <BsTrash />
+        <Trash2 />
         <span>Delete all sessions</span>
       </Button>
       <Grid gridTemplateColumns={["repeat(1, 1fr)"]} gap={2} mt={2}>

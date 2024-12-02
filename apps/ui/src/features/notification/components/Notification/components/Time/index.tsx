@@ -1,10 +1,12 @@
+"use client";
+
 import { Box, Button, Flex, IconButton, Text, useDisclosure } from "@chakra-ui/react";
 import type { EditNotificationDto, NotificationDto } from "@did-you-forget/dto";
 import { Input } from "@ui/components";
 import { useEditNotification } from "@ui/features/notification/hooks";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { LuPen } from "react-icons/lu";
+import { Pen } from "lucide-react";
 
 export function Time({ id, time }: Pick<NotificationDto, "id" | "time">) {
   const { register, handleSubmit, setValue, formState } = useForm<EditNotificationDto>();
@@ -17,7 +19,7 @@ export function Time({ id, time }: Pick<NotificationDto, "id" | "time">) {
 
   return (
     <Box bgColor="gray.800" p={4} rounded="md">
-      <Text mb={2} fontWeight={500}>
+      <Text mb={4} fontWeight={500}>
         Time
       </Text>
       {isOpen ? (
@@ -52,13 +54,13 @@ export function Time({ id, time }: Pick<NotificationDto, "id" | "time">) {
           </Flex>
         </Box>
       ) : (
-        <Flex gap={2} align="center">
+        <Flex gap={3} align="center">
           <IconButton
             aria-label="Edit time"
             variant="icon"
             size="icon"
             onClick={onOpen}
-            icon={<LuPen size="1.25em" />}
+            icon={<Pen size="1.25em" />}
           />
           <Text>{new Date(time).toLocaleString()}</Text>
         </Flex>

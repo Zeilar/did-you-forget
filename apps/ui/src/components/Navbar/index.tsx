@@ -2,14 +2,13 @@
 
 import { Link } from "@chakra-ui/next-js";
 import { usePathname } from "next/navigation";
-import type { PropsWithChildren } from "react";
-import { BsHouseDoorFill, BsPersonFill } from "react-icons/bs";
-import type { IconType } from "react-icons/lib";
+import type { ForwardRefExoticComponent, PropsWithChildren, RefAttributes } from "react";
+import { House, type LucideProps, User2 } from "lucide-react";
 import { Flex } from "@chakra-ui/react";
 
 interface NavLinkProps extends PropsWithChildren {
   href: string;
-  icon: IconType;
+  icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>;
 }
 
 function NavLink({ children, href, icon: Icon }: NavLinkProps) {
@@ -25,10 +24,11 @@ function NavLink({ children, href, icon: Icon }: NavLinkProps) {
       alignItems="center"
       userSelect="none"
       fontWeight={500}
+      letterSpacing={0.5}
       gap={1}
-      _hover={{ textDecor: "none", color: !active && "primary.600" }}
+      _hover={{ textDecor: "none", color: !active && "text.primary" }}
     >
-      <Icon size="1.25em" />
+      <Icon />
       <span>{children}</span>
     </Link>
   );
@@ -48,10 +48,10 @@ export function Navbar() {
       pos="sticky"
       bottom={0}
     >
-      <NavLink href="/home" icon={BsHouseDoorFill}>
+      <NavLink href="/home" icon={House}>
         Home
       </NavLink>
-      <NavLink href="/account" icon={BsPersonFill}>
+      <NavLink href="/account" icon={User2}>
         Account
       </NavLink>
     </Flex>

@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { pluralizeWithS } from "@ui/common/pluralize";
 import { useDeleteNotification } from "@ui/features/notification";
-import { BsTrash } from "react-icons/bs";
+import { Trash2 } from "lucide-react";
 
 interface DeletePromptProps {
   ids: string[];
@@ -30,7 +30,7 @@ export function DeletePrompt({ ids }: DeletePromptProps) {
         aria-label="Delete notification"
         variant="icon"
         size="icon"
-        icon={<BsTrash size="1.5em" />}
+        icon={<Trash2 size="1.5em" />}
         onClick={onOpen}
         _hover={{ color: "red.500" }}
       />
@@ -48,7 +48,7 @@ export function DeletePrompt({ ids }: DeletePromptProps) {
             <Button onClick={() => mutate()} isLoading={isLoading} variant="solid-danger">
               Delete
             </Button>
-            <Button variant="ghost" onClick={onClose}>
+            <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
           </ModalFooter>
@@ -61,7 +61,7 @@ export function DeletePrompt({ ids }: DeletePromptProps) {
   //   <DialogRoot lazyMount open={open} onOpenChange={(e) => (e.open ? onOpen() : onClose())}>
   //     <DialogTrigger asChild>
   //       <Button onClick={onOpen}>
-  //         <BsTrash />
+  //         <Trash2 />
   //       </Button>
   //     </DialogTrigger>
   //     <DialogContent>
