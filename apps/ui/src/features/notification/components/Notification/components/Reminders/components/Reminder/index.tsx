@@ -33,7 +33,7 @@ export function Reminder({ id, reminder, reminders }: ReminderProps) {
           as="button"
           w="full"
           justifyContent="start"
-          p={3}
+          p={2}
           bgColor="bg.paper"
           rounded="md"
           opacity={!isLoading ? 1 : 0.5}
@@ -44,12 +44,12 @@ export function Reminder({ id, reminder, reminders }: ReminderProps) {
         </Flex>
         <IconButton
           variant="outline"
+          size="icon"
           borderColor="text.danger"
           color="text.danger"
           icon={<Trash2 />}
           aria-label="Delete"
           isLoading={isLoading}
-          size="lg"
           onClick={() => mutate({ reminders: reminders.filter((element) => element !== reminder) })}
         />
       </Flex>

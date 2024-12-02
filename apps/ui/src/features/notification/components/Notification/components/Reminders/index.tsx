@@ -23,6 +23,7 @@ export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "remin
           variant="outline-primary"
           onClick={addModal.onOpen}
           leftIcon={<Plus size="1.25em" />}
+          size="sm"
         >
           New
         </Button>

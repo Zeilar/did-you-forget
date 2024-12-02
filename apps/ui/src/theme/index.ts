@@ -46,7 +46,7 @@ export const theme = extendTheme({
           h: "2.25em",
           w: "2.25em",
           minW: "auto",
-          p: "0.65em !important",
+          p: "0.5em !important",
         },
       },
       variants: {
