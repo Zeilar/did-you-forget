@@ -1,9 +1,7 @@
-import { Alert, AlertDescription, AlertTitle } from "@chakra-ui/react";
 import type { NotificationsForUserDto } from "@did-you-forget/dto";
 import { serverFetch } from "@ui/common/fetchers/server";
 import { Notifications } from "@ui/features/notification";
 import { withAuth } from "src/app/components";
-import { BellRing } from "lucide-react";
 
 // import { useState, useEffect } from "react";
 // import { subscribe, unsubscribe, notify } from "./actions";
@@ -88,25 +86,7 @@ async function Page() {
 
   return (
     <>
-      {notifications.length > 0 ? (
-        <Notifications initialData={notifications} />
-      ) : (
-        <Alert
-          bgColor="bg.paper"
-          status="info"
-          variant="subtle"
-          flexDir="column"
-          rounded="md"
-          p={8}
-          gap={2}
-          m={3}
-          w="auto"
-        >
-          <BellRing size={40} />
-          <AlertTitle mt={2}>No notifications found</AlertTitle>
-          <AlertDescription>Add some notifications before you forget</AlertDescription>
-        </Alert>
-      )}
+      <Notifications initialData={notifications} />
       {/* <PushNotificationManager /> */}
     </>
   );
