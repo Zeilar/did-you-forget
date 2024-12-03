@@ -71,7 +71,6 @@
     "eslint-config-next": "^15.0.3",
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
-    "human-format": "^1.2.1",
     "lucide-react": "^0.462.0",
     "motion": "^11.11.17",
     "next": "15.0.3",

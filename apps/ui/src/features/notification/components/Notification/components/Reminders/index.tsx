@@ -6,7 +6,6 @@ import { Accordion } from "@ui/components";
 import { Dialog, type DialogFields, Reminder } from "./components";
 import { useEditNotification } from "@ui/features/notification/hooks";
 import { useForm } from "react-hook-form";
-import { getTotalSeconds } from "./common";
 import { Plus } from "lucide-react";
 
 const flexProps: FlexProps = { bgColor: "gray.800", shadow: "none" };
@@ -45,10 +44,7 @@ export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "remin
         error={addForm.formState.errors.reminder}
         isLoading={isLoading}
         onSubmit={addForm.handleSubmit(({ reminder }) =>
-          mutate(
-            { reminders: [...reminders, getTotalSeconds(reminder)] },
-            { onSuccess: () => addForm.reset() }
-          )
+          mutate({ reminders: [...reminders, reminder] }, { onSuccess: () => addForm.reset() })
         )}
         control={addForm.control}
       />

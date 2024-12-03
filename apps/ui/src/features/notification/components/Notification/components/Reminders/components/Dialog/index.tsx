@@ -1,23 +1,20 @@
 "use client";
 
 import {
-  Box,
   Button,
-  Flex,
   FormControl,
   FormErrorMessage,
+  Grid,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalOverlay,
-  PinInput,
-  PinInputField,
   type UseDisclosureReturn,
 } from "@chakra-ui/react";
-import { Input } from "@ui/components";
 import { Controller, type FieldError, type Control } from "react-hook-form";
 import type { BaseSyntheticEvent } from "react";
+import { formatDuration } from "../../common";
 
 interface DialogProps {
   disclosure: UseDisclosureReturn;
@@ -31,36 +28,39 @@ export interface DialogFields {
   reminder: string;
 }
 
+const OPTIONS: string[] = [
+  `${60 * 5}`, // 5 minutes.
+  `${60 * 10}`, // 10 minutes.
+  `${60 * 15}`, // 15 minutes.
+  `${60 * 60}`, // 1 hour.
+  `${60 * 60 * 2}`, // 2 hours.
+  `${60 * 60 * 12}`, // 12 hours.
+  `${60 * 60 * 24}`, // 24 hours.
+  `${60 * 60 * 48}`, // 48 hours.
+];
+
 export function Dialog({ disclosure, isLoading, onSubmit, control, error }: DialogProps) {
   return (
     <Modal isOpen={disclosure.isOpen} onClose={disclosure.onClose}>
       <ModalOverlay />
-      <ModalContent as="form" w="fit-content" onSubmit={onSubmit} mx={4}>
+      <ModalContent as="form" onSubmit={onSubmit} mx={4}>
         <ModalBody>
           <Controller
             control={control}
             name="reminder"
             render={({ field }) => (
               <FormControl>
-                <Flex pt={4} gap={2} justify="center">
-                  <PinInput size="lg" placeholder="0" value={field.value} onChange={field.onChange}>
-                    <PinInputField order={1} as={Input} aria-label="Hours" placeholder="M" />
-                    <PinInputField order={2} as={Input} aria-label="Hours" placeholder="M" />
-                    <PinInputField order={4} as={Input} aria-label="Minutes" placeholder="M" />
-                    <PinInputField order={5} as={Input} aria-label="Minutes" placeholder="M" />
-                    <Box sx={{ all: "unset", order: 3 }}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="48"
-                        viewBox="0 0 16 48"
-                      >
-                        <Box as="circle" cx="8" cy="16" r="2" fill="border" />
-                        <Box as="circle" cx="8" cy="32" r="2" fill="border" />
-                      </svg>
-                    </Box>
-                  </PinInput>
-                </Flex>
+                <Grid pt={4} gap={4} gridTemplateColumns={["repeat(2, 1fr)"]}>
+                  {OPTIONS.map((option) => (
+                    <Button
+                      key={option}
+                      variant={field.value === option ? "outline-primary" : "outline"}
+                      onClick={() => field.onChange(option)}
+                    >
+                      {formatDuration(parseInt(option))}
+                    </Button>
+                  ))}
+                </Grid>
                 {error && <FormErrorMessage>{error.message}</FormErrorMessage>}
               </FormControl>
             )}

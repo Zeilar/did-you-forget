@@ -1,1 +1,1 @@
-export * from "./getTotalSeconds";
+export * from "./formatDuration";
