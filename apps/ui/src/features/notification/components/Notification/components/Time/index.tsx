@@ -57,8 +57,8 @@ export function Time({ id, time }: Pick<NotificationDto, "id" | "time">) {
         <Flex gap={3} align="center">
           <IconButton
             aria-label="Edit time"
-            variant="icon"
-            size="icon"
+            variant="ghost"
+            size="sm"
             onClick={onOpen}
             icon={<Pen size="1.25em" />}
           />

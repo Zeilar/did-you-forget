@@ -30,7 +30,7 @@ const OPTIONS: string[] = [
 ];
 
 export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "reminders">) {
-  const { setValue, control, formState, reset, handleSubmit } = useForm<{ reminders: string[] }>({
+  const { setValue, control, formState, handleSubmit } = useForm<{ reminders: string[] }>({
     defaultValues: { reminders },
   });
   const { mutate, isLoading } = useEditNotification(id);
@@ -55,6 +55,7 @@ export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "remin
                   return (
                     <Button
                       key={option}
+                      disabled={isLoading}
                       variant={isSelected ? "outline-primary" : "outline"}
                       onClick={() =>
                         onChange(
@@ -79,7 +80,7 @@ export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "remin
           <Button isLoading={isLoading} onClick={handleSubmit((fields) => mutate(fields))}>
             Save
           </Button>
-          <Button variant="outline" onClick={() => reset()}>
+          <Button variant="outline" onClick={() => setValue("reminders", reminders)}>
             Reset
           </Button>
         </Flex>
