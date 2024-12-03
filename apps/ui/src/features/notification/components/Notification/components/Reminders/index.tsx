@@ -1,53 +1,89 @@
 "use client";
 
-import { Button, Flex, Text, useDisclosure, type FlexProps } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  Grid,
+  Text,
+  type FlexProps,
+} from "@chakra-ui/react";
 import { NotificationDto } from "@did-you-forget/dto";
 import { Accordion } from "@ui/components";
-import { Dialog, type DialogFields, Reminder } from "./components";
 import { useEditNotification } from "@ui/features/notification/hooks";
-import { useForm } from "react-hook-form";
-import { Plus } from "lucide-react";
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { formatDuration } from "./common";
 
 const flexProps: FlexProps = { bgColor: "gray.800", shadow: "none" };
 
+const OPTIONS: string[] = [
+  `${60 * 5}`, // 5 minutes.
+  `${60 * 10}`, // 10 minutes.
+  `${60 * 15}`, // 15 minutes.
+  `${60 * 60}`, // 1 hour.
+  `${60 * 60 * 2}`, // 2 hours.
+  `${60 * 60 * 12}`, // 12 hours.
+  `${60 * 60 * 24}`, // 24 hours.
+  `${60 * 60 * 48}`, // 48 hours.
+];
+
 export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "reminders">) {
-  const addModal = useDisclosure();
-  const addForm = useForm<DialogFields>();
-  const { mutate, isLoading } = useEditNotification(id, addModal.onClose);
+  const { setValue, control, formState, reset, handleSubmit } = useForm<{ reminders: string[] }>({
+    defaultValues: { reminders },
+  });
+  const { mutate, isLoading } = useEditNotification(id);
+
+  useEffect(() => {
+    setValue("reminders", reminders);
+  }, [reminders, setValue]);
 
   return (
     <>
       <Accordion title={<Text color="text.secondary">Reminders</Text>} flexProps={flexProps}>
-        <Button
-          variant="outline-primary"
-          onClick={addModal.onOpen}
-          leftIcon={<Plus size="1.25em" />}
-          size="sm"
-        >
-          New
-        </Button>
-        {reminders.length > 0 && (
-          <Flex flexDir="column" gap={2} mt={4}>
-            {reminders.map((reminder, i) => (
-              <Reminder
-                key={`${id}-${reminder}-${i}`}
-                id={id}
-                reminders={reminders}
-                reminder={reminder}
-              />
-            ))}
-          </Flex>
-        )}
+        <Controller
+          control={control}
+          name="reminders"
+          render={({ field }) => (
+            <FormControl>
+              <Grid gap={2} gridTemplateColumns={["repeat(2, 1fr)"]}>
+                {OPTIONS.map((option) => {
+                  const { value = [], onChange } = field;
+                  const isSelected = value.includes(option);
+
+                  return (
+                    <Button
+                      key={option}
+                      variant={isSelected ? "outline-primary" : "outline"}
+                      onClick={() =>
+                        onChange(
+                          !isSelected
+                            ? [...value, option]
+                            : value.filter((element) => element !== option)
+                        )
+                      }
+                    >
+                      {formatDuration(parseInt(option))}
+                    </Button>
+                  );
+                })}
+              </Grid>
+              {formState.errors.reminders && (
+                <FormErrorMessage>{formState.errors.reminders.message}</FormErrorMessage>
+              )}
+            </FormControl>
+          )}
+        />
+        <Flex gap={2} mt={4}>
+          <Button isLoading={isLoading} onClick={handleSubmit((fields) => mutate(fields))}>
+            Save
+          </Button>
+          <Button variant="outline" onClick={() => reset()}>
+            Reset
+          </Button>
+        </Flex>
       </Accordion>
-      <Dialog
-        disclosure={addModal}
-        error={addForm.formState.errors.reminder}
-        isLoading={isLoading}
-        onSubmit={addForm.handleSubmit(({ reminder }) =>
-          mutate({ reminders: [...reminders, reminder] }, { onSuccess: () => addForm.reset() })
-        )}
-        control={addForm.control}
-      />
     </>
   );
 }
