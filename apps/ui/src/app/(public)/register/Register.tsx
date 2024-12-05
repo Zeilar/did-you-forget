@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { Input, Paper } from "@ui/components";
 import type { RegisterUserDto } from "@did-you-forget/dto";
 import { useToast } from "@ui/hooks";
+import { isEmail } from "class-validator";
 
 const errorToastOptions: UseToastOptions = {
   title: "Error",
@@ -51,6 +52,7 @@ export function Register() {
               value: true,
               message: "Email is required.",
             },
+            validate: (value) => isEmail(value) || "Invalid email.",
           })}
           type="email"
           placeholder="Email"

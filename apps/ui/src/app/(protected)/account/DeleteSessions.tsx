@@ -18,7 +18,7 @@ export function DeleteSessions() {
     <Stack align="start">
       <Alert status="error">
         <AlertIcon />
-        <Text>This will log you out everywhere, including this machine.</Text>
+        <Text>This will sign you out everywhere, including this machine.</Text>
       </Alert>
       <Button
         variant="outline-danger"
