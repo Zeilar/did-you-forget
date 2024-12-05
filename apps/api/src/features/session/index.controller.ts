@@ -62,7 +62,7 @@ export class SessionController {
 
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
-  @Delete("/delete-all")
+  @Delete("/all")
   public async deleteAllSessionsForUser(@SessionId() sessionId: string): Promise<void> {
     const { id } = await this.userService.getUserBySessionId(sessionId);
     await this.sessionService.deleteAllSessionsForUser(id);

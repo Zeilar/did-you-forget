@@ -1,4 +1,14 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Res, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Patch,
+  Post,
+  Res,
+  UseGuards,
+} from "@nestjs/common";
 import { UserService } from "./index.service";
 import type {
   CreatedUserDto,
@@ -36,14 +46,14 @@ export class UserController {
 
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
-  @Get("/profile")
+  @Get("/")
   public profile(@SessionId() sessionId: string): Promise<UserWithoutPasswordDto> {
     return this.userService.getUserBySessionId(sessionId);
   }
 
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
-  @Post("/edit")
+  @Patch("/")
   public async edit(
     @SessionId() sessionId: string,
     @Body() editUserDto: EditUserDto

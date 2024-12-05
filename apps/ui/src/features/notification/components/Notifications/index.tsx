@@ -66,7 +66,7 @@ export function Notifications({ initialData }: NotificationsProps) {
 
   return (
     <>
-      <Paper rounded="none" flexDir="row" justify="space-between" gap={4}>
+      <Paper rounded="none" flexDir="row" justify="space-between">
         <Heading m={0}>Notifications</Heading>
         <Button
           variant="outline-primary"

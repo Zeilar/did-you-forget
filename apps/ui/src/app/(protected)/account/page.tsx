@@ -1,20 +1,23 @@
-import { Flex } from "@chakra-ui/react";
-import type { SessionsForUserDto } from "@did-you-forget/dto";
-import { serverFetch } from "@ui/common/fetchers/server";
-import { Title } from "@ui/components";
-import { Sessions } from "@ui/features/session";
 import { withAuth } from "src/app/components";
+import { Logout } from "./Logout";
+import { serverFetch } from "@ui/common/fetchers/server";
+import type { UserWithoutPasswordDto } from "@did-you-forget/dto";
+import { DeleteSessions } from "./DeleteSessions";
+import { Credentials } from "./Credentials";
+import { Box, Divider } from "@chakra-ui/react";
 
 async function Page() {
-  const sessionsQuery = await serverFetch<SessionsForUserDto>("/session");
+  const { data } = await serverFetch<UserWithoutPasswordDto>("/user");
 
   return (
-    <div>
-      <Title as={Flex} justifyContent="space-between" alignItems="center" w="100%">
-        Sessions
-      </Title>
-      <Sessions initialData={sessionsQuery.data?.sessions ?? []} />
-    </div>
+    <>
+      <Credentials initialData={data} />
+      <Box mt={4}>
+        <Logout />
+      </Box>
+      <Divider my={4} />
+      <DeleteSessions />
+    </>
   );
 }
 

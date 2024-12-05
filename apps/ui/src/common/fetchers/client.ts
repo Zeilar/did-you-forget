@@ -1,15 +1,15 @@
-export interface ServerFetchResult<T> {
-  data: T | null;
+export interface ClientFetchResult<T> {
+  data: T;
   status: number;
   ok: boolean;
 }
 
-export const clientFetch = async <T extends object = object>(
+export const clientFetch = async <T extends object | null = null>(
   url: string,
   method?: string,
   body?: object,
   headers?: HeadersInit
-): Promise<ServerFetchResult<T>> => {
+): Promise<ClientFetchResult<T>> => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
     method: method ?? "GET",
     credentials: "include",
@@ -19,7 +19,7 @@ export const clientFetch = async <T extends object = object>(
       ...headers,
     },
   });
-  let data: T | null = null;
+  let data = null as T;
   if (response.status !== 204) {
     try {
       data = await response.json();

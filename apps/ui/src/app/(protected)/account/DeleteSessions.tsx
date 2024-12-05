@@ -1,0 +1,33 @@
+"use client";
+
+import { Alert, AlertIcon, Button, Stack, Text } from "@chakra-ui/react";
+import { clientFetch } from "@ui/common/fetchers/client";
+import { Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useMutation } from "react-query";
+
+export function DeleteSessions() {
+  const { push } = useRouter();
+  const { isLoading, mutate } = useMutation(
+    "deleteSessions",
+    () => clientFetch("/session/all", "DELETE"),
+    { onSuccess: () => push("/login") }
+  );
+
+  return (
+    <Stack align="start">
+      <Alert status="error">
+        <AlertIcon />
+        <Text>This will log you out everywhere, including this machine.</Text>
+      </Alert>
+      <Button
+        variant="outline-danger"
+        isLoading={isLoading}
+        onClick={() => mutate()}
+        leftIcon={<Trash2 />}
+      >
+        Delete sessions
+      </Button>
+    </Stack>
+  );
+}

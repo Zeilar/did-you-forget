@@ -5,8 +5,8 @@ import type { ComponentType } from "react";
 
 export function withAuth<T extends object = object>(Component: ComponentType<T>) {
   return async function Page(props: T) {
-    const profileQuery = await serverFetch<UserWithoutPasswordDto>("/user/profile");
-    if (profileQuery.status >= 400) {
+    const { status } = await serverFetch<UserWithoutPasswordDto>("/user");
+    if (status >= 400) {
       redirect("/login");
       return null;
     }
