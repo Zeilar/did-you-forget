@@ -21,7 +21,9 @@ export function Credentials({ initialData }: CredentialsProps) {
     },
     { initialData, cacheTime: 0 } // For some reason the cache invalidation doesn't work.
   );
-  const { register } = useForm<EditUserDto>({ defaultValues: { email: initialData.email } });
+  const { register, setValue } = useForm<EditUserDto>({
+    defaultValues: { email: initialData.email },
+  });
 
   return (
     <Paper w="full" as="form">
@@ -61,7 +63,12 @@ export function Credentials({ initialData }: CredentialsProps) {
       </FormControl>
       <Flex gap={2} mt={2}>
         <Button>Save</Button>
-        <Button variant="outline">Reset</Button>
+        <Button
+          variant="outline"
+          onClick={() => setValue("email", data?.email ?? initialData.email)}
+        >
+          Reset
+        </Button>
       </Flex>
     </Paper>
   );
