@@ -45,11 +45,11 @@ export function Time({ id, time }: Pick<NotificationDto, "id" | "time">) {
             })}
           />
           <Flex gap={2} align="center" mt={2}>
-            <Button type="submit" isLoading={isLoading || formState.isSubmitting}>
-              Save
-            </Button>
             <Button variant="outline" onClick={onClose}>
               Cancel
+            </Button>
+            <Button type="submit" isLoading={isLoading || formState.isSubmitting}>
+              Save
             </Button>
           </Flex>
         </Box>

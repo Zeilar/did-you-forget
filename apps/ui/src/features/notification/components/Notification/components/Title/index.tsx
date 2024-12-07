@@ -47,11 +47,11 @@ export function Title({ id, title }: Pick<NotificationDto, "id" | "title">) {
         )}
       </FormControl>
       <Flex gap={2} align="center" mt={2}>
-        <Button type="submit" isLoading={isLoading || formState.isSubmitting}>
-          Save
-        </Button>
         <Button variant="outline" onClick={onClose}>
           Cancel
+        </Button>
+        <Button type="submit" isLoading={isLoading || formState.isSubmitting}>
+          Save
         </Button>
       </Flex>
     </Box>
