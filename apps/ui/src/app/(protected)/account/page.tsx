@@ -12,10 +12,11 @@ async function Page() {
   return (
     <>
       <Credentials initialData={data} />
-      <Box mt={4}>
+      <Divider my={2} />
+      <Box>
         <Logout />
       </Box>
-      <Divider my={4} />
+      <Divider my={2} />
       <DeleteSessions />
     </>
   );

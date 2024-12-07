@@ -1,10 +1,20 @@
 "use client";
 
-import { Button, Flex, FormControl, FormLabel, Heading, Input } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Heading,
+  Input,
+  Stack,
+} from "@chakra-ui/react";
 import type { EditUserDto, UserWithoutPasswordDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
-import { Paper } from "@ui/components";
+import { useEditUser } from "@ui/features/user/hooks";
 import { isEmail } from "class-validator";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 
@@ -13,6 +23,7 @@ interface CredentialsProps {
 }
 
 export function Credentials({ initialData }: CredentialsProps) {
+  const { mutate, isLoading } = useEditUser();
   const { data } = useQuery<UserWithoutPasswordDto>(
     "user",
     async () => {
@@ -21,47 +32,47 @@ export function Credentials({ initialData }: CredentialsProps) {
     },
     { initialData, cacheTime: 0 } // For some reason the cache invalidation doesn't work.
   );
-  const { register, setValue, watch } = useForm<EditUserDto>({
+  const { register, setValue, watch, formState, handleSubmit } = useForm<EditUserDto>({
     defaultValues: { email: initialData.email },
   });
 
+  useEffect(() => {
+    setValue("email", data?.email ?? initialData.email);
+  }, [initialData.email, data?.email, setValue]);
+
   return (
-    <Paper w="full" as="form">
+    <Stack spacing={4} as="form" onSubmit={handleSubmit((fields) => mutate(fields))}>
       <Heading as="h3" size="lg" mb={0}>
         Profile
       </Heading>
-      <FormControl>
+      <FormControl isInvalid={!!formState.errors.email}>
         <FormLabel>Email</FormLabel>
         <Input
           placeholder={data?.email ?? initialData.email}
           type="email"
-          {...register("email", {
-            required: {
-              value: true,
-              message: "Email is required.",
-            },
-            validate: (value) => isEmail(value) || "Invalid email.",
-          })}
+          {...register("email", { validate: (value) => isEmail(value) || "Invalid email." })}
         />
+        {formState.errors.email?.message && (
+          <FormErrorMessage>{formState.errors.email.message}</FormErrorMessage>
+        )}
       </FormControl>
-      <FormControl>
+      <FormControl isInvalid={!!formState.errors.password}>
         <FormLabel>Password</FormLabel>
         <Input
           placeholder="Password"
           type="password"
           {...register("password", {
-            required: {
-              value: true,
-              message: "Password is required.",
-            },
             minLength: {
               value: 3,
               message: "Password must be at least 3 character long.",
             },
           })}
         />
+        {formState.errors.password?.message && (
+          <FormErrorMessage>{formState.errors.password.message}</FormErrorMessage>
+        )}
       </FormControl>
-      <Flex gap={2} mt={2} justify="end">
+      <Flex gap={2} justify="end">
         <Button
           disabled={(data?.email ?? initialData.email) === watch("email")}
           variant="outline"
@@ -69,8 +80,10 @@ export function Credentials({ initialData }: CredentialsProps) {
         >
           Reset
         </Button>
-        <Button>Save</Button>
+        <Button type="submit" isLoading={isLoading}>
+          Save
+        </Button>
       </Flex>
-    </Paper>
+    </Stack>
   );
 }
