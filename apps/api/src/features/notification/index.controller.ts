@@ -24,6 +24,7 @@ import { AuthGuard } from "../../common/guards/auth.guard";
 import { SessionId } from "../../common/decorators/session-id.decorator";
 import { UserService } from "../user/index.service";
 import { isArray } from "class-validator";
+import { IsVerifiedGuard } from "../../common/guards";
 
 @Controller("/notification")
 export class NotificationController {
@@ -44,7 +45,7 @@ export class NotificationController {
     };
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(IsVerifiedGuard)
   @HttpCode(HttpStatus.CREATED)
   @Post("/")
   public async createNotification(
@@ -55,9 +56,9 @@ export class NotificationController {
     return this.notificationService.createNotification(id, createNotificationDto);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(IsVerifiedGuard)
   @HttpCode(HttpStatus.OK)
-  @Patch("/edit/:id")
+  @Patch("/:id")
   public async editNotification(
     @SessionId() sessionId: string,
     @Body() editNotificationDto: EditNotificationDto,
@@ -67,7 +68,7 @@ export class NotificationController {
     return this.notificationService.editNotification(id, userId, editNotificationDto);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(IsVerifiedGuard)
   @HttpCode(HttpStatus.OK)
   @Delete("/")
   /**

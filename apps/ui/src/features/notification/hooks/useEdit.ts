@@ -14,7 +14,7 @@ export function useEditNotification(id: string, onSuccess?: VoidFunction) {
     async (editNotificationDto) => {
       // Use react hook form and validate title etc
       const { data } = await clientFetch<NotificationDto>(
-        `/notification/edit/${id}`,
+        `/notification/${id}`,
         "PATCH",
         editNotificationDto
       );

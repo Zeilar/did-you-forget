@@ -17,7 +17,7 @@ import type {
   RegisterUserDto,
   UserWithoutPasswordDto,
 } from "@did-you-forget/dto";
-import { AuthGuard } from "../../common/guards";
+import { AuthGuard, IsVerifiedGuard } from "../../common/guards";
 import { IpAddress, SessionId } from "../../common/decorators";
 import { PrismaService } from "../db/prisma/index.service";
 import type { Response } from "express";
@@ -52,7 +52,7 @@ export class UserController {
     return this.userService.getBySessionId(sessionId);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(IsVerifiedGuard)
   @HttpCode(HttpStatus.OK)
   @Patch("/")
   public async edit(
@@ -63,7 +63,7 @@ export class UserController {
     return this.userService.edit(id, editUserDto);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(IsVerifiedGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Post("/clear-sessions")
   public async clearSessions(

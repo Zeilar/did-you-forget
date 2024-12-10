@@ -14,7 +14,7 @@ import type {
   SessionForUserDto,
   SessionsForUserDto,
 } from "@did-you-forget/dto";
-import { AuthGuard } from "../../common/guards";
+import { AuthGuard, IsVerifiedGuard } from "../../common/guards";
 import { SessionId } from "../../common/decorators";
 import { UserService } from "../user/index.service";
 import { isArray } from "class-validator";
@@ -39,7 +39,7 @@ export class SessionController {
     };
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(IsVerifiedGuard)
   @HttpCode(HttpStatus.OK)
   @Delete("/delete")
   /**
@@ -60,7 +60,7 @@ export class SessionController {
     return { deletedSessions };
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(IsVerifiedGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete("/all")
   public async deleteAllSessionsForUser(@SessionId() sessionId: string): Promise<void> {
