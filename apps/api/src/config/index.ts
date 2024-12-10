@@ -16,5 +16,15 @@ export default function config() {
     },
     globalPrefix: "api",
     cors: process.env.CORS,
+    mailjet: {
+      keys: {
+        api: process.env.MAILJET_API_KEY,
+        secret: process.env.MAILJET_SECRET_KEY,
+      },
+      sender: {
+        email: "philip@angelin.dev",
+        name: "Did You Forget",
+      },
+    },
   };
 }

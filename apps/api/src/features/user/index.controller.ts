@@ -4,6 +4,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Patch,
   Post,
   Res,
@@ -39,7 +40,7 @@ export class UserController {
     @IpAddress() ipAddress: string | undefined,
     @Res({ passthrough: true }) res: Response
   ): Promise<CreatedUserDto> {
-    const user = await this.userService.createUser(registerUserDto);
+    const user = await this.userService.create(registerUserDto);
     await this.authService.signIn({ ipAddress: ipAddress ?? null, ...registerUserDto }, res);
     return user;
   }
@@ -48,7 +49,7 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   @Get("/")
   public profile(@SessionId() sessionId: string): Promise<UserWithoutPasswordDto> {
-    return this.userService.getUserBySessionId(sessionId);
+    return this.userService.getBySessionId(sessionId);
   }
 
   @UseGuards(AuthGuard)
@@ -58,8 +59,8 @@ export class UserController {
     @SessionId() sessionId: string,
     @Body() editUserDto: EditUserDto
   ): Promise<UserWithoutPasswordDto> {
-    const { id } = await this.userService.getUserBySessionId(sessionId);
-    return this.userService.editUser(id, editUserDto);
+    const { id } = await this.userService.getBySessionId(sessionId);
+    return this.userService.edit(id, editUserDto);
   }
 
   @UseGuards(AuthGuard)
@@ -69,8 +70,22 @@ export class UserController {
     @SessionId() sessionId: string,
     @Res({ passthrough: true }) res: Response
   ): Promise<void> {
-    const { id } = await this.userService.getUserBySessionId(sessionId);
+    const { id } = await this.userService.getBySessionId(sessionId);
     await this.prismaService.session.deleteMany({ where: { userId: id } });
     res.clearCookie(this.configService.getOrThrow<string>("sessionCookie.name"));
+  }
+
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Post("/verify/:pendingVerificationId")
+  public async verify(
+    @Param("pendingVerificationId") pendingVerificationId: string
+  ): Promise<void> {
+    await this.userService.verify(pendingVerificationId);
+  }
+
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Post("/send-verification-code/:email")
+  public async sendVerificationCode(@Param("email") email: string): Promise<void> {
+    await this.userService.sendVerificationCode(email);
   }
 }

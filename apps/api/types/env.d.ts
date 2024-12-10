@@ -13,6 +13,8 @@ declare global {
       DB_PORT: string;
       DB_HOST: string;
       DB_URL: string;
+      MAILJET_API_KEY: string;
+      MAILJET_SECRET_KEY: string;
     }
   }
 }

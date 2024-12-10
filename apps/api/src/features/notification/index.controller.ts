@@ -38,7 +38,7 @@ export class NotificationController {
   public async getNotificationsForUser(
     @SessionId() sessionId: string
   ): Promise<NotificationsForUserDto> {
-    const { id } = await this.userService.getUserBySessionId(sessionId);
+    const { id } = await this.userService.getBySessionId(sessionId);
     return {
       notifications: await this.notificationService.getNotificationsByUserId(id),
     };
@@ -51,7 +51,7 @@ export class NotificationController {
     @SessionId() sessionId: string,
     @Body() createNotificationDto: CreateNotificationDto
   ): Promise<NotificationDto> {
-    const { id } = await this.userService.getUserBySessionId(sessionId);
+    const { id } = await this.userService.getBySessionId(sessionId);
     return this.notificationService.createNotification(id, createNotificationDto);
   }
 
@@ -63,7 +63,7 @@ export class NotificationController {
     @Body() editNotificationDto: EditNotificationDto,
     @Param("id") id: string
   ): Promise<NotificationDto> {
-    const { id: userId } = await this.userService.getUserBySessionId(sessionId);
+    const { id: userId } = await this.userService.getBySessionId(sessionId);
     return this.notificationService.editNotification(id, userId, editNotificationDto);
   }
 
@@ -83,7 +83,7 @@ export class NotificationController {
         `ids must be a comma separated string that starts and ends with an id.`
       );
     }
-    const { id } = await this.userService.getUserBySessionId(sessionId);
+    const { id } = await this.userService.getBySessionId(sessionId);
     const deletedNotifications = await this.notificationService.deleteNotifications(parsedIds, id);
     return { deletedNotifications };
   }

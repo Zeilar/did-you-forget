@@ -30,7 +30,7 @@ export class SessionController {
   @HttpCode(HttpStatus.OK)
   @Get("/")
   public async getSessions(@SessionId() sessionId: string): Promise<SessionsForUserDto> {
-    const { id } = await this.userService.getUserBySessionId(sessionId);
+    const { id } = await this.userService.getBySessionId(sessionId);
     const sessions = await this.sessionService.getSessionsForUser(id);
     return {
       sessions: sessions.map(
@@ -55,7 +55,7 @@ export class SessionController {
         `ids must be a comma separated string that starts and ends with an id.`
       );
     }
-    const { id } = await this.userService.getUserBySessionId(sessionId);
+    const { id } = await this.userService.getBySessionId(sessionId);
     const deletedSessions = await this.sessionService.deleteSessions(parsedIds, id);
     return { deletedSessions };
   }
@@ -64,7 +64,7 @@ export class SessionController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete("/all")
   public async deleteAllSessionsForUser(@SessionId() sessionId: string): Promise<void> {
-    const { id } = await this.userService.getUserBySessionId(sessionId);
+    const { id } = await this.userService.getBySessionId(sessionId);
     await this.sessionService.deleteAllSessionsForUser(id);
   }
 }
