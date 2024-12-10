@@ -1,16 +1,19 @@
-import { IsDateString, IsEmail, IsUUID } from "class-validator";
+import { IsBoolean, IsDateString, IsEmail, IsUUID } from "class-validator";
 import { UserWithoutPasswordDto } from "./without-password.dto";
 
 export class CreatedUserDto implements Omit<UserWithoutPasswordDto, "notifications"> {
   @IsUUID("4")
-  id: string;
+  public id: string;
 
   @IsEmail()
-  email: string;
+  public email: string;
+
+  @IsBoolean()
+  public isVerified: boolean;
 
   @IsDateString()
-  createdAt: Date;
+  public createdAt: Date;
 
   @IsDateString()
-  updatedAt: Date;
+  public updatedAt: Date;
 }

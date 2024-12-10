@@ -17,25 +17,25 @@ export class EditNotificationDto
 {
   @IsOptional()
   @IsBoolean()
-  email?: boolean | null;
+  public email?: boolean | null;
 
   @IsOptional()
   @IsArray()
   @IsPositive({ each: true })
   @IsString({ each: true })
-  reminders?: string[];
+  public reminders?: string[];
 
   @IsOptional()
   @Validate(RepeatValidator)
-  repeat?: number[];
+  public repeat?: number[];
 
   @IsOptional()
   @IsDateString()
-  time?: Date;
+  public time?: Date;
 
   @IsOptional()
   @MinLength(3)
   @MaxLength(30)
   @IsString()
-  title?: string;
+  public title?: string;
 }

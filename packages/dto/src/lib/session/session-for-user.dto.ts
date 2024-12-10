@@ -7,25 +7,25 @@ interface SessionForUserDtoImplementation extends Session {
 
 export class SessionForUserDto implements SessionForUserDtoImplementation {
   @IsUUID("4")
-  id: string;
+  public id: string;
 
   @IsOptional()
   @IsDateString()
-  expires: Date;
+  public expires: Date;
 
   @IsOptional()
   @IsIP()
-  ipAddress: string | null;
+  public ipAddress: string | null;
 
   @IsDateString()
-  createdAt: Date;
+  public createdAt: Date;
 
   @IsDateString()
-  updatedAt: Date;
+  public updatedAt: Date;
 
   @IsUUID("4")
-  userId: string;
+  public userId: string;
 
   @IsBoolean()
-  current: boolean;
+  public current: boolean;
 }

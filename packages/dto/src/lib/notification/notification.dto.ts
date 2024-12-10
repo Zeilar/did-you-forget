@@ -14,33 +14,33 @@ import { RepeatValidator } from "./validation";
 
 export class NotificationDto implements Notification {
   @IsUUID("4")
-  id: string;
+  public id: string;
 
   @IsOptional()
   @IsBoolean()
-  email: boolean | null;
+  public email: boolean | null;
 
   @IsArray()
   @IsString({ each: true })
-  reminders: string[];
+  public reminders: string[];
 
   @Validate(RepeatValidator)
-  repeat: number[];
+  public repeat: number[];
 
   @MinLength(3)
   @MaxLength(30)
   @IsString()
-  title: string;
+  public title: string;
 
   @IsDateString()
-  time: Date;
+  public time: Date;
 
   @IsDateString()
-  createdAt: Date;
+  public createdAt: Date;
 
   @IsDateString()
-  updatedAt: Date;
+  public updatedAt: Date;
 
   @IsUUID("4")
-  userId: string;
+  public userId: string;
 }

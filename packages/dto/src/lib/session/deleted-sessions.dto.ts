@@ -5,5 +5,5 @@ import { SessionDto } from "./session.dto";
 export class DeletedSessionsDto {
   @ValidateNested({ each: true })
   @Type(() => SessionDto)
-  deletedSessions: SessionDto[];
+  public deletedSessions: SessionDto[];
 }

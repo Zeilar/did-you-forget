@@ -3,9 +3,9 @@ import { IsEmail, IsString, MinLength } from "class-validator";
 
 export class RegisterUserDto implements Pick<User, "email" | "password"> {
   @IsEmail()
-  email: string;
+  public email: string;
 
   @IsString()
   @MinLength(3)
-  password: string;
+  public password: string;
 }

@@ -6,5 +6,5 @@ interface SignInResultDtoImplementation {
 
 export class SignInResultDto implements SignInResultDtoImplementation {
   @IsUUID("4")
-  sessionId: string;
+  public sessionId: string;
 }

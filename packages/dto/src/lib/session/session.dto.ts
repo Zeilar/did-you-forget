@@ -3,22 +3,22 @@ import { IsDateString, IsIP, IsOptional, IsUUID } from "class-validator";
 
 export class SessionDto implements Session {
   @IsUUID("4")
-  id: string;
+  public id: string;
 
   @IsOptional()
   @IsDateString()
-  expires: Date;
+  public expires: Date;
 
   @IsOptional()
   @IsIP()
-  ipAddress: string | null;
+  public ipAddress: string | null;
 
   @IsDateString()
-  createdAt: Date;
+  public createdAt: Date;
 
   @IsDateString()
-  updatedAt: Date;
+  public updatedAt: Date;
 
   @IsUUID("4")
-  userId: string;
+  public userId: string;
 }

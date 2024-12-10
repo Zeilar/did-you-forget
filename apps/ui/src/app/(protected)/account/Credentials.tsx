@@ -34,6 +34,7 @@ export function Credentials({ initialData }: CredentialsProps) {
   );
   const { register, setValue, watch, formState, handleSubmit } = useForm<EditUserDto>({
     defaultValues: { email: initialData.email },
+    disabled: !data?.isVerified,
   });
 
   useEffect(() => {
@@ -74,13 +75,13 @@ export function Credentials({ initialData }: CredentialsProps) {
       </FormControl>
       <Flex gap={2} justify="end">
         <Button
-          disabled={(data?.email ?? initialData.email) === watch("email")}
+          disabled={!data?.isVerified || (data?.email ?? initialData.email) === watch("email")}
           variant="outline"
           onClick={() => setValue("email", data?.email ?? initialData.email)}
         >
           Reset
         </Button>
-        <Button type="submit" isLoading={isLoading}>
+        <Button type="submit" isLoading={isLoading} disabled={!data?.isVerified}>
           Save
         </Button>
       </Flex>

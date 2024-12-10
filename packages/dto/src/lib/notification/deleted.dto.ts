@@ -5,5 +5,5 @@ import { NotificationDto } from "./notification.dto";
 export class DeletedNotificationsDto {
   @ValidateNested({ each: true })
   @Type(() => NotificationDto)
-  deletedNotifications: NotificationDto[];
+  public deletedNotifications: NotificationDto[];
 }

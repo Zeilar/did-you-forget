@@ -5,5 +5,5 @@ import { NotificationDto } from "./notification.dto";
 export class NotificationsForUserDto {
   @ValidateNested({ each: true })
   @Type(() => NotificationDto)
-  notifications: NotificationDto[];
+  public notifications: NotificationDto[];
 }

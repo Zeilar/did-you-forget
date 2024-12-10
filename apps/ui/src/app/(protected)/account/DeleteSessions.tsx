@@ -6,7 +6,11 @@ import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMutation } from "react-query";
 
-export function DeleteSessions() {
+interface DeleteSessionsProps {
+  disabled: boolean;
+}
+
+export function DeleteSessions({ disabled }: DeleteSessionsProps) {
   const { push } = useRouter();
   const { isLoading, mutate } = useMutation(
     "deleteSessions",
@@ -22,6 +26,7 @@ export function DeleteSessions() {
       </Alert>
       <Button
         variant="outline-danger"
+        disabled={disabled}
         isLoading={isLoading}
         onClick={() => mutate()}
         leftIcon={<Trash2 />}

@@ -8,7 +8,7 @@ export default function Page({ children }: PropsWithChildren) {
       <Paper rounded="none">
         <Heading m={0}>Account</Heading>
       </Paper>
-      <Paper m={4}>{children}</Paper>
+      {children}
       <Navbar />
     </>
   );

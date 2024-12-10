@@ -7,13 +7,13 @@ interface SignInDtoImplementation extends Partial<Pick<User, "email" | "password
 
 export class SignInDto implements SignInDtoImplementation {
   @IsEmail()
-  email: string;
+  public email: string;
 
   @IsString()
   @MinLength(3)
-  password: string;
+  public password: string;
 
   @IsOptional()
   @IsBoolean()
-  rememberMe?: boolean;
+  public rememberMe?: boolean;
 }
