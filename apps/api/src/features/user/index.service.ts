@@ -28,6 +28,7 @@ export class UserService {
     const { password: hashedPassword, ...user } = await this.prismaService.user.create({
       data: { email, password: await this.hash(password) },
     });
+    await this.sendVerificationCode(user.email);
     return user;
   }
 
