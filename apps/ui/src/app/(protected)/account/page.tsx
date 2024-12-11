@@ -21,13 +21,20 @@ async function Page() {
 
   return (
     <Stack spacing={4} m={4}>
-      {!data.isVerified && (
+      {data.isVerified && (
         <Alert status="error">
           <AlertIcon />
           <Box>
             <AlertTitle>Verify your account</AlertTitle>
             <AlertDescription>
-              Most functions are locked until you <Verify email={data.email} />.
+              <span>If you just registered your account, please check your mail inbox.</span>
+              <br />
+              <span>
+                Don&apos;t forget to check spam and junk folders. Most functions are locked until
+                you have verified your account.
+              </span>
+              <br />
+              <Verify email={data.email} />
             </AlertDescription>
           </Box>
         </Alert>
