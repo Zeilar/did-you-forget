@@ -3,11 +3,11 @@ import { Alert, AlertDescription, AlertIcon, AlertTitle } from "@chakra-ui/react
 import { serverFetch } from "@ui/common/fetchers/server";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function Page({ params }: Props) {
-  const { ok, status } = await serverFetch(`/user/verify/${params.id}`, "POST");
+  const { ok, status } = await serverFetch(`/user/verify/${(await params).id}`, "POST");
 
   if (!ok) {
     console.error(`${status} Failed to verify account.`);
