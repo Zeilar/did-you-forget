@@ -10,6 +10,8 @@ export class MailjetService implements OnModuleInit {
   public constructor(@Inject(ConfigService) private readonly configService: ConfigService) {}
 
   public onModuleInit(): void {
+    console.log("HERE", this.configService.get("mailjet.keys.api"));
+    console.log(this.configService.getOrThrow("mailjet.keys.api"));
     this.mailjet = new Mailjet({
       apiKey: this.configService.getOrThrow("mailjet.keys.api"),
       apiSecret: this.configService.getOrThrow("mailjet.keys.secret"),
