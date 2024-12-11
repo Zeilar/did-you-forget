@@ -12,7 +12,7 @@ RUN yarn global add nx@19.8.10
 
 RUN nx build api
 
-FROM node:alpine as main
+FROM node:22-alpine as main
 
 COPY --from=build /usr/src/app/dist/apps/api .
 COPY --from=build /usr/src/app/apps/api/.env .
