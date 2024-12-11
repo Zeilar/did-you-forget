@@ -33,7 +33,7 @@ export function Verify({ email }: VerifyProps) {
         })
       }
     >
-      verify your account
+      Click here to send a new verification request.
     </Button>
   );
 }
