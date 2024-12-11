@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   ConflictException,
+  Inject,
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
@@ -13,12 +14,14 @@ import type {
 } from "@did-you-forget/dto";
 import { hash } from "bcrypt";
 import { MailjetService } from "../mailjet/index.service";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class UserService {
   public constructor(
     private readonly prismaService: PrismaService,
-    private readonly mailjetService: MailjetService
+    private readonly mailjetService: MailjetService,
+    @Inject(ConfigService) private readonly configService: ConfigService
   ) {}
 
   public async create({ email, password }: RegisterUserDto): Promise<CreatedUserDto> {
@@ -103,10 +106,19 @@ export class UserService {
     const { id } = await this.prismaService.pendingVerification.create({
       data: { expires: new Date(Date.now() + 1000 * 60 * 5), user: { connect: { id: userId } } },
     });
+    const href = `${this.configService.get("cors")}/verify/${id}`;
     await this.mailjetService.sendMail(
       { email, name: email },
       "Verify your account",
-      `Use id: ${id}`
+      `
+        <div>
+          Hello and thank you for using the app! Click this link to verify your account and start using the app: <a href=${href}>${href}</a>
+        </div>
+        <br />
+        <div>
+          If you didn't make this request, kindly ignore this mail.
+        </div>
+      `.trim()
     );
   }
 }
