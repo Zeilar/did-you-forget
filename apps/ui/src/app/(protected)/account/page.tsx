@@ -35,11 +35,11 @@ async function Page() {
       )}
       <Paper>
         <Credentials initialData={data} />
-        <Divider my={2} />
-        <Box>
+        <Divider />
+        <>
           <Logout />
-        </Box>
-        <Divider my={2} />
+        </>
+        <Divider />
         <DeleteSessions disabled={!data.isVerified} />
       </Paper>
     </Stack>

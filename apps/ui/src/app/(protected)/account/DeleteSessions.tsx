@@ -19,7 +19,7 @@ export function DeleteSessions({ disabled }: DeleteSessionsProps) {
   );
 
   return (
-    <Stack align="start">
+    <Stack>
       <Alert status="error">
         <AlertIcon />
         <Text>This will sign you out everywhere, including this machine.</Text>

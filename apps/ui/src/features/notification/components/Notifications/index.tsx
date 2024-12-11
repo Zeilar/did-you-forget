@@ -65,8 +65,6 @@ export function Notifications({ initialData }: NotificationsProps) {
     ? data.filter(({ title }) => title.toLowerCase().includes(search.toLowerCase()))
     : data;
 
-  console.log(createDialog);
-
   return (
     <>
       <Paper rounded="none" flexDir="row" justify="space-between">
@@ -115,64 +113,6 @@ export function Notifications({ initialData }: NotificationsProps) {
               ))
             )}
           </Grid>
-          <Modal isOpen={createDialog.isOpen} onClose={createDialog.onClose}>
-            <ModalOverlay />
-            <ModalContent
-              as="form"
-              mx={4}
-              onSubmit={createForm.handleSubmit(({ time, ...fields }) =>
-                createNotification.mutate({
-                  ...fields,
-                  time: new Date(time).toISOString(),
-                })
-              )}
-            >
-              <ModalHeader>Create notification</ModalHeader>
-              <ModalBody as={Stack} spacing={4}>
-                <FormControl isInvalid={!!createForm.formState.errors.title}>
-                  <FormLabel>Title</FormLabel>
-                  <UiInput
-                    {...createForm.register("title", {
-                      required: {
-                        value: true,
-                        message: "Title is required.",
-                      },
-                      minLength: {
-                        value: 3,
-                        message: "Title must be at least 3 character long.",
-                      },
-                    })}
-                  />
-                  {createForm.formState.errors.title && (
-                    <FormErrorMessage>{createForm.formState.errors.title.message}</FormErrorMessage>
-                  )}
-                </FormControl>
-                <FormControl isInvalid={!!createForm.formState.errors.title}>
-                  <FormLabel>Time</FormLabel>
-                  <UiInput
-                    type="datetime-local"
-                    {...createForm.register("time", {
-                      required: {
-                        value: true,
-                        message: "Time is required.",
-                      },
-                    })}
-                  />
-                  {createForm.formState.errors.time && (
-                    <FormErrorMessage>{createForm.formState.errors.time.message}</FormErrorMessage>
-                  )}
-                </FormControl>
-              </ModalBody>
-              <ModalFooter gap={2}>
-                <Button variant="outline" onClick={createDialog.onClose}>
-                  Cancel
-                </Button>
-                <Button isLoading={createNotification.isLoading} type="submit">
-                  Save
-                </Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
         </>
       ) : (
         <Alert
@@ -191,6 +131,64 @@ export function Notifications({ initialData }: NotificationsProps) {
           <AlertDescription>Add some notifications before you forget</AlertDescription>
         </Alert>
       )}
+      <Modal isOpen={createDialog.isOpen} onClose={createDialog.onClose}>
+        <ModalOverlay />
+        <ModalContent
+          as="form"
+          mx={4}
+          onSubmit={createForm.handleSubmit(({ time, ...fields }) =>
+            createNotification.mutate({
+              ...fields,
+              time: new Date(time).toISOString(),
+            })
+          )}
+        >
+          <ModalHeader>Create notification</ModalHeader>
+          <ModalBody as={Stack} spacing={4}>
+            <FormControl isInvalid={!!createForm.formState.errors.title}>
+              <FormLabel>Title</FormLabel>
+              <UiInput
+                {...createForm.register("title", {
+                  required: {
+                    value: true,
+                    message: "Title is required.",
+                  },
+                  minLength: {
+                    value: 3,
+                    message: "Title must be at least 3 character long.",
+                  },
+                })}
+              />
+              {createForm.formState.errors.title && (
+                <FormErrorMessage>{createForm.formState.errors.title.message}</FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl isInvalid={!!createForm.formState.errors.title}>
+              <FormLabel>Time</FormLabel>
+              <UiInput
+                type="datetime-local"
+                {...createForm.register("time", {
+                  required: {
+                    value: true,
+                    message: "Time is required.",
+                  },
+                })}
+              />
+              {createForm.formState.errors.time && (
+                <FormErrorMessage>{createForm.formState.errors.time.message}</FormErrorMessage>
+              )}
+            </FormControl>
+          </ModalBody>
+          <ModalFooter gap={2}>
+            <Button variant="outline" onClick={createDialog.onClose}>
+              Cancel
+            </Button>
+            <Button isLoading={createNotification.isLoading} type="submit">
+              Save
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }
