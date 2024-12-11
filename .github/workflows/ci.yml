@@ -44,6 +44,8 @@ jobs:
           echo "DB_USER=${{ secrets.DB_USER }}" >> apps/api/.env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> apps/api/.env
           echo "DB_URL=${{ secrets.DB_URL }}" >> apps/api/.env
+          echo "MAILJET_API_KEY=${{ secrets.MAILJET_API_KEY }}" >> apps/api/.env
+          echo "MAILJET_SECRET_KEY=${{ secrets.MAILJET_SECRET_KEY }}" >> apps/api/.env
           docker build -t did-you-forget_api -f apps/api/Dockerfile .
 
       - name: Log in to Docker Hub
@@ -82,6 +84,8 @@ jobs:
             echo "DB_USER=${{ secrets.DB_USER }}" >> .env
             echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
             echo "DB_URL=${{ secrets.DB_URL }}" >> .env
+            echo "MAILJET_API_KEY=${{ secrets.MAILJET_API_KEY }}" >> .env
+            echo "MAILJET_SECRET_KEY=${{ secrets.MAILJET_SECRET_KEY }}" >> .env
             docker pull zeilar/did-you-forget_ui:latest
             docker pull zeilar/did-you-forget_api:latest
             docker-compose down

@@ -37,7 +37,7 @@ export function Register() {
             toast(errorToastOptions);
             return;
           }
-          replace("/");
+          replace("/account");
         } catch (error) {
           console.error(error);
           toast(errorToastOptions);
