@@ -93,7 +93,13 @@ export function Notifications({ initialData }: NotificationsProps) {
               />
               {search && (
                 <InputRightElement>
-                  <X role="button" onClick={() => setSearch("")} cursor="pointer" />
+                  <X
+                    color="var(--chakra-colors-text-muted)"
+                    role="button"
+                    onClick={() => setSearch("")}
+                    cursor="pointer"
+                    size="1em"
+                  />
                 </InputRightElement>
               )}
             </InputGroup>
