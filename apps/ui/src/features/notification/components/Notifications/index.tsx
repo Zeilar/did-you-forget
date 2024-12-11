@@ -34,7 +34,7 @@ import type {
 } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import { AnimatePresence, motion } from "motion/react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { BellRing, Plus, Search, X } from "lucide-react";
 import { inputProps, Paper, Input as UiInput } from "@ui/components";
 import { useForm } from "react-hook-form";
@@ -61,13 +61,11 @@ export function Notifications({ initialData }: NotificationsProps) {
     },
     { initialData, cacheTime: 0 } // For some reason the cache invalidation in useEditNotification doesn't work.
   );
-  const searchedNotifications = useMemo<NotificationDto[]>(
-    () =>
-      search
-        ? data.filter(({ title }) => title.toLowerCase().includes(search.toLowerCase()))
-        : data,
-    [data, search]
-  );
+  const searchedNotifications: NotificationDto[] = search
+    ? data.filter(({ title }) => title.toLowerCase().includes(search.toLowerCase()))
+    : data;
+
+  console.log(createDialog);
 
   return (
     <>
