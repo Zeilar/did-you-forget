@@ -30,6 +30,7 @@ import type {
   CreateNotificationDto,
   NotificationDto,
   NotificationsForUserDto,
+  UserWithoutPasswordDto,
 } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import { AnimatePresence, motion } from "motion/react";
@@ -44,6 +45,10 @@ interface NotificationsProps {
 }
 
 export function Notifications({ initialData }: NotificationsProps) {
+  const userQuery = useQuery<UserWithoutPasswordDto>("user", async () => {
+    const { data } = await clientFetch<UserWithoutPasswordDto>("/user");
+    return data;
+  });
   const createForm = useForm<CreateNotificationDto>();
   const createDialog = useDisclosure();
   const createNotification = useCreateNotification(createDialog.onClose);
@@ -72,6 +77,7 @@ export function Notifications({ initialData }: NotificationsProps) {
           variant="outline-primary"
           leftIcon={<Plus size="1.25em" />}
           onClick={createDialog.onOpen}
+          disabled={userQuery.isLoading || !userQuery.data?.isVerified}
         >
           New
         </Button>

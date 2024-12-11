@@ -13,6 +13,8 @@ export default function config() {
     sessionCookie: {
       name: "dyf-session",
       domain: process.env.SESSION_COOKIE_DOMAIN,
+      expires: 1000 * 60 * 60 * 24 * 7 * 4, // 28 days (one month).
+      rememberMeExpires: 1000 * 60 * 60 * 24 * 365, // 365 days (one year).
     },
     globalPrefix: "api",
     cors: process.env.CORS,
@@ -26,5 +28,6 @@ export default function config() {
         name: "Did You Forget",
       },
     },
+    pendingVerificationExpires: 1000 * 60 * 15, // 15 minutes.
   };
 }

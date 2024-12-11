@@ -104,19 +104,28 @@ export class UserService {
     const userId = user.id;
     await this.prismaService.pendingVerification.deleteMany({ where: { userId } });
     const { id } = await this.prismaService.pendingVerification.create({
-      data: { expires: new Date(Date.now() + 1000 * 60 * 5), user: { connect: { id: userId } } },
+      data: {
+        expires: new Date(
+          Date.now() + parseInt(this.configService.getOrThrow("pendingVerificationExpires"))
+        ),
+        user: { connect: { id: userId } },
+      },
     });
-    const href = `${this.configService.get("cors")}/verify/${id}`;
+    const href = `${this.configService.getOrThrow("cors")}/verify/${id}`;
     await this.mailjetService.sendMail(
       { email, name: email },
       "Verify your account",
       `
         <div>
-          Hello and thank you for using the app! Click this link to verify your account and start using the app: <a href=${href}>${href}</a>
+          <p>
+            Hello and thank you for using the app!
+            Click this link to verify your account and start using the app: <a href=${href}>${href}</a>
+          </p>
+          <p>This link will expire in 15 minutes.</p>
         </div>
         <br />
         <div>
-          If you didn't make this request, kindly ignore this mail.
+          <p>If you didn't make this request, kindly ignore this mail.</p>
         </div>
       `.trim()
     );

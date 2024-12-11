@@ -11,8 +11,8 @@ export class MailjetService implements OnModuleInit {
 
   public onModuleInit(): void {
     this.mailjet = new Mailjet({
-      apiKey: this.configService.get("mailjet.keys.api"),
-      apiSecret: this.configService.get("mailjet.keys.secret"),
+      apiKey: this.configService.getOrThrow("mailjet.keys.api"),
+      apiSecret: this.configService.getOrThrow("mailjet.keys.secret"),
     });
   }
 
@@ -25,8 +25,8 @@ export class MailjetService implements OnModuleInit {
       Messages: [
         {
           From: {
-            Email: this.configService.get("mailjet.sender.email"),
-            Name: this.configService.get("mailjet.sender.name"),
+            Email: this.configService.getOrThrow("mailjet.sender.email"),
+            Name: this.configService.getOrThrow("mailjet.sender.name"),
           },
           To: [{ Email: email, Name: name }],
           Subject: subject,
