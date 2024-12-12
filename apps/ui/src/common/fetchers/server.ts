@@ -16,6 +16,7 @@ export const serverFetch = async <T extends object | null = null>(
     method: method ?? "GET",
     credentials: "include",
     body: body ? JSON.stringify(body) : null,
+    next: { tags: [url] },
     headers: {
       "Content-Type": "application/json",
       cookie: `${await cookies()}`,

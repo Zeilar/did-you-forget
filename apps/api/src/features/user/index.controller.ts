@@ -75,6 +75,7 @@ export class UserController {
     res.clearCookie(this.configService.getOrThrow<string>("sessionCookie.name"));
   }
 
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Post("/verify/:pendingVerificationId")
   public async verify(
@@ -83,9 +84,14 @@ export class UserController {
     await this.userService.verify(pendingVerificationId);
   }
 
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Post("/send-verification-code/:email")
-  public async sendVerificationCode(@Param("email") email: string): Promise<void> {
-    await this.userService.sendVerificationCode(email);
+  public async sendVerificationCode(
+    @Param("email") email: string,
+    @SessionId() sessionId: string
+  ): Promise<void> {
+    const { id } = await this.userService.getBySessionId(sessionId);
+    await this.userService.sendVerificationCode(id, email);
   }
 }

@@ -31,7 +31,7 @@ export class UserService {
     const { password: hashedPassword, ...user } = await this.prismaService.user.create({
       data: { email, password: await this.hash(password) },
     });
-    await this.sendVerificationCode(user.email);
+    await this.sendVerificationCode(user.id, user.email);
     return user;
   }
 
@@ -70,10 +70,14 @@ export class UserService {
     if (!email && !password) {
       throw new BadRequestException("No fields were filled.");
     }
+    if (email && (await this.isEmailTaken(email))) {
+      throw new ConflictException(`The email ${email} is taken.`);
+    }
     const { password: hashedPassword, ...user } = await this.prismaService.user.update({
       data: {
         email,
         password: password ? await this.hash(password) : undefined,
+        isVerified: email ? false : undefined, // If user changes emails, they have to verify their email anew.
       },
       where: { id },
     });
@@ -96,12 +100,7 @@ export class UserService {
     await this.prismaService.pendingVerification.delete({ where: { id: pendingVerification.id } });
   }
 
-  public async sendVerificationCode(email: string): Promise<void> {
-    const user = await this.prismaService.user.findFirst({ where: { email } });
-    if (!user) {
-      throw new NotFoundException(`User with email ${email} not found.`);
-    }
-    const userId = user.id;
+  public async sendVerificationCode(userId: string, email: string): Promise<void> {
     await this.prismaService.pendingVerification.deleteMany({ where: { userId } });
     const { id } = await this.prismaService.pendingVerification.create({
       data: {
@@ -121,7 +120,7 @@ export class UserService {
             Hello and thank you for using the app!
             Click this link to verify your account and start using the app: <a href=${href}>${href}</a>
           </p>
-          <p>This link will expire in 15 minutes.</p>
+          <p>This link will expire shortly.</p>
         </div>
         <br />
         <div>

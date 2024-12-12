@@ -14,6 +14,7 @@ import type { EditUserDto, UserWithoutPasswordDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
 import { useEditUser } from "@ui/features/user/hooks";
 import { isEmail } from "class-validator";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
@@ -23,7 +24,8 @@ interface CredentialsProps {
 }
 
 export function Credentials({ initialData }: CredentialsProps) {
-  const { mutate, isLoading } = useEditUser();
+  const { refresh } = useRouter();
+  const { mutate, isLoading } = useEditUser(refresh);
   const { data } = useQuery<UserWithoutPasswordDto>(
     "user",
     async () => {
