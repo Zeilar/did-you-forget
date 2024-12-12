@@ -154,6 +154,7 @@ export function Notifications({ initialData }: NotificationsProps) {
             <FormControl isInvalid={!!createForm.formState.errors.title}>
               <FormLabel>Title</FormLabel>
               <UiInput
+                placeholder="My notification"
                 {...createForm.register("title", {
                   required: {
                     value: true,
