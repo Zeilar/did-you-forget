@@ -11,6 +11,7 @@ services:
     ports:
       - ${DB_PORT}:${DB_PORT}
   adminer:
+    container_name: dyf_adminer
     image: adminer
     restart: always
     ports:
