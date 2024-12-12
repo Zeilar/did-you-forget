@@ -14,23 +14,23 @@ import { Accordion } from "@ui/components";
 import { useEditNotification } from "@ui/features/notification/hooks";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { formatDuration } from "./common";
+import { areReminderArraysEqual, formatDuration } from "./common";
 
 const flexProps: FlexProps = { bgColor: "gray.800", shadow: "none" };
 
 const OPTIONS: string[] = [
-  `${60 * 5}`, // 5 minutes.
-  `${60 * 10}`, // 10 minutes.
-  `${60 * 15}`, // 15 minutes.
-  `${60 * 60}`, // 1 hour.
-  `${60 * 60 * 2}`, // 2 hours.
-  `${60 * 60 * 12}`, // 12 hours.
-  `${60 * 60 * 24}`, // 24 hours.
-  `${60 * 60 * 48}`, // 48 hours.
-];
+  60 * 5, // 5 minutes.
+  60 * 10, // 10 minutes.
+  60 * 15, // 15 minutes.
+  60 * 60, // 1 hour.
+  60 * 60 * 2, // 2 hours.
+  60 * 60 * 12, // 12 hours.
+  60 * 60 * 24, // 24 hours.
+  60 * 60 * 48, // 48 hours.
+].map(String);
 
 export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "reminders">) {
-  const { setValue, control, formState, handleSubmit } = useForm<{ reminders: string[] }>({
+  const { setValue, control, formState, handleSubmit, watch } = useForm<{ reminders: string[] }>({
     defaultValues: { reminders },
   });
   const { mutate, isLoading } = useEditNotification(id);
@@ -80,7 +80,11 @@ export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "remin
           <Button isLoading={isLoading} onClick={handleSubmit((fields) => mutate(fields))}>
             Save
           </Button>
-          <Button variant="outline" onClick={() => setValue("reminders", reminders)}>
+          <Button
+            variant="outline"
+            onClick={() => setValue("reminders", reminders)}
+            disabled={areReminderArraysEqual(reminders, watch("reminders"))}
+          >
             Reset
           </Button>
         </Flex>
