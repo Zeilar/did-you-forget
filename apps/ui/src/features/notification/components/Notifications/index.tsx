@@ -185,12 +185,12 @@ export function Notifications({ initialData }: NotificationsProps) {
               )}
             </FormControl>
           </ModalBody>
-          <ModalFooter gap={2}>
-            <Button variant="outline" onClick={createDialog.onClose}>
-              Cancel
-            </Button>
+          <ModalFooter gap={2} justifyContent="start">
             <Button isLoading={createNotification.isLoading} type="submit">
               Save
+            </Button>
+            <Button variant="outline" onClick={createDialog.onClose}>
+              Cancel
             </Button>
           </ModalFooter>
         </ModalContent>

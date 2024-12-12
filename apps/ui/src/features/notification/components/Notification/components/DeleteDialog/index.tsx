@@ -43,7 +43,7 @@ export function DeletePrompt({ ids }: DeletePromptProps) {
             <br />
             The {pluralizeWithS("notification", 1)} will be gone forever.
           </ModalBody>
-          <ModalFooter gap={2} px={4}>
+          <ModalFooter gap={2} px={4} justifyContent="start">
             <Button onClick={() => mutate()} isLoading={isLoading} variant="solid-danger">
               Delete
             </Button>

@@ -75,16 +75,16 @@ export function Credentials({ initialData }: CredentialsProps) {
           <FormErrorMessage>{formState.errors.password.message}</FormErrorMessage>
         )}
       </FormControl>
-      <Flex gap={2} justify="end">
+      <Flex gap={2}>
+        <Button type="submit" isLoading={isLoading} disabled={!data?.isVerified}>
+          Save
+        </Button>
         <Button
           disabled={!data?.isVerified || (data?.email ?? initialData.email) === watch("email")}
           variant="outline"
           onClick={() => setValue("email", data?.email ?? initialData.email)}
         >
           Reset
-        </Button>
-        <Button type="submit" isLoading={isLoading} disabled={!data?.isVerified}>
-          Save
         </Button>
       </Flex>
     </Stack>
