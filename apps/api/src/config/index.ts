@@ -29,5 +29,6 @@ export default function config() {
       },
     },
     pendingVerificationExpires: 1000 * 60 * 15, // 15 minutes.
+    pendingPasswordResetExpires: 1000 * 60 * 15, // 15 minutes.
   };
 }

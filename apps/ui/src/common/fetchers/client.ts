@@ -1,4 +1,4 @@
-export interface ClientFetchResult<T> {
+export interface ClientFetchResult<T extends object | null = null> {
   data: T;
   status: number;
   ok: boolean;

@@ -4,6 +4,7 @@ import {
   Button,
   Flex,
   FormControl,
+  FormErrorIcon,
   FormErrorMessage,
   FormLabel,
   Heading,
@@ -12,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import type { EditUserDto, UserWithoutPasswordDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
+import { passwordPlaceholder } from "@ui/components";
 import { useEditUser } from "@ui/features/user/hooks";
 import { isEmail } from "class-validator";
 import { useRouter } from "next/navigation";
@@ -56,13 +58,16 @@ export function Credentials({ initialData }: CredentialsProps) {
           {...register("email", { validate: (value) => isEmail(value) || "Invalid email." })}
         />
         {formState.errors.email?.message && (
-          <FormErrorMessage>{formState.errors.email.message}</FormErrorMessage>
+          <FormErrorMessage>
+            <FormErrorIcon />
+            <span>{formState.errors.email.message}</span>
+          </FormErrorMessage>
         )}
       </FormControl>
       <FormControl isInvalid={!!formState.errors.password}>
         <FormLabel>Password</FormLabel>
         <Input
-          placeholder="Password"
+          placeholder={passwordPlaceholder}
           type="password"
           {...register("password", {
             minLength: {
@@ -72,7 +77,10 @@ export function Credentials({ initialData }: CredentialsProps) {
           })}
         />
         {formState.errors.password?.message && (
-          <FormErrorMessage>{formState.errors.password.message}</FormErrorMessage>
+          <FormErrorMessage>
+            <FormErrorIcon />
+            <span>{formState.errors.password.message}</span>
+          </FormErrorMessage>
         )}
       </FormControl>
       <Flex gap={2}>

@@ -6,13 +6,14 @@ import {
   Checkbox,
   Flex,
   FormControl,
+  FormErrorIcon,
   FormErrorMessage,
   FormLabel,
   type UseToastOptions,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { Input, Paper } from "@ui/components";
+import { Input, Paper, passwordPlaceholder } from "@ui/components";
 import type { SignInDto } from "@did-you-forget/dto";
 import { useToast } from "@ui/hooks";
 
@@ -59,7 +60,10 @@ export function Login() {
           autoFocus
         />
         {formState.errors.email?.message && (
-          <FormErrorMessage>{formState.errors.email.message}</FormErrorMessage>
+          <FormErrorMessage>
+            <FormErrorIcon />
+            <span>{formState.errors.email.message}</span>
+          </FormErrorMessage>
         )}
       </FormControl>
       <FormControl isInvalid={!!formState.errors.password}>
@@ -76,10 +80,13 @@ export function Login() {
             },
           })}
           type="password"
-          placeholder="Password"
+          placeholder={passwordPlaceholder}
         />
         {formState.errors.password?.message && (
-          <FormErrorMessage>{formState.errors.password.message}</FormErrorMessage>
+          <FormErrorMessage>
+            <FormErrorIcon />
+            <span>{formState.errors.password.message}</span>
+          </FormErrorMessage>
         )}
       </FormControl>
       <Flex justify="space-between">

@@ -34,7 +34,7 @@ export class UserService {
     return user;
   }
 
-  private hash(password: string): Promise<string> {
+  public hash(password: string): Promise<string> {
     return hash(password, 10);
   }
 

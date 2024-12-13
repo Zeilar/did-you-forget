@@ -4,6 +4,7 @@ import {
   Button,
   Flex,
   FormControl,
+  FormErrorIcon,
   FormErrorMessage,
   Grid,
   Text,
@@ -70,8 +71,11 @@ export function Reminders({ id, reminders }: Pick<NotificationDto, "id" | "remin
                   );
                 })}
               </Grid>
-              {formState.errors.reminders && (
-                <FormErrorMessage>{formState.errors.reminders.message}</FormErrorMessage>
+              {formState.errors.reminders?.message && (
+                <FormErrorMessage>
+                  <FormErrorIcon />
+                  <span>{formState.errors.reminders.message}</span>
+                </FormErrorMessage>
               )}
             </FormControl>
           )}

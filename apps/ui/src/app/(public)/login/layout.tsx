@@ -2,7 +2,7 @@ import { Link } from "@chakra-ui/next-js";
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import type { PropsWithChildren } from "react";
 
-export default function Page({ children }: PropsWithChildren) {
+export default function Layout({ children }: PropsWithChildren) {
   return (
     <Flex p={4} m="auto" w="full" h="full" align="center" justify="center" flexDir="column">
       <Heading>Sign in</Heading>

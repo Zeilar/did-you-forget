@@ -5,6 +5,7 @@ import {
   Button,
   Flex,
   FormControl,
+  FormErrorIcon,
   FormErrorMessage,
   IconButton,
   Input,
@@ -42,8 +43,11 @@ export function Title({ id, title }: Pick<NotificationDto, "id" | "title">) {
             },
           })}
         />
-        {formState.errors.title && (
-          <FormErrorMessage>{formState.errors.title.message}</FormErrorMessage>
+        {formState.errors.title?.message && (
+          <FormErrorMessage>
+            <FormErrorIcon />
+            <span>{formState.errors.title.message}</span>
+          </FormErrorMessage>
         )}
       </FormControl>
       <Flex gap={2} align="center" mt={2}>

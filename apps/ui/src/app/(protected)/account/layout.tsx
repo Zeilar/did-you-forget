@@ -2,7 +2,7 @@ import { Heading } from "@chakra-ui/react";
 import { Navbar, Paper } from "@ui/components";
 import type { PropsWithChildren } from "react";
 
-export default function Page({ children }: PropsWithChildren) {
+export default function Layout({ children }: PropsWithChildren) {
   return (
     <>
       <Paper rounded="none">

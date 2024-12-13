@@ -23,6 +23,7 @@ import {
   Alert,
   AlertTitle,
   AlertDescription,
+  FormErrorIcon,
 } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { Notification } from "../Notification";
@@ -166,8 +167,11 @@ export function Notifications({ initialData }: NotificationsProps) {
                   },
                 })}
               />
-              {createForm.formState.errors.title && (
-                <FormErrorMessage>{createForm.formState.errors.title.message}</FormErrorMessage>
+              {createForm.formState.errors.title?.message && (
+                <FormErrorMessage>
+                  <FormErrorIcon />
+                  <span>{createForm.formState.errors.title.message}</span>
+                </FormErrorMessage>
               )}
             </FormControl>
             <FormControl isInvalid={!!createForm.formState.errors.title}>
@@ -181,8 +185,11 @@ export function Notifications({ initialData }: NotificationsProps) {
                   },
                 })}
               />
-              {createForm.formState.errors.time && (
-                <FormErrorMessage>{createForm.formState.errors.time.message}</FormErrorMessage>
+              {createForm.formState.errors.time?.message && (
+                <FormErrorMessage>
+                  <FormErrorIcon />
+                  <span>{createForm.formState.errors.time.message}</span>
+                </FormErrorMessage>
               )}
             </FormControl>
           </ModalBody>

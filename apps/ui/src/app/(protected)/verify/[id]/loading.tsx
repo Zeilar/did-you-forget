@@ -1,6 +1,6 @@
 import { Spinner, Text } from "@chakra-ui/react";
 
-export default function Page() {
+export default function Loading() {
   return (
     <div>
       <Spinner color="text.primary" />

@@ -2,6 +2,8 @@
 
 import { forwardRef, Input as ChakraInput, type InputProps } from "@chakra-ui/react";
 
+export const passwordPlaceholder = "•••••••••••••••";
+
 export const inputProps: InputProps = {
   outlineOffset: 0,
   transitionProperty: "all",

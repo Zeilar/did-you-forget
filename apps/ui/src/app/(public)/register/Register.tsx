@@ -4,13 +4,14 @@ import { clientFetch } from "@ui/common/fetchers/client";
 import {
   Button,
   FormControl,
+  FormErrorIcon,
   FormErrorMessage,
   FormLabel,
   type UseToastOptions,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { Input, Paper } from "@ui/components";
+import { Input, Paper, passwordPlaceholder } from "@ui/components";
 import type { RegisterUserDto } from "@did-you-forget/dto";
 import { useToast } from "@ui/hooks";
 import { isEmail } from "class-validator";
@@ -59,7 +60,10 @@ export function Register() {
           autoFocus
         />
         {formState.errors.email?.message && (
-          <FormErrorMessage>{formState.errors.email.message}</FormErrorMessage>
+          <FormErrorMessage>
+            <FormErrorIcon />
+            <span>{formState.errors.email.message}</span>
+          </FormErrorMessage>
         )}
       </FormControl>
       <FormControl isInvalid={!!formState.errors.password}>
@@ -76,10 +80,13 @@ export function Register() {
             },
           })}
           type="password"
-          placeholder="Password"
+          placeholder={passwordPlaceholder}
         />
         {formState.errors.password?.message && (
-          <FormErrorMessage>{formState.errors.password.message}</FormErrorMessage>
+          <FormErrorMessage>
+            <FormErrorIcon />
+            <span>{formState.errors.password.message}</span>
+          </FormErrorMessage>
         )}
       </FormControl>
       <Button mt={2} type="submit" isLoading={formState.isSubmitting}>
