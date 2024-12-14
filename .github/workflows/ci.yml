@@ -90,4 +90,5 @@ jobs:
             docker pull zeilar/did-you-forget_api:latest
             docker-compose down
             docker-compose up -d
+            docker system prune -f
           EOF
