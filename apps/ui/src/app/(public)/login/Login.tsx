@@ -4,11 +4,13 @@ import { clientFetch } from "@ui/common/fetchers/client";
 import {
   Button,
   Checkbox,
+  Divider,
   Flex,
   FormControl,
   FormErrorIcon,
   FormErrorMessage,
   FormLabel,
+  Text,
   type UseToastOptions,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
@@ -16,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { Input, Paper, passwordPlaceholder } from "@ui/components";
 import type { SignInDto } from "@did-you-forget/dto";
 import { useToast } from "@ui/hooks";
+import { Link } from "@chakra-ui/next-js";
 
 const errorToastOptions: UseToastOptions = {
   title: "Error",
@@ -93,10 +96,20 @@ export function Login() {
         <Checkbox {...register("rememberMe")} w="fit-content">
           Remember me
         </Checkbox>
+        <Link href="/password-reset" display="inline-flex" alignItems="center" gap={1}>
+          Reset password
+        </Link>
       </Flex>
       <Button mt={2} type="submit" isLoading={formState.isSubmitting}>
         Sign in
       </Button>
+      <Divider />
+      <Text>
+        Don&apos;t have an account? {` `}
+        <Link href="/register" display="inline-flex" alignItems="center" gap={1}>
+          Register
+        </Link>
+      </Text>
     </Paper>
   );
 }
