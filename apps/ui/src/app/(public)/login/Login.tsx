@@ -104,7 +104,7 @@ export function Login() {
         Sign in
       </Button>
       <Divider />
-      <Text>
+      <Text textAlign="center">
         Don&apos;t have an account? {` `}
         <Link href="/register" display="inline-flex" alignItems="center" gap={1}>
           Register

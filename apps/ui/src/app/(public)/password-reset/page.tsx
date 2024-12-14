@@ -1,6 +1,7 @@
 import { Heading, Text } from "@chakra-ui/react";
 import { Paper } from "@ui/components";
 import { PasswordReset } from "./PasswordReset";
+import { BackButton } from "./BackButton";
 
 export default function Page() {
   return (
@@ -12,6 +13,7 @@ export default function Page() {
         </Text>
         <PasswordReset />
       </Paper>
+      <BackButton />
     </>
   );
 }
