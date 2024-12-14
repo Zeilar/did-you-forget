@@ -11,6 +11,8 @@ import {
 import type { PasswordResetConfirmDto } from "@did-you-forget/dto";
 import { clientFetch, type ClientFetchResult } from "@ui/common/fetchers/client";
 import { Input, Paper, passwordPlaceholder } from "@ui/components";
+import { useToast } from "@ui/hooks";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 
@@ -23,9 +25,21 @@ interface Fields {
 }
 
 export function Form({ id }: FormProps) {
+  const { replace } = useRouter();
+  const toast = useToast();
   const { mutate, isLoading } = useMutation<ClientFetchResult, unknown, PasswordResetConfirmDto>(
     ["password-reset", id],
-    (fields) => clientFetch("/auth/password-reset/confirm", "POST", fields)
+    (fields) => clientFetch("/auth/password-reset/confirm", "POST", fields),
+    {
+      onSuccess: () => {
+        toast({
+          title: "Password reset",
+          description: "Use your new password to log in.",
+          status: "success",
+        });
+        replace("/login");
+      },
+    }
   );
   const { handleSubmit, register, formState } = useForm<Fields>();
 
