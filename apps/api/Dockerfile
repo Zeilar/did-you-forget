@@ -19,7 +19,7 @@ COPY --from=build /usr/src/app/apps/api/prisma .
 # Prisma needs it for some reason, in order to connect to the database.
 RUN apk add openssl
 
-RUN yarn add -D @prisma/client@5.22.0
+RUN yarn global add @prisma/client@5.22.0
 
 # Is needed in runtime for some reason.
 RUN yarn add tslib
