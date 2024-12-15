@@ -23,6 +23,11 @@ export function useEditUser(onSuccess?: VoidFunction) {
           throw new Error("An unexpected error occurred.");
         }
         queryClient.setQueryData("user", data);
+        toast({
+          title: "Changes saved",
+          description: "Your profile was successfully edited.",
+          status: "success",
+        });
         onSuccess?.();
       },
       onError: (error) => {
