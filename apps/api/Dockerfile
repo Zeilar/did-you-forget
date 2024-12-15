@@ -19,6 +19,8 @@ COPY --from=build /usr/src/app/apps/api/prisma .
 # Prisma needs it for some reason, in order to connect to the database.
 RUN apk add openssl
 
+RUN yarn add -D nx@19.8.10
+
 RUN yarn nx prisma-generate api
 
 # Is needed in runtime for some reason.
