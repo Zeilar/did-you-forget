@@ -6,7 +6,7 @@ COPY . .
 
 RUN yarn install --frozen-lockfile
 
-RUN yarn nx prisma-generate api
+RUN yarn prisma generate --schema apps/api/prisma/schema.prisma
 
 RUN yarn nx build api
 
@@ -21,8 +21,6 @@ RUN apk add openssl
 
 RUN yarn add -D nx@19.8.10
 
-RUN yarn nx prisma-generate api
-
 # Is needed in runtime for some reason.
 RUN yarn add tslib
 
@@ -30,4 +28,4 @@ EXPOSE 4020
 
 # Running migrations here mean that they should happen after the db container is ready.
 # If this stops being the case, it must happen in runtime instead.
-CMD prisma migrate deploy && node main.js
+CMD yarn prisma migrate deploy && node main.js
