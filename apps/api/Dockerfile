@@ -8,17 +8,13 @@ RUN yarn install --frozen-lockfile
 
 RUN yarn nx prisma-generate api
 
-RUN yarn global add nx@19.8.10
-
-RUN nx build api
+RUN yarn nx build api
 
 FROM node:22-alpine as main
 
 COPY --from=build /usr/src/app/dist/apps/api .
 COPY --from=build /usr/src/app/apps/api/.env .
 COPY --from=build /usr/src/app/apps/api/prisma .
-
-RUN yarn global add nx@19.8.10 prisma@5.22.0
 
 RUN yarn nx prisma-generate api
 
