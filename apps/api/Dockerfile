@@ -20,6 +20,8 @@ COPY --from=build /usr/src/app/apps/api/prisma .
 
 RUN yarn global add prisma@5.22.0
 
+RUN yarn nx prisma-generate api
+
 # Is needed in runtime for some reason.
 RUN yarn add tslib
 
