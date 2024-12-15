@@ -3,10 +3,12 @@
 import { clientFetch } from "@ui/common/fetchers/client";
 import {
   Button,
+  Divider,
   FormControl,
   FormErrorIcon,
   FormErrorMessage,
   FormLabel,
+  Text,
   type UseToastOptions,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
@@ -15,6 +17,7 @@ import { Input, Paper, passwordPlaceholder } from "@ui/components";
 import type { RegisterUserDto } from "@did-you-forget/dto";
 import { useToast } from "@ui/hooks";
 import { isEmail } from "class-validator";
+import { Link } from "@chakra-ui/next-js";
 
 const errorToastOptions: UseToastOptions = {
   title: "Error",
@@ -92,6 +95,13 @@ export function Register() {
       <Button mt={2} type="submit" isLoading={formState.isSubmitting}>
         Register
       </Button>
+      <Divider />
+      <Text textAlign="center">
+        Already have an account? {` `}
+        <Link href="/login" display="inline-flex" alignItems="center" gap={1}>
+          Login
+        </Link>
+      </Text>
     </Paper>
   );
 }
