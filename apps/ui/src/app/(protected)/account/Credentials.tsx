@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import type { EditUserDto, UserWithoutPasswordDto } from "@did-you-forget/dto";
 import { clientFetch } from "@ui/common/fetchers/client";
-import { passwordPlaceholder } from "@ui/components";
+import { inputProps, passwordPlaceholder } from "@ui/components";
 import { useEditUser } from "@ui/features/user/hooks";
 import { isEmail } from "class-validator";
 import { useRouter } from "next/navigation";
@@ -53,6 +53,7 @@ export function Credentials({ initialData }: CredentialsProps) {
       <FormControl isInvalid={!!formState.errors.email}>
         <FormLabel>Email</FormLabel>
         <Input
+          {...inputProps}
           placeholder={data?.email ?? initialData.email}
           type="email"
           {...register("email", { validate: (value) => isEmail(value) || "Invalid email." })}
@@ -67,6 +68,7 @@ export function Credentials({ initialData }: CredentialsProps) {
       <FormControl isInvalid={!!formState.errors.password}>
         <FormLabel>Password</FormLabel>
         <Input
+          {...inputProps}
           placeholder={passwordPlaceholder}
           type="password"
           {...register("password", {
