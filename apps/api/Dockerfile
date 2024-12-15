@@ -2,6 +2,9 @@ FROM node:22-alpine as build
 
 WORKDIR /usr/src/app
 
+# Prisma needs it for some reason, in order to connect to the database.
+RUN apk add openssl
+
 COPY . .
 
 RUN yarn install --frozen-lockfile
