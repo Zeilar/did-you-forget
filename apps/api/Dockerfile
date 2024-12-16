@@ -6,6 +6,8 @@ COPY . .
 
 RUN yarn install --frozen-lockfile
 
+RUN yarn global add @prisma/client@5.22.0
+
 RUN yarn prisma generate --schema apps/api/prisma/schema.prisma
 
 RUN yarn nx build api
