@@ -134,7 +134,7 @@ export const theme = extendTheme({
   colors: {
     border: "var(--chakra-colors-gray-600)",
     bg: {
-      body: "#0e1014",
+      body: "#101217",
       paper: "var(--chakra-colors-gray-900)",
     },
     text: {
