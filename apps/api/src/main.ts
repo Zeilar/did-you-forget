@@ -10,6 +10,10 @@ import { exec } from "child_process";
 const execAsync = promisify(exec);
 
 async function bootstrap() {
+  if (process.env.NODE_ENV === "production") {
+    await execAsync("yarn prisma generate");
+  }
+
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   const prismaService = app.get(PrismaService);
@@ -19,7 +23,6 @@ async function bootstrap() {
   const env = configService.getOrThrow("env");
 
   if (env === "production") {
-    await execAsync("yarn prisma generate");
     await prismaService.migrate();
   }
 
