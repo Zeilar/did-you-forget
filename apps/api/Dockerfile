@@ -23,6 +23,8 @@ RUN apk add openssl
 
 RUN yarn install --frozen-lockfile
 
+RUN yarn add -D prisma@5.22.0
+
 RUN yarn prisma generate
 
 # Is needed in runtime for some reason.
