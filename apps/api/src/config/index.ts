@@ -1,6 +1,6 @@
 export default function config() {
   return {
-    env: process.env.NODE_ENV,
+    env: process.env.NODE_ENV || "production",
     port: parseInt(process.env.PORT, 10) || 3000,
     secure: process.env.SECURE === "true",
     db: {
