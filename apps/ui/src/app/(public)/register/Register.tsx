@@ -51,6 +51,7 @@ export function Register() {
       <FormControl isInvalid={!!formState.errors.email}>
         <FormLabel>Email</FormLabel>
         <Input
+          required
           {...register("email", {
             required: {
               value: true,
@@ -72,6 +73,7 @@ export function Register() {
       <FormControl isInvalid={!!formState.errors.password}>
         <FormLabel>Password</FormLabel>
         <Input
+          required
           {...register("password", {
             required: {
               value: true,

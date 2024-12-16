@@ -33,6 +33,7 @@ export function Time({ id, time }: Pick<NotificationDto, "id" | "time">) {
           w="full"
         >
           <Input
+            required
             w={["full", 500]}
             type="datetime-local"
             placeholder="Title"

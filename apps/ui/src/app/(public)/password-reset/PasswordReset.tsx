@@ -32,6 +32,7 @@ export function PasswordReset() {
       <FormControl isInvalid={!!formState.errors.email}>
         <FormLabel>Email</FormLabel>
         <Input
+          required
           type="email"
           placeholder="john.doe@example.com"
           {...register("email", {

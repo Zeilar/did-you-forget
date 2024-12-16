@@ -62,7 +62,7 @@ export function Notifications({ initialData }: NotificationsProps) {
     },
     { initialData, cacheTime: 0 } // For some reason the cache invalidation in useEditNotification doesn't work.
   );
-  const searchedNotifications: NotificationDto[] = search
+  const searchedNotifications: NotificationDto[] = search.trim()
     ? data.filter(({ title }) => title.toLowerCase().includes(search.toLowerCase()))
     : data;
 
@@ -106,7 +106,7 @@ export function Notifications({ initialData }: NotificationsProps) {
             </InputGroup>
           </Box>
           <Grid gridTemplateColumns={["repeat(1, 1fr)"]} gap={4} p={4}>
-            {!search ? (
+            {!search.trim() ? (
               <AnimatePresence>
                 {data.map((notification) => (
                   <motion.div key={notification.id} exit={{ opacity: 0 }}>
@@ -155,6 +155,7 @@ export function Notifications({ initialData }: NotificationsProps) {
             <FormControl isInvalid={!!createForm.formState.errors.title}>
               <FormLabel>Title</FormLabel>
               <UiInput
+                required
                 placeholder="My notification"
                 {...createForm.register("title", {
                   required: {
@@ -177,6 +178,7 @@ export function Notifications({ initialData }: NotificationsProps) {
             <FormControl isInvalid={!!createForm.formState.errors.title}>
               <FormLabel>Time</FormLabel>
               <UiInput
+                required
                 type="datetime-local"
                 {...createForm.register("time", {
                   required: {

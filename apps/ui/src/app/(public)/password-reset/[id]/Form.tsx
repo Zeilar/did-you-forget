@@ -50,6 +50,7 @@ export function Form({ id }: FormProps) {
         <FormControl isInvalid={!!formState.errors.password}>
           <FormLabel>New Password</FormLabel>
           <Input
+            required
             type="password"
             placeholder={passwordPlaceholder}
             {...register("password", {

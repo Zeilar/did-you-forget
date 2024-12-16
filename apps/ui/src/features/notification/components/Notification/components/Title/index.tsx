@@ -33,10 +33,15 @@ export function Title({ id, title }: Pick<NotificationDto, "id" | "title">) {
       <FormControl isInvalid={!!formState.errors.title}>
         <Input
           {...inputProps}
+          required
           w={["full", 500]}
           placeholder="Title"
           autoFocus
           {...register("title", {
+            required: {
+              value: true,
+              message: "Please fill out the field.",
+            },
             minLength: {
               value: 3,
               message: "Title must be at least 3 characters long.",
