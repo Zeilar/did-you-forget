@@ -4,16 +4,8 @@ import { AppModule } from "./app/index.module";
 import cookieParser from "cookie-parser";
 import { ConfigService } from "@nestjs/config";
 import { PrismaService } from "./features/db/prisma/index.service";
-import { promisify } from "util";
-import { exec } from "child_process";
-
-const execAsync = promisify(exec);
 
 async function bootstrap() {
-  if (process.env.NODE_ENV === "production") {
-    await execAsync("yarn prisma generate");
-  }
-
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   const prismaService = app.get(PrismaService);
