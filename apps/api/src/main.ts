@@ -3,12 +3,21 @@ import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app/index.module";
 import cookieParser from "cookie-parser";
 import { ConfigService } from "@nestjs/config";
+import { PrismaService } from "./features/db/prisma/index.service";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+  const prismaService = app.get(PrismaService);
+
   const port = configService.getOrThrow("port");
   const globalPrefix = configService.getOrThrow("globalPrefix");
+  const env = configService.getOrThrow("env");
+
+  if (env === "production") {
+    await prismaService.migrate();
+  }
+
   app
     .setGlobalPrefix(globalPrefix)
     .useGlobalPipes(
