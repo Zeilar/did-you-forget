@@ -25,11 +25,7 @@ export function Time({ id, time }: Pick<NotificationDto, "id" | "time">) {
       {isOpen ? (
         <Box
           as="form"
-          onSubmit={handleSubmit(({ time }) =>
-            mutate({
-              time: new Date(time as Date).toISOString() as unknown as Date,
-            })
-          )}
+          onSubmit={handleSubmit(({ time }) => mutate({ time: new Date(time as Date) }))}
           w="full"
         >
           <Input
