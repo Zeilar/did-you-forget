@@ -21,6 +21,8 @@ COPY --from=build /usr/src/app/apps/api/prisma .
 # Prisma needs it for some reason, in order to connect to the database.
 RUN apk add openssl
 
+RUN yarn install --frozen-lockfile
+
 # Is needed in runtime for some reason.
 RUN yarn add tslib
 
